@@ -1,0 +1,1721 @@
+pal@pal-desktop79:/media/pal/E/GnomeApp/totem-gstbt/install/bin$ ./totem 
+(totem_object_class_init) 
+(totem-object/totem_object_init) 
+GST::gst_soup_http_src_uri_handler_init 
+(gst_bt_demux_class_init) 
+(totem_object_app_handle_local_options) 
+NOT g_application_get_is_remote 
+(totem-object/totem_object_app_activate)
+(totem_player_toolbar_class_init) 
+bacon_video_widget_class_init 
+(bacon_video_widget_init) 
+(file_src_init)
+(gst_bt_demux_class_init) 
+(bt_demux_init) 
+(gst_bt_demux_init) add sink pad to element
+GTK-GLSINK:: gst_gtk_gl_sink_init 
+GL-SINKBIN::gst_gl_sink_bin_init 
+GL-SINKBIN::gst_gl_sink_bin_set_sink 
+(bacon_video_widget_can_direct_seek 
+bacon_time_label_class_init 
+(totem_setup_window) 
+(totem-object/video_widget_create) 
+(totem_callback_connect) 
+(bacon_video_widget_get_volume)
+(bvw/set_audio_filter) caps is NULL 
+IN totem_plugins_engine_get_default ,path[]=/home/pal/.local/share/totem/plugins
+IN totem_plugins_engine_get_default ,path[]=/media/pal/E/GnomeApp/totem-gstbt/install/lib/x86_64-linux-gnu/totem/plugins
+plugin loading:TOTEM_TYPE_VARIABLE_RATE_PLUGIN
+plugin loading:TOTEM_TYPE_MOVIE_PROPERTIES_PLUGIN
+In totem-movie-properties.c impl_activeate 
+plugin loading:TOTEM_TYPE_SCREENSAVER_PLUGIN
+plugin loading:TOTEM_TYPE_SCREENSHOT_PLUGIN
+plugin loading:TOTEM_TYPE_ROTATION_PLUGIN
+plugin loading:TOTEM_TYPE_OPEN_DIRECTORY_PLUGIN
+OPEN-DIRECTORY: impl_activate
+ (totem_object_plugins_init) 
+(totem_object_app_activate) set fileidx as -1 to start pipeline but not playing yet 
+totem_object_set_fileidx, file_idx=-1 
+(bacon_video_widget_open) initial case: fileidx is -1 
+(gst_bt_demux_change_state) 
+(gst_bt_demux_change_state) 
+(bt_demux_change_state) GST_STATE_CHANGE_READY_TO_PAUSED 
+(bt_demux_task_setup) 
+(base_src_perform_seek) 
+(bt_demux_sink_event) 
+(bt_demux_sink_event) Not EOS , return
+(gst_file_src_fill) offset=0, length=4096
+(gst_file_src_fill) Reading 4096 bytes at offset  0x0 
+(bt_demux_sink_event) 
+(bt_demux_sink_event) Not EOS , return
+Received buffer 
+(gst_file_src_fill) offset=4096, length=1108
+(gst_file_src_fill) Reading 1108 bytes at offset  0x1000 
+Received buffer 
+(bt_demux_sink_event) 
+Received EOS in gst_bt_demux_sink_event()
+buflen is 5204 
+len is 5204 
+atp.save_path = /home/pal/Documents 
+libtorrent, async_add_torrent 
+Got add_torrent_alert 
+Start download, num files: 2, num pieces: 248, piece length: 32768 
+(gst_bt_demux_handle_alert) finished_pieces piece_byte count=31
+gst_bt_demux_stream_class_init 
+gst_bt_demux_stream_init 
+(gst_bt_demux_handle_alert) create src pad (aka.BtDemuxStream) 
+(bt_demux_handle_alert) Adding stream src_00 for file Japan/ForBiggerBlazes.mp4 at fileidx 0, start_piece:0, start_ofset:0,end_piece:76,end_ofset:7757 [0,2498125]
+gst_bt_demux_stream_init 
+(gst_bt_demux_handle_alert) create src pad (aka.BtDemuxStream) 
+(bt_demux_handle_alert) Adding stream src_01 for file Japan/wwa.mp4 at fileidx 1, start_piece:76, start_ofset:7757,end_piece:247,end_ofset:17639 [2498125,8111335]
+(bvw_handle_application_message) entering 
+(bvw_handle_application_message) src_name is:btdemux,type_name is:got-piece-block-info 
+(totem_got_piece_block_info) entering 
+(free_piece_block_info_sd) called 
+Piece 0 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 1 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 2 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 3 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 4 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 5 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 6 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 7 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 8 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 9 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 10 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 11 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 12 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 13 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 14 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 15 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 16 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 17 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 18 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 19 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 20 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 21 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 22 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 23 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 24 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 25 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 26 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 27 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 28 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 29 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 30 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 31 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 32 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 33 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 34 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 35 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 36 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 37 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 38 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 39 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 40 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 41 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 42 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 43 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 44 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 45 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 46 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 47 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 48 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 49 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 50 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 51 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 52 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 53 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 54 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 55 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 56 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 57 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 58 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 59 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 60 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 61 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 62 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 63 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 64 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 65 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 66 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 67 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 68 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 69 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 70 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 71 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 72 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 73 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 74 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 75 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 76 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 77 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 78 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 79 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 80 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 81 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 82 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 83 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 84 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 85 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 86 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 87 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 88 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 89 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 90 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 91 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 92 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 93 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 94 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 95 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 96 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 97 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 98 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 99 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 100 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 101 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 102 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 103 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 104 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 105 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 106 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 107 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 108 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 109 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 110 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 111 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 112 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 113 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 114 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 115 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 116 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 117 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 118 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 119 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 120 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 121 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 122 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 123 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 124 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 125 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 126 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 127 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 128 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 129 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 130 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 131 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 132 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 133 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 134 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 135 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 136 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 137 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 138 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 139 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 140 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 141 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 142 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 143 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 144 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 145 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 146 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 147 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 148 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 149 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 150 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 151 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 152 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 153 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 154 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 155 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 156 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 157 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 158 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 159 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 160 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 161 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 162 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 163 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 164 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 165 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 166 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 167 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 168 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 169 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 170 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 171 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 172 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 173 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 174 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 175 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 176 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 177 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 178 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 179 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 180 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 181 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 182 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 183 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 184 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 185 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 186 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 187 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 188 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 189 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 190 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 191 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 192 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 193 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 194 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 195 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 196 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 197 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 198 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 199 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 200 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 201 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 202 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 203 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 204 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 205 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 206 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 207 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 208 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 209 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 210 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 211 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 212 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 213 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 214 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 215 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 216 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 217 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 218 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 219 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 220 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 221 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 222 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 223 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 224 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 225 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 226 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 227 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 228 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 229 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 230 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 231 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 232 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 233 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 234 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 235 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 236 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 237 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 238 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 239 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 240 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 241 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 242 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 243 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 244 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 245 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 246 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Piece 247 completed (down: 0 kb/s, up: 0 kb/s, peers: 0) 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+(gst_bt_demux_handle_alert) waiting lock 
+(gst_bt_demux_handle_alert) recovery lock 
+Got torrent_checked_alert
+(bt_demux_activate_streams) Got torrent_checked_alert or reset pushing from start, gst_bt_demux_activate_streams !!! 
+(bt_demux_activate_streams)  thiz->stream len is 2 
+(gst_bt_demux_activate_streams) waiting lock 
+(gst_bt_demux_activate_streams) recovery lock 
+(gst_bt_demux_activate_streams) unlock lock 
+(gst_bt_demux_activate_streams) waiting lock 
+(gst_bt_demux_activate_streams) recovery lock 
+(gst_bt_demux_activate_streams) unlock lock 
+(gst_bt_demux_activate_streams) waiting lock 2
+(gst_bt_demux_activate_streams) recovery lock 2
+(bt_demux_activate_streams) Requesting stream src_00 
+(bt_demux_stream_activate) Activating stream 'src_00', start: (0), start_offset: 0, end: 76, end_offset: 7757, current: (-1) 
+(bt_demux_stream_add_piece) Adding more pieces at 1, current: -1, max: 3 
+(bt_demux_stream_add_piece) Adding more pieces at 2, current: -1, max: 3 
+(gst_bt_demux_activate_streams) unlock lock 2
+(gst_bt_demux_activate_streams) waiting lock 2
+(gst_bt_demux_activate_streams) recovery lock 2
+(bt_demux_activate_streams) Requesting stream src_01 
+(bt_demux_stream_activate) Activating stream 'src_01', start: (76), start_offset: 7757, end: 247, end_offset: 17639, current: (75) 
+(bt_demux_stream_add_piece) Adding more pieces at 77, current: 75, max: 3 
+(bt_demux_stream_add_piece) Adding more pieces at 78, current: 75, max: 3 
+(gst_bt_demux_activate_streams) unlock lock 2
+(gst_bt_demux_activate_streams) waiting lock 3
+(gst_bt_demux_activate_streams) recovery lock 3
+(bt_demux_activate_streams) Starting stream 'src_00', reading piece 0, current: -1 
+(gst_bt_demux_activate_streams) waiting lock 3
+(gst_bt_demux_activate_streams) recovery lock 3
+(bt_demux_activate_streams) Starting stream 'src_01', reading piece 76, current: 75 
+(bt_demux_handle_alert) BEGIN recv read_piece_alert, piece idx:(0)
+(bt_demux_handle_alert) waiting lock 2; alert piece idx(0), stream->current_piece(-1)
+(bt_demux_handle_alert) recovery lock 2; alert piece idx(0), stream->current_piece(-1)
+(bt_demux_handle_alert) stream-idx(0) create the pad if needed and add the pad to element (0)
+(on_btdemux_pad_added) btdemux src pad added: src_00
+(gst_bt_demux_buffer_new) thiz->start_piece=0, piece=0, this buffer actual size:32768 
+(bt_demux_handle_alert) if(thiz->typefind) caps is video/quicktime, variant=(string)iso 
+(bt_demux_handle_alert) in read_piece_alert, piece_idx on alert(aka ipc_data->piece)=(0), size=32768 
+(bt_demux_handle_alert) stream-idx(0) in read_piece_alert, gst_pad_start bt_demux_stream_push_loop 0 
+(bt_demux_handle_alert) unlock lock 2 ; alert piece idx(0), stream->current_piece(-1)
+(bt_demux_handle_alert) waiting lock 2; alert piece idx(0), stream->current_piece(75)
+(bt_demux_handle_alert) recovery lock 2; alert piece idx(0), stream->current_piece(75)
+(gst_bt_demux_handle_alert) judge whether this read piece belongs to this stream
+(bt_demux_handle_alert) BEGIN recv read_piece_alert, piece idx:(76)
+(bt_demux_handle_alert) waiting lock 2; alert piece idx(76), stream->current_piece(-1)
+(bt_demux_handle_alert) recovery lock 2; alert piece idx(76), stream->current_piece(-1)
+(bt_demux_handle_alert) in read_piece_alert, piece_idx on alert(aka ipc_data->piece)=(76), size=32768 
+(bt_demux_handle_alert) stream-idx(0) in read_piece_alert, gst_pad_start bt_demux_stream_push_loop 76 
+(bt_demux_handle_alert) unlock lock 2 ; alert piece idx(76), stream->current_piece(-1)
+(bt_demux_handle_alert) waiting lock 2; alert piece idx(76), stream->current_piece(75)
+(bt_demux_handle_alert) recovery lock 2; alert piece idx(76), stream->current_piece(75)
+(bt_demux_handle_alert) stream-idx(1) create the pad if needed and add the pad to element (76)
+(on_btdemux_pad_added) btdemux src pad added: src_01
+(gst_bt_demux_buffer_new) thiz->start_piece=76, piece=76, this buffer actual size:25011 
+(bt_demux_stream_push_loop) FIRE src_00 [start piece idx:0, end piece idx:76] 
+(bt_demux_stream_push_loop) waiting lock thiz->current_piece(-1), ipc_data->piece(0)
+(bt_demux_stream_push_loop) recovery lock (-1)
+(gst_bt_demux_buffer_new) thiz->start_piece=0, piece=0, this buffer actual size:32768 
+(bt_demux_stream_push_loop) Received piece (0) of size 32768 and actual size 32768 on file 0 
+(bt_demux_stream_push_loop) Reading next piece 1, current: -1 
+(bt_demux_stream_push_loop) Push SEGMENT event, start_byte=0, end_byte=2498125 
+(bt_demux_stream_push_loop) Pushing buffer, actual size: 32768, file: 0, piece: (0) 
+
+(totem:10086): GStreamer-WARNING **: 08:35:38.552: ../subprojects/gstreamer/gst/gstpad.c:4749:gst_pad_push_data:<btdemux:src_00> Got data flow before stream-start event
+(bt_demux_stream_push_loop)!!Failed Pushing buffer,actual size: 32768, file: 0, piece: (0)
+()ret = -1 
+(bt_demux_stream_push_loop) Sending EOS event on file 0, piece:0 
+(bt_demux_stream_push_loop) unlock (0)
+bt_demux_stream_push_loop, END 
+(bt_demux_handle_alert) if(thiz->typefind) caps is video/quicktime, variant=(string)iso 
+(bt_demux_handle_alert) in read_piece_alert, piece_idx on alert(aka ipc_data->piece)=(76), size=32768 
+(bt_demux_handle_alert) stream-idx(1) in read_piece_alert, gst_pad_start bt_demux_stream_push_loop 76 
+(bt_demux_handle_alert) unlock lock 2 ; alert piece idx(76), stream->current_piece(75)
+(bt_demux_check_no_more_pads) We're done... Sending no more pads 
+(on_btdemux_no_more_pads) Not Found btdemux src pad stored in bvw->btdemux_srcpads 
+(bt_demux_handle_alert) BEGIN recv read_piece_alert, piece idx:(1)
+(bt_demux_handle_alert) waiting lock 2; alert piece idx(1), stream->current_piece(0)
+(bt_demux_handle_alert) recovery lock 2; alert piece idx(1), stream->current_piece(0)
+(bt_demux_handle_alert) in read_piece_alert, piece_idx on alert(aka ipc_data->piece)=(1), size=32768 
+(bt_demux_handle_alert) stream-idx(0) in read_piece_alert, gst_pad_start bt_demux_stream_push_loop 1 
+(bt_demux_stream_push_loop) FIRE src_01 [start piece idx:76, end piece idx:247] 
+(bt_demux_stream_push_loop) FIRE src_00 [start piece idx:0, end piece idx:76] 
+(bt_demux_handle_alert) unlock lock 2 ; alert piece idx(1), stream->current_piece(0)
+(bt_demux_handle_alert) waiting lock 2; alert piece idx(1), stream->current_piece(75)
+(bt_demux_handle_alert) recovery lock 2; alert piece idx(1), stream->current_piece(75)
+(gst_bt_demux_handle_alert) judge whether this read piece belongs to this stream
+(bt_demux_stream_push_loop) waiting lock thiz->current_piece(75), ipc_data->piece(76)
+(bt_demux_stream_push_loop) recovery lock (75)
+(bt_demux_stream_push_loop) waiting lock thiz->current_piece(0), ipc_data->piece(76)
+(bt_demux_stream_push_loop) recovery lock (0)
+(bt_demux_stream_push_loop) Dropping piece (76), waiting for (1) on file 0 
+(bt_demux_stream_push_loop) FIRE src_00 [start piece idx:0, end piece idx:76] 
+(gst_bt_demux_buffer_new) thiz->start_piece=76, piece=76, this buffer actual size:25011 
+(bt_demux_stream_push_loop) waiting lock thiz->current_piece(0), ipc_data->piece(1)
+(bt_demux_stream_push_loop) Received piece (76) of size 32768 and actual size 25011 on file 1 
+(bt_demux_stream_push_loop) recovery lock (0)
+(gst_bt_demux_buffer_new) thiz->start_piece=0, piece=1, this buffer actual size:32768 
+(bt_demux_stream_push_loop) Received piece (1) of size 32768 and actual size 32768 on file 0 
+(bt_demux_stream_push_loop) Reading next piece 77, current: 75 
+(bt_demux_stream_push_loop) Push SEGMENT event, start_byte=0, end_byte=5613210 
+(bt_demux_stream_push_loop) Pushing buffer, actual size: 25011, file: 1, piece: (76) 
+
+(totem:10086): GStreamer-WARNING **: 08:35:38.553: ../subprojects/gstreamer/gst/gstpad.c:4749:gst_pad_push_data:<btdemux:src_01> Got data flow before stream-start event
+(bt_demux_stream_push_loop)!!Failed Pushing buffer,actual size: 25011, file: 1, piece: (76)
+()ret = -1 
+(bt_demux_stream_push_loop) Sending EOS event on file 1, piece:76 
+(bt_demux_stream_push_loop) unlock (76)
+bt_demux_stream_push_loop, END 
+(bt_demux_stream_push_loop) Reading next piece 2, current: 0 
+(bt_demux_stream_push_loop) Pushing buffer, actual size: 32768, file: 0, piece: (1) 
+(gst_pad_push_data) GST_PAD_IS_EOS 
+(gst_pad_push_data) pushing, but pad was EOS 
+(bt_demux_stream_push_loop)!!Failed Pushing buffer,actual size: 32768, file: 0, piece: (1)
+()ret = -3 
+(bt_demux_stream_push_loop) Sending EOS event on file 0, piece:1 
+(bt_demux_stream_push_loop) unlock (1)
+bt_demux_stream_push_loop, END 
+(bt_demux_handle_alert) BEGIN recv read_piece_alert, piece idx:(77)
+(bt_demux_handle_alert) waiting lock 2; alert piece idx(77), stream->current_piece(1)
+(bt_demux_handle_alert) recovery lock 2; alert piece idx(77), stream->current_piece(1)
+(gst_bt_demux_handle_alert) judge whether this read piece belongs to this stream
+(bt_demux_handle_alert) waiting lock 2; alert piece idx(77), stream->current_piece(76)
+(bt_demux_handle_alert) recovery lock 2; alert piece idx(77), stream->current_piece(76)
+(bt_demux_handle_alert) in read_piece_alert, piece_idx on alert(aka ipc_data->piece)=(77), size=32768 
+(bt_demux_handle_alert) stream-idx(0) in read_piece_alert, gst_pad_start bt_demux_stream_push_loop 77 
+(bt_demux_handle_alert) unlock lock 2 ; alert piece idx(77), stream->current_piece(76)
+(bt_demux_handle_alert) BEGIN recv read_piece_alert, piece idx:(2)
+(bt_demux_handle_alert) waiting lock 2; alert piece idx(2), stream->current_piece(1)
+(bt_demux_handle_alert) recovery lock 2; alert piece idx(2), stream->current_piece(1)
+(bt_demux_handle_alert) in read_piece_alert, piece_idx on alert(aka ipc_data->piece)=(2), size=32768 
+(bt_demux_handle_alert) stream-idx(0) in read_piece_alert, gst_pad_start bt_demux_stream_push_loop 2 
+(bt_demux_stream_push_loop) FIRE src_01 [start piece idx:76, end piece idx:247] 
+(bt_demux_handle_alert) unlock lock 2 ; alert piece idx(2), stream->current_piece(1)
+(bt_demux_handle_alert) waiting lock 2; alert piece idx(2), stream->current_piece(76)
+(bt_demux_handle_alert) recovery lock 2; alert piece idx(2), stream->current_piece(76)
+(gst_bt_demux_handle_alert) judge whether this read piece belongs to this stream
+(bt_demux_stream_push_loop) FIRE src_00 [start piece idx:0, end piece idx:76] 
+(bt_demux_stream_push_loop) waiting lock thiz->current_piece(1), ipc_data->piece(2)
+(bt_demux_stream_push_loop) recovery lock (1)
+(gst_bt_demux_buffer_new) thiz->start_piece=0, piece=2, this buffer actual size:32768 
+(bt_demux_stream_push_loop) Received piece (2) of size 32768 and actual size 32768 on file 0 
+(bt_demux_stream_push_loop) waiting lock thiz->current_piece(76), ipc_data->piece(77)
+(bt_demux_stream_push_loop) recovery lock (76)
+(gst_bt_demux_buffer_new) thiz->start_piece=76, piece=77, this buffer actual size:32768 
+(bt_demux_stream_push_loop) Received piece (77) of size 32768 and actual size 32768 on file 1 
+(bt_demux_stream_push_loop) Reading next piece 3, current: 1 
+(bt_demux_stream_push_loop) Reading next piece 78, current: 76 
+(bt_demux_stream_push_loop) Pushing buffer, actual size: 32768, file: 1, piece: (77) 
+(gst_pad_push_data) GST_PAD_IS_EOS 
+(gst_pad_push_data) pushing, but pad was EOS 
+(bt_demux_stream_push_loop)!!Failed Pushing buffer,actual size: 32768, file: 1, piece: (77)
+()ret = -3 
+(bt_demux_stream_push_loop) Sending EOS event on file 1, piece:77 
+(bt_demux_stream_push_loop) unlock (77)
+bt_demux_stream_push_loop, END 
+(bt_demux_stream_push_loop) Pushing buffer, actual size: 32768, file: 0, piece: (2) 
+(gst_pad_push_data) GST_PAD_IS_EOS 
+(gst_pad_push_data) pushing, but pad was EOS 
+(bt_demux_stream_push_loop)!!Failed Pushing buffer,actual size: 32768, file: 0, piece: (2)
+()ret = -3 
+(bt_demux_stream_push_loop) Sending EOS event on file 0, piece:2 
+(bt_demux_stream_push_loop) unlock (2)
+bt_demux_stream_push_loop, END 
+(bt_demux_handle_alert) BEGIN recv read_piece_alert, piece idx:(78)
+(bt_demux_handle_alert) waiting lock 2; alert piece idx(78), stream->current_piece(2)
+(bt_demux_handle_alert) recovery lock 2; alert piece idx(78), stream->current_piece(2)
+(gst_bt_demux_handle_alert) judge whether this read piece belongs to this stream
+(bt_demux_handle_alert) waiting lock 2; alert piece idx(78), stream->current_piece(77)
+(bt_demux_handle_alert) recovery lock 2; alert piece idx(78), stream->current_piece(77)
+(bt_demux_handle_alert) in read_piece_alert, piece_idx on alert(aka ipc_data->piece)=(78), size=32768 
+(bt_demux_handle_alert) stream-idx(0) in read_piece_alert, gst_pad_start bt_demux_stream_push_loop 78 
+(bt_demux_handle_alert) unlock lock 2 ; alert piece idx(78), stream->current_piece(77)
+(bt_demux_stream_push_loop) FIRE src_01 [start piece idx:76, end piece idx:247] 
+(bt_demux_handle_alert) BEGIN recv read_piece_alert, piece idx:(3)
+(bt_demux_handle_alert) waiting lock 2; alert piece idx(3), stream->current_piece(2)
+(bt_demux_handle_alert) recovery lock 2; alert piece idx(3), stream->current_piece(2)
+(bt_demux_handle_alert) in read_piece_alert, piece_idx on alert(aka ipc_data->piece)=(3), size=32768 
+(bt_demux_handle_alert) stream-idx(0) in read_piece_alert, gst_pad_start bt_demux_stream_push_loop 3 
+(bt_demux_stream_push_loop) waiting lock thiz->current_piece(77), ipc_data->piece(78)
+(bt_demux_handle_alert) unlock lock 2 ; alert piece idx(3), stream->current_piece(2)
+(bt_demux_handle_alert) waiting lock 2; alert piece idx(3), stream->current_piece(77)
+(bt_demux_stream_push_loop) recovery lock (77)
+(gst_bt_demux_buffer_new) thiz->start_piece=76, piece=78, this buffer actual size:32768 
+(bt_demux_stream_push_loop) Received piece (78) of size 32768 and actual size 32768 on file 1 
+(bt_demux_stream_push_loop) FIRE src_00 [start piece idx:0, end piece idx:76] 
+(bt_demux_stream_push_loop) Reading next piece 79, current: 77 
+(bt_demux_stream_push_loop) Pushing buffer, actual size: 32768, file: 1, piece: (78) 
+(bt_demux_stream_push_loop) waiting lock thiz->current_piece(2), ipc_data->piece(3)
+(bt_demux_stream_push_loop) recovery lock (2)
+(gst_bt_demux_buffer_new) thiz->start_piece=0, piece=3, this buffer actual size:32768 
+(bt_demux_stream_push_loop) Received piece (3) of size 32768 and actual size 32768 on file 0 
+(gst_pad_push_data) GST_PAD_IS_EOS 
+(gst_pad_push_data) pushing, but pad was EOS 
+(bt_demux_stream_push_loop)!!Failed Pushing buffer,actual size: 32768, file: 1, piece: (78)
+()ret = -3 
+(bt_demux_stream_push_loop) Sending EOS event on file 1, piece:78 
+(bt_demux_stream_push_loop) unlock (78)
+bt_demux_stream_push_loop, END 
+(bt_demux_handle_alert) recovery lock 2; alert piece idx(3), stream->current_piece(78)
+(gst_bt_demux_handle_alert) judge whether this read piece belongs to this stream
+(bt_demux_handle_alert) BEGIN recv read_piece_alert, piece idx:(79)
+(bt_demux_handle_alert) waiting lock 2; alert piece idx(79), stream->current_piece(2)
+(bt_demux_stream_push_loop) Reading next piece 4, current: 2 
+(bt_demux_stream_push_loop) Pushing buffer, actual size: 32768, file: 0, piece: (3) 
+(gst_pad_push_data) GST_PAD_IS_EOS 
+(gst_pad_push_data) pushing, but pad was EOS 
+(bt_demux_stream_push_loop)!!Failed Pushing buffer,actual size: 32768, file: 0, piece: (3)
+()ret = -3 
+(bt_demux_stream_push_loop) Sending EOS event on file 0, piece:3 
+(bt_demux_stream_push_loop) unlock (3)
+bt_demux_stream_push_loop, END 
+(bt_demux_handle_alert) recovery lock 2; alert piece idx(79), stream->current_piece(3)
+(gst_bt_demux_handle_alert) judge whether this read piece belongs to this stream
+(bt_demux_handle_alert) waiting lock 2; alert piece idx(79), stream->current_piece(78)
+(bt_demux_handle_alert) recovery lock 2; alert piece idx(79), stream->current_piece(78)
+(bt_demux_handle_alert) in read_piece_alert, piece_idx on alert(aka ipc_data->piece)=(79), size=32768 
+(bt_demux_handle_alert) stream-idx(0) in read_piece_alert, gst_pad_start bt_demux_stream_push_loop 79 
+(bt_demux_handle_alert) unlock lock 2 ; alert piece idx(79), stream->current_piece(78)
+(bt_demux_stream_push_loop) FIRE src_01 [start piece idx:76, end piece idx:247] 
+(bt_demux_handle_alert) BEGIN recv read_piece_alert, piece idx:(4)
+(bt_demux_handle_alert) waiting lock 2; alert piece idx(4), stream->current_piece(3)
+(bt_demux_handle_alert) recovery lock 2; alert piece idx(4), stream->current_piece(3)
+(bt_demux_handle_alert) in read_piece_alert, piece_idx on alert(aka ipc_data->piece)=(4), size=32768 
+(bt_demux_handle_alert) stream-idx(0) in read_piece_alert, gst_pad_start bt_demux_stream_push_loop 4 
+(bt_demux_stream_push_loop) waiting lock thiz->current_piece(78), ipc_data->piece(79)
+(bt_demux_stream_push_loop) recovery lock (78)
+(gst_bt_demux_buffer_new) thiz->start_piece=76, piece=79, this buffer actual size:32768 
+(bt_demux_stream_push_loop) FIRE src_00 [start piece idx:0, end piece idx:76] 
+(bt_demux_stream_push_loop) Received piece (79) of size 32768 and actual size 32768 on file 1 
+(bt_demux_handle_alert) unlock lock 2 ; alert piece idx(4), stream->current_piece(3)
+(bt_demux_handle_alert) waiting lock 2; alert piece idx(4), stream->current_piece(78)
+(bt_demux_stream_push_loop) waiting lock thiz->current_piece(3), ipc_data->piece(4)
+(bt_demux_stream_push_loop) recovery lock (3)
+(gst_bt_demux_buffer_new) thiz->start_piece=0, piece=4, this buffer actual size:32768 
+(bt_demux_stream_push_loop) Received piece (4) of size 32768 and actual size 32768 on file 0 
+(bt_demux_stream_push_loop) Reading next piece 80, current: 78 
+(bt_demux_stream_push_loop) Pushing buffer, actual size: 32768, file: 1, piece: (79) 
+(bt_demux_stream_push_loop) Reading next piece 5, current: 3 
+(bt_demux_stream_push_loop) Pushing buffer, actual size: 32768, file: 0, piece: (4) 
+(gst_pad_push_data) GST_PAD_IS_EOS 
+(gst_pad_push_data) pushing, but pad was EOS 
+(bt_demux_stream_push_loop)!!Failed Pushing buffer,actual size: 32768, file: 0, piece: (4)
+()ret = -3 
+(gst_pad_push_data) GST_PAD_IS_EOS 
+(gst_pad_push_data) pushing, but pad was EOS 
+(bt_demux_stream_push_loop)!!Failed Pushing buffer,actual size: 32768, file: 1, piece: (79)
+()ret = -3 
+(bt_demux_stream_push_loop) Sending EOS event on file 1, piece:79 
+(bt_demux_stream_push_loop) unlock (79)
+bt_demux_stream_push_loop, END 
+(bt_demux_handle_alert) recovery lock 2; alert piece idx(4), stream->current_piece(79)
+(gst_bt_demux_handle_alert) judge whether this read piece belongs to this stream
+(bt_demux_handle_alert) BEGIN recv read_piece_alert, piece idx:(80)
+(bt_demux_handle_alert) waiting lock 2; alert piece idx(80), stream->current_piece(4)
+(bt_demux_stream_push_loop) Sending EOS event on file 0, piece:4 
+(bt_demux_stream_push_loop) unlock (4)
+bt_demux_stream_push_loop, END 
+(bt_demux_handle_alert) recovery lock 2; alert piece idx(80), stream->current_piece(4)
+(gst_bt_demux_handle_alert) judge whether this read piece belongs to this stream
+(bt_demux_handle_alert) waiting lock 2; alert piece idx(80), stream->current_piece(79)
+(bt_demux_handle_alert) recovery lock 2; alert piece idx(80), stream->current_piece(79)
+(bt_demux_handle_alert) in read_piece_alert, piece_idx on alert(aka ipc_data->piece)=(80), size=32768 
+(bt_demux_handle_alert) stream-idx(0) in read_piece_alert, gst_pad_start bt_demux_stream_push_loop 80 
+(bt_demux_handle_alert) unlock lock 2 ; alert piece idx(80), stream->current_piece(79)
+(bt_demux_stream_push_loop) FIRE src_01 [start piece idx:76, end piece idx:247] 
+(bt_demux_handle_alert) BEGIN recv read_piece_alert, piece idx:(5)
+(bt_demux_handle_alert) waiting lock 2; alert piece idx(5), stream->current_piece(4)
+(bt_demux_handle_alert) recovery lock 2; alert piece idx(5), stream->current_piece(4)
+(bt_demux_handle_alert) in read_piece_alert, piece_idx on alert(aka ipc_data->piece)=(5), size=32768 
+(bt_demux_handle_alert) stream-idx(0) in read_piece_alert, gst_pad_start bt_demux_stream_push_loop 5 
+(bt_demux_handle_alert) unlock lock 2 ; alert piece idx(5), stream->current_piece(4)
+(bt_demux_handle_alert) waiting lock 2; alert piece idx(5), stream->current_piece(79)
+(bt_demux_handle_alert) recovery lock 2; alert piece idx(5), stream->current_piece(79)
+(gst_bt_demux_handle_alert) judge whether this read piece belongs to this stream
+(bt_demux_stream_push_loop) FIRE src_00 [start piece idx:0, end piece idx:76] 
+(bt_demux_stream_push_loop) waiting lock thiz->current_piece(79), ipc_data->piece(80)
+(bt_demux_stream_push_loop) recovery lock (79)
+(gst_bt_demux_buffer_new) thiz->start_piece=76, piece=80, this buffer actual size:32768 
+(bt_demux_stream_push_loop) Received piece (80) of size 32768 and actual size 32768 on file 1 
+(bt_demux_stream_push_loop) waiting lock thiz->current_piece(4), ipc_data->piece(5)
+(bt_demux_stream_push_loop) recovery lock (4)
+(gst_bt_demux_buffer_new) thiz->start_piece=0, piece=5, this buffer actual size:32768 
+(bt_demux_stream_push_loop) Received piece (5) of size 32768 and actual size 32768 on file 0 
+(bt_demux_stream_push_loop) Reading next piece 81, current: 79 
+(bt_demux_stream_push_loop) Pushing buffer, actual size: 32768, file: 1, piece: (80) 
+(gst_pad_push_data) GST_PAD_IS_EOS 
+(gst_pad_push_data) pushing, but pad was EOS 
+(bt_demux_stream_push_loop)!!Failed Pushing buffer,actual size: 32768, file: 1, piece: (80)
+()ret = -3 
+(bt_demux_stream_push_loop) Sending EOS event on file 1, piece:80 
+(bt_demux_stream_push_loop) unlock (80)
+bt_demux_stream_push_loop, END 
+(bt_demux_stream_push_loop) Reading next piece 6, current: 4 
+(bt_demux_stream_push_loop) Pushing buffer, actual size: 32768, file: 0, piece: (5) 
+(gst_pad_push_data) GST_PAD_IS_EOS 
+(bt_demux_handle_alert) BEGIN recv read_piece_alert, piece idx:(81)
+(bt_demux_handle_alert) waiting lock 2; alert piece idx(81), stream->current_piece(5)
+(gst_pad_push_data) pushing, but pad was EOS 
+(bt_demux_stream_push_loop)!!Failed Pushing buffer,actual size: 32768, file: 0, piece: (5)
+()ret = -3 
+(bt_demux_stream_push_loop) Sending EOS event on file 0, piece:5 
+(bt_demux_stream_push_loop) unlock (5)
+bt_demux_stream_push_loop, END 
+(bt_demux_handle_alert) recovery lock 2; alert piece idx(81), stream->current_piece(5)
+(gst_bt_demux_handle_alert) judge whether this read piece belongs to this stream
+(bt_demux_handle_alert) waiting lock 2; alert piece idx(81), stream->current_piece(80)
+(bt_demux_handle_alert) recovery lock 2; alert piece idx(81), stream->current_piece(80)
+(bt_demux_handle_alert) in read_piece_alert, piece_idx on alert(aka ipc_data->piece)=(81), size=32768 
+(bt_demux_handle_alert) stream-idx(0) in read_piece_alert, gst_pad_start bt_demux_stream_push_loop 81 
+(bt_demux_handle_alert) unlock lock 2 ; alert piece idx(81), stream->current_piece(80)
+(bt_demux_handle_alert) BEGIN recv read_piece_alert, piece idx:(6)
+(bt_demux_handle_alert) waiting lock 2; alert piece idx(6), stream->current_piece(5)
+(bt_demux_handle_alert) recovery lock 2; alert piece idx(6), stream->current_piece(5)
+(bt_demux_handle_alert) in read_piece_alert, piece_idx on alert(aka ipc_data->piece)=(6), size=32768 
+(bt_demux_handle_alert) stream-idx(0) in read_piece_alert, gst_pad_start bt_demux_stream_push_loop 6 
+(bt_demux_stream_push_loop) FIRE src_01 [start piece idx:76, end piece idx:247] 
+(bt_demux_handle_alert) unlock lock 2 ; alert piece idx(6), stream->current_piece(5)
+(bt_demux_handle_alert) waiting lock 2; alert piece idx(6), stream->current_piece(80)
+(bt_demux_handle_alert) recovery lock 2; alert piece idx(6), stream->current_piece(80)
+(gst_bt_demux_handle_alert) judge whether this read piece belongs to this stream
+(bt_demux_stream_push_loop) waiting lock thiz->current_piece(80), ipc_data->piece(81)
+(bt_demux_stream_push_loop) recovery lock (80)
+(gst_bt_demux_buffer_new) thiz->start_piece=76, piece=81, this buffer actual size:32768 
+(bt_demux_stream_push_loop) Received piece (81) of size 32768 and actual size 32768 on file 1 
+(bt_demux_stream_push_loop) FIRE src_00 [start piece idx:0, end piece idx:76] 
+(bt_demux_stream_push_loop) Reading next piece 82, current: 80 
+(bt_demux_stream_push_loop) waiting lock thiz->current_piece(5), ipc_data->piece(6)
+(bt_demux_stream_push_loop) recovery lock (5)
+(gst_bt_demux_buffer_new) thiz->start_piece=0, piece=6, this buffer actual size:32768 
+(bt_demux_stream_push_loop) Received piece (6) of size 32768 and actual size 32768 on file 0 
+(bt_demux_stream_push_loop) Pushing buffer, actual size: 32768, file: 1, piece: (81) 
+(gst_pad_push_data) GST_PAD_IS_EOS 
+(gst_pad_push_data) pushing, but pad was EOS 
+(bt_demux_stream_push_loop)!!Failed Pushing buffer,actual size: 32768, file: 1, piece: (81)
+()ret = -3 
+(bt_demux_stream_push_loop) Sending EOS event on file 1, piece:81 
+(bt_demux_stream_push_loop) unlock (81)
+bt_demux_stream_push_loop, END 
+(bt_demux_stream_push_loop) Reading next piece 7, current: 5 
+(bt_demux_stream_push_loop) Pushing buffer, actual size: 32768, file: 0, piece: (6) 
+(gst_pad_push_data) GST_PAD_IS_EOS 
+(gst_pad_push_data) pushing, but pad was EOS 
+(bt_demux_stream_push_loop)!!Failed Pushing buffer,actual size: 32768, file: 0, piece: (6)
+()ret = -3 
+(bt_demux_stream_push_loop) Sending EOS event on file 0, piece:6 
+(bt_demux_stream_push_loop) unlock (6)
+bt_demux_stream_push_loop, END 
+(bt_demux_handle_alert) BEGIN recv read_piece_alert, piece idx:(82)
+(bt_demux_handle_alert) waiting lock 2; alert piece idx(82), stream->current_piece(6)
+(bt_demux_handle_alert) recovery lock 2; alert piece idx(82), stream->current_piece(6)
+(gst_bt_demux_handle_alert) judge whether this read piece belongs to this stream
+(bt_demux_handle_alert) waiting lock 2; alert piece idx(82), stream->current_piece(81)
+(bt_demux_handle_alert) recovery lock 2; alert piece idx(82), stream->current_piece(81)
+(bt_demux_handle_alert) in read_piece_alert, piece_idx on alert(aka ipc_data->piece)=(82), size=32768 
+(bt_demux_handle_alert) stream-idx(0) in read_piece_alert, gst_pad_start bt_demux_stream_push_loop 82 
+(bt_demux_handle_alert) unlock lock 2 ; alert piece idx(82), stream->current_piece(81)
+(bt_demux_handle_alert) BEGIN recv read_piece_alert, piece idx:(7)
+(bt_demux_handle_alert) waiting lock 2; alert piece idx(7), stream->current_piece(6)
+(bt_demux_handle_alert) recovery lock 2; alert piece idx(7), stream->current_piece(6)
+(bt_demux_handle_alert) in read_piece_alert, piece_idx on alert(aka ipc_data->piece)=(7), size=32768 
+(bt_demux_handle_alert) stream-idx(0) in read_piece_alert, gst_pad_start bt_demux_stream_push_loop 7 
+(bt_demux_handle_alert) unlock lock 2 ; alert piece idx(7), stream->current_piece(6)
+(bt_demux_handle_alert) waiting lock 2; alert piece idx(7), stream->current_piece(81)
+(bt_demux_handle_alert) recovery lock 2; alert piece idx(7), stream->current_piece(81)
+(gst_bt_demux_handle_alert) judge whether this read piece belongs to this stream
+(bt_demux_stream_push_loop) FIRE src_00 [start piece idx:0, end piece idx:76] 
+(bt_demux_stream_push_loop) FIRE src_01 [start piece idx:76, end piece idx:247] 
+(bvw_handle_element_message) src_name is:btdemux,type_name is:got-piece-block-info  
+gst_value_array_get_size = 2 
+(bvw) fname is Japan/ForBiggerBlazes.mp4
+(bvw) fpath is /home/pal/Documents/Japan/ForBiggerBlazes.mp4
+(btdemux-video-info) Key: 0, FileName: Japan/ForBiggerBlazes.mp4, FullPath: /home/pal/Documents/Japan/ForBiggerBlazes.mp4
+(bvw) fname is Japan/wwa.mp4
+(bvw) fpath is /home/pal/Documents/Japan/wwa.mp4
+(btdemux-video-info) Key: 1, FileName: Japan/wwa.mp4, FullPath: /home/pal/Documents/Japan/wwa.mp4
+(bacon_video_widget_retrieve_btdemux_video_info) Got it 
+(totem_got_torrent_videos_info) Loop item, Fidx: 0, FileName: Japan/ForBiggerBlazes.mp4, FullPath: /home/pal/Documents/Japan/ForBiggerBlazes.mp4
+(totem_playlist_add_one_row_impl) 0 Japan/ForBiggerBlazes.mp4 /home/pal/Documents/Japan/ForBiggerBlazes.mp4
+(totem_playlist_add_one_row_impl) use insert_with_values 
+(totem_got_torrent_videos_info) Loop item, Fidx: 1, FileName: Japan/wwa.mp4, FullPath: /home/pal/Documents/Japan/wwa.mp4
+(totem_playlist_add_one_row_impl) 1 Japan/wwa.mp4 /home/pal/Documents/Japan/wwa.mp4
+(totem_playlist_add_one_row_impl) use insert_with_values 
+(totem_got_torrent_videos_info) probe: len of playlist is 2
+(totem_object_set_current_fileidx_and_play) get current fileidx 1 from totem-playlist 
+totem_object_set_fileidx_and_play, file_index=1 
+totem_object_set_fileidx, file_idx=1 
+(bacon_video_widget_open) set cur_video_fileidx_within_tor to 1
+(bvw_reconfigure_ppi_timeout) 
+(btdemux/update_requested_stream) desired fileidx 1 
+(btdemux/update_requested_stream) stream-idx(0) disable undesired streams(src pads)
+(bt_demux_stream_push_loop) waiting lock thiz->current_piece(6), ipc_data->piece(7)
+(bt_demux_stream_push_loop) waiting lock thiz->current_piece(81), ipc_data->piece(82)
+(bt_demux_stream_push_loop) recovery lock (81)
+(gst_bt_demux_buffer_new) thiz->start_piece=76, piece=82, this buffer actual size:32768 
+(bt_demux_stream_push_loop) Received piece (82) of size 32768 and actual size 32768 on file 1 
+(bt_demux_stream_push_loop) Reading next piece 83, current: 81 
+(bt_demux_stream_push_loop) Pushing buffer, actual size: 32768, file: 1, piece: (82) 
+(gst_pad_push_data) GST_PAD_IS_EOS 
+(gst_pad_push_data) pushing, but pad was EOS 
+(bt_demux_stream_push_loop)!!Failed Pushing buffer,actual size: 32768, file: 1, piece: (82)
+()ret = -3 
+(bt_demux_stream_push_loop) Sending EOS event on file 1, piece:82 
+(bt_demux_stream_push_loop) unlock (82)
+bt_demux_stream_push_loop, END 
+(bt_demux_handle_alert) BEGIN recv read_piece_alert, piece idx:(83)
+(bt_demux_handle_alert) waiting lock 2; alert piece idx(83), stream->current_piece(6)
+^C
+pal@pal-desktop79:/media/pal/E/GnomeApp/totem-gstbt/install/bin$ 

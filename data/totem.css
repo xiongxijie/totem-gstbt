@@ -1,0 +1,9 @@
+#seek_popover {
+    background-color: rgba(0, 0, 0, 0.8);  /* Semi-transparent background */
+}
+
+#seek_popover_time_label {
+    font-size: 14px;  /* Adjust font size */
+    font-weight: bold;  /* Bold text */
+    color: #ffffff;  /* White text for better visibility */
+}

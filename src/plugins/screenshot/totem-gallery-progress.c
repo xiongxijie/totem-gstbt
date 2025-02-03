@@ -1,0 +1,209 @@
+/* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
+/*
+ * Copyright (C) 2006 William Jon McCann <mccann@jhu.edu>
+ * Copyright (C) 2008 Philip Withnall <philip@tecnocode.co.uk>
+ *
+ * SPDX-License-Identifier: GPL-3-or-later
+ *
+ */
+
+#include "config.h"
+
+#include <signal.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <glib.h>
+#include <gtk/gtk.h>
+#include <glib/gi18n-lib.h>
+#include <glib/gstdio.h>
+
+#include "totem-gallery-progress.h"
+
+static void totem_gallery_progress_finalize (GObject *object);
+static void dialog_response_callback (GtkDialog *dialog, gint response_id, TotemGalleryProgress *self);
+
+struct _TotemGalleryProgress {
+	GtkDialog parent;
+	GPid child_pid;
+	GString *line;
+	gchar *output_filename;
+
+	GtkProgressBar *progress_bar;
+};
+
+G_DEFINE_TYPE (TotemGalleryProgress, totem_gallery_progress, GTK_TYPE_DIALOG)
+
+static void
+totem_gallery_progress_class_init (TotemGalleryProgressClass *klass)
+{
+	GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
+
+	gobject_class->finalize = totem_gallery_progress_finalize;
+}
+
+static void
+totem_gallery_progress_init (TotemGalleryProgress *self)
+{
+}
+
+static void
+totem_gallery_progress_finalize (GObject *object)
+{
+	TotemGalleryProgress *progress = TOTEM_GALLERY_PROGRESS (object);
+
+	g_spawn_close_pid (progress->child_pid);
+	g_free (progress->output_filename);
+
+	if (progress->line != NULL)
+		g_string_free (progress->line, TRUE);
+
+	/* Chain up to the parent class */
+	G_OBJECT_CLASS (totem_gallery_progress_parent_class)->finalize (object);
+}
+
+TotemGalleryProgress *
+totem_gallery_progress_new (GPid child_pid, const gchar *output_filename)
+{
+	TotemGalleryProgress *self;
+	GtkWidget *container;
+	gchar *label_text;
+
+	/* Create the gallery */
+	self = g_object_new (TOTEM_TYPE_GALLERY_PROGRESS, NULL);
+
+	/* Create the widget and initialise class variables */
+	self->progress_bar = GTK_PROGRESS_BAR (gtk_progress_bar_new ());
+	self->child_pid = child_pid;
+	self->output_filename = g_strdup (output_filename);
+
+	/* Set up the window */
+	gtk_window_set_title (GTK_WINDOW (self), _("Creating Gallery…"));
+	gtk_window_set_resizable (GTK_WINDOW (self), FALSE);
+	gtk_dialog_add_button (GTK_DIALOG (self), _("_Cancel"), GTK_RESPONSE_CANCEL);
+	gtk_dialog_set_default_response (GTK_DIALOG (self), GTK_RESPONSE_CANCEL);
+
+	/* Set the progress label */
+	label_text = g_strdup_printf (_("Saving gallery as “%s”"), output_filename);
+	gtk_progress_bar_set_show_text (self->progress_bar, TRUE);
+	gtk_progress_bar_set_text (self->progress_bar, label_text);
+	g_free (label_text);
+
+	g_signal_connect (G_OBJECT (self), "response",
+			  G_CALLBACK (dialog_response_callback), self);
+
+	/* Assemble the window */
+	container = gtk_dialog_get_content_area (GTK_DIALOG (self));
+	gtk_box_pack_start (GTK_BOX (container), GTK_WIDGET (self->progress_bar), TRUE, TRUE, 5);
+
+	gtk_widget_show_all (container);
+
+	return self;
+}
+
+static void
+dialog_response_callback (GtkDialog *dialog, gint response_id, TotemGalleryProgress *self)
+{
+	if (response_id != GTK_RESPONSE_OK) {
+		/* Cancel the operation by killing the process */
+		kill (self->child_pid, SIGINT);
+
+		/* Unlink the output file, just in case (race condition) it's already been created */
+		g_unlink (self->output_filename);
+	}
+}
+
+static gboolean
+process_line (TotemGalleryProgress *self, const gchar *line)
+{
+	gfloat percent_complete;
+
+	if (sscanf (line, "%f%% complete", &percent_complete) == 1) {
+		gtk_progress_bar_set_fraction (self->progress_bar, percent_complete / 100.0);
+		return TRUE;
+	}
+
+	/* Error! */
+	return FALSE;
+}
+
+static gboolean
+stdout_watch_cb (GIOChannel *source, GIOCondition condition, TotemGalleryProgress *self)
+{
+	gboolean retval = TRUE;
+
+	if (condition & G_IO_IN) {
+		gchar *line;
+		gchar buf[1];
+		GIOStatus status;
+
+		status = g_io_channel_read_line (source, &line, NULL, NULL, NULL);
+
+		if (status == G_IO_STATUS_NORMAL) {
+			if (self->line != NULL) {
+				g_string_append (self->line, line);
+				g_free (line);
+				line = g_string_free (self->line, FALSE);
+				self->line = NULL;
+			}
+
+			retval = process_line (self, line);
+			g_free (line);
+		} else if (status == G_IO_STATUS_AGAIN) {
+			/* A non-terminated line was read, read the data into the buffer. */
+			status = g_io_channel_read_chars (source, buf, 1, NULL, NULL);
+
+			if (status == G_IO_STATUS_NORMAL) {
+				gchar *line2;
+
+				if (self->line == NULL)
+					self->line = g_string_new (NULL);
+				g_string_append_c (self->line, buf[0]);
+
+				switch (buf[0]) {
+				case '\n':
+				case '\r':
+				case '\xe2':
+				case '\0':
+					line2 = g_string_free (self->line, FALSE);
+					self->line = NULL;
+
+					retval = process_line (self, line2);
+					g_free (line2);
+					break;
+				default:
+					break;
+				}
+			}
+		} else if (status == G_IO_STATUS_EOF) {
+			/* Show as complete and stop processing */
+			gtk_progress_bar_set_fraction (self->progress_bar, 1.0);
+			retval = FALSE;
+		}
+	} else if (condition & G_IO_HUP) {
+		retval = FALSE;
+	}
+
+	if (retval == FALSE) {
+		/* We're done processing input, we now have an answer */
+		gtk_dialog_response (GTK_DIALOG (self), GTK_RESPONSE_OK);
+	}
+
+	return retval;
+}
+
+void
+totem_gallery_progress_run (TotemGalleryProgress *self, gint stdout_fd)
+{
+	GIOChannel *channel;
+
+	fcntl (stdout_fd, F_SETFL, O_NONBLOCK);
+
+	/* Watch the output from totem-video-thumbnailer */
+	channel = g_io_channel_unix_new (stdout_fd);
+	g_io_channel_set_flags (channel, g_io_channel_get_flags (channel) | G_IO_FLAG_NONBLOCK, NULL);
+
+	g_io_add_watch (channel, G_IO_IN | G_IO_HUP | G_IO_ERR | G_IO_NVAL, (GIOFunc) stdout_watch_cb, self);
+
+	g_io_channel_unref (channel);
+}
+

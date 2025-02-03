@@ -1,0 +1,2 @@
+option('with-plugins', type: 'combo', choices: ['all', 'none', 'auto'], value: 'auto', description: 'Which Totem plugins to compile (default: auto; "all", "none" and "auto" are valid)')
+option('profile', type: 'combo', choices: ['default', 'development'], value: 'default', description: 'Build profiles')

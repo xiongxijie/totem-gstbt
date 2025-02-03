@@ -1,0 +1,82 @@
+--BUILD
+meson _build --prefix=/media/pal/E/GnomeApp/totem-gstbt/install
+
+
+--CLEAR
+ninja -C _build -t clean
+
+
+--INSTALL
+ninja -C _build install
+
+
+//uninstall what insatlled
+sudo ninja -C build uninstall
+
+
+--show debug 
+export G_MESSAGES_DEBUG=Totem
+
+
+echo $LD_LIBRARY_PATH
+
+--not show debug
+unset  G_MESSAGES_DEBUG
+
+//use own-built Gstreamer installed in customize path, not system path(/usr/lib/....)
+
+//add gstreamer installed lib path  
+export LD_LIBRARY_PATH=/media/pal/E/FreeDsktop/gstreamer/install/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
+//also add gstreamer plugins intalled lib           path plugins (.so)
+export LD_LIBRARY_PATH=/media/pal/E/FreeDsktop/gstreamer/install/lib/x86_64-linux-gnu/gstreamer-1.0:$LD_LIBRARY_PATH
+
+//in install dir , must set libtotem.so path to our built one
+export LD_LIBRARY_PATH=/media/pal/E/GnomeApp/totem-gstbt/install/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
+
+//also export plugins path if you run totem only in _build dir
+export TOTEM_PLUGIN_DIR=/media/pal/E/GnomeApp/totem-before/_build/src/plugins
+
+
+
+
+
+//use your own built version of Grilo proj instead of the system-installed one, you can set the PKG_CONFIG_PATH environment variable to point to the directory containing your custom grilo-pls.pc file.
+export PKG_CONFIG_PATH=/media/pal/E/GnomeApp/grilo/install/lib/x86_64-linux-gnu/pkgconfig:$PKG_CONFIG_PATH
+export LD_LIBRARY_PATH=/media/pal/E/GnomeApp/grilo/install/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
+
+pkg-config --variable=libdir grilo-0.3
+
+
+
+
+--src -> qtdemux --> decodebin, play a local mp4 file
+gst-launch-1.0 filesrc location=~/Videos/Films/TWD_S5_Trailer.mp4 ! qtdemux name=demux demux.video_0 ! queue ! decodebin ! videoconvert ! autovideosink demux.audio_0 ! queue ! decodebin ! audioconvert ! autoaudiosink
+
+
+
+
+
+
+#before build
+//before run meson build gst-bt,  set pkg-config path for our own libtorrent-rasterbar
+export PKG_CONFIG_PATH=/media/pal/E/Documents/libtorrent-RC_2_0/install/lib/pkgconfig:$PKG_CONFIG_PATH
+//set pkg-config path for our own gstreamer
+export PKG_CONFIG_PATH=/media/pal/E/FreeDsktop/gstreamer/install/lib/x86_64-linux-gnu/pkgconfig:$PKG_CONFIG_PATH
+
+
+
+
+# --after build, install
+
+# our own libtotem.so
+export LD_LIBRARY_PATH=/media/pal/E/GnomeApp/totem-gstbt/install/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
+#our own gstreamer
+export GST_PLUGIN_PATH=/media/pal/E/FreeDsktop/gstreamer/install/lib/x86_64-linux-gnu/gstreamer-1.0:$GST_PLUGIN_PATH
+export LD_LIBRARY_PATH=/media/pal/E/FreeDsktop/gstreamer/install/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=/media/pal/E/FreeDsktop/gstreamer/install/lib/x86_64-linux-gnu/gstreamer-1.0:$LD_LIBRARY_PATH
+# our own libtorrent-rasterbar.so
+export LD_LIBRARY_PATH=/media/pal/E/Documents/libtorrent-RC_2_0/install/lib:$LD_LIBRARY_PATH
+
+export PKG_CONFIG_PATH=/media/pal/E/Documents/libtorrent-RC_2_0/install/lib/pkgconfig:$PKG_CONFIG_PATH
+
+gst-launch-1.0  filesrc location=/media/pal/E/FreeDsktop/gst-bt/install/lib/gstreamer-1.0/ForBiggerBlazes.mp4.torrent ! btdemux temp-location=/home/pal/Downloads ! decodebin name=dec ! queue ! autovideosink dec. ! queue ! audioconvert ! autoaudiosink

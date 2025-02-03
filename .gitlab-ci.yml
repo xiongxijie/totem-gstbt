@@ -1,0 +1,69 @@
+include: 'https://gitlab.gnome.org/GNOME/citemplates/raw/master/flatpak/flatpak_ci_initiative.yml'
+
+stages:
+- test
+- deploy
+
+variables:
+    # Replace with your preferred file name of the resulting Flatpak bundle
+    BUNDLE: "org.gnome.Totem.Devel.flatpak"
+    GIT_SUBMODULE_STRATEGY: normal
+    FEDORA_DEPS:
+      redhat-rpm-config
+      meson
+      git
+      cairo-devel
+      desktop-file-utils
+      gcc-c++
+      gettext
+      gnome-desktop3-devel
+      grilo-devel
+      gsettings-desktop-schemas-devel
+      gstreamer1-devel
+      gstreamer1-plugins-base-devel
+      gstreamer1-plugins-good
+      gstreamer1-plugins-good-gtk
+      gtk3-devel
+      gtk-doc
+      itstool
+      libappstream-glib
+      liberation-sans-fonts
+      libhandy-devel
+      libpeas-devel
+      pygobject3-devel
+      pylint
+      python3-devel
+      totem-pl-parser-devel
+      flatpak-builder
+      xorg-x11-server-Xvfb
+
+build-fedora:
+  image: fedora:38
+  stage: test
+  tags:
+    - crun
+  before_script:
+    - dnf update -y
+    - dnf install --setopt=install_weak_deps=False -y $FEDORA_DEPS
+  script:
+    - meson _build -Dhelp=true -Denable-gtk-doc=true -Denable-python=yes -Dprofile=default
+    - G_MESSAGES_DEBUG=all xvfb-run -a -s "-screen 0 1024x768x24" ninja -C _build test
+    - ninja -C _build install
+    - G_MESSAGES_DEBUG=all xvfb-run -a -s "-screen 0 1024x768x24" ninja -C _build dist
+  artifacts:
+    when: always
+    name: "totem-${CI_COMMIT_REF_NAME}"
+    paths:
+      - "${CI_PROJECT_DIR}/_build/meson-logs"
+      - "${CI_PROJECT_DIR}/_build/meson-dist"
+
+flatpak:master:
+    extends: .flatpak
+    stage: test
+    variables:
+        # Replace with your manifest path
+        MANIFEST_PATH: "flatpak/org.gnome.Totem.Devel.json"
+        RUNTIME_REPO: "https://nightly.gnome.org/gnome-nightly.flatpakrepo"
+        # Replace with your application name, as written in the manifest
+        FLATPAK_MODULE: "totem"
+        APP_ID: "org.gnome.Totem.Devel"

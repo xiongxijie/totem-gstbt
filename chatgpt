@@ -1,0 +1,75 @@
+
+
+sync problem in code,
+
+
+static gboolean
+gst_bt_demux_handle_alert (GstBtDemux * thiz, libtorrent::alert * a)
+{
+
+      // ....skipped
+
+  switch (a->type()) {
+case read_piece_alert::alert_type:
+    {
+
+=
+
+      /* ************read the piece once it is finished and send downstream in order */
+      for (walk = thiz->streams; walk; walk = g_slist_next (walk)) 
+      {
+        GstBtDemuxBufferData *ipc_data;
+        GstBtDemuxStream *stream = GST_BT_DEMUX_STREAM (walk->data);
+
+printf("(gst_bt_demux_handle_alert) waiting lock 2\n");
+        g_static_rec_mutex_lock (stream->lock);//***************************************************************************************************************
+printf("(gst_bt_demux_handle_alert) recovery lock 2\n");
+
+              //doing stuff here 
+
+
+              g_static_rec_mutex_unlock(stream->lock);
+      }
+      
+    }
+}
+
+
+
+
+
+static void
+gst_bt_demux_stream_seek (gpointer user_data)
+{
+
+// ......othe code skipped
+
+printf("(gst_bt_demux_stream_seek) waiting lock \n");
+  g_static_rec_mutex_lock (thiz->lock);//***************************************************************************************************
+printf("(gst_bt_demux_stream_seek) recovery lock \n");
+
+
+//doing stuff
+
+    g_static_rec_mutex_unlock(thiz->lock);
+
+}
+
+
+
+typedef struct _GstBtDemuxStream
+{
+  GstPad pad;
+......other field skipped
+
+  GStaticRecMutex *lock;
+
+} GstBtDemuxStream;
+
+the lock field in GstBtDemuxStream,
+
+
+
+the problem is `gst_bt_demux_handle_alert` and `gst_bt_demux_stream_seek` executed at different thread, when gst_bt_demux_handle_alert call `g_static_rec_mutex_lock`, 
+the `g_static_rec_mutex_lock` in gst_bt_demux_stream_seek will block until g_static_rec_mutex_unlock called in gst_bt_demux_handle_alert,this leadsd to some 
+thing i dont expect, i want this "when `gst_bt_demux_stream_seek` function called", it some mechanism to notify so that the `gst_bt_demux_handle_alert` will just return and no-op

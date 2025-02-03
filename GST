@@ -1,0 +1,66 @@
+PLUGINS
+
+in Totem player, bacon_video_widget
+playbin, scaletempo, gtkglsink, glsinkbin, autoaudiosink
+
+
+in gst-launch-1.0
+gsturidecodebin gstsouphttpsrc decodebin typefind autovideosink
+
+
+G_DEFINE_TYPE()
+totem_object_class_init (TotemObjectClass *klass)
+g_object_new()
+
+
+#define XXX_YYY              (xxx_yyy_get_type ())
+G_DECLARE_FINAL_TYPE(TotemPluginsEngine, totem_plugins_engine, TOTEM, PLUGINS_ENGINE, PeasEngine)
+
+
+COLLECTIONS:
+
+gst_element_factory_make()
+gst_element_seek()
+gst_bin_get_by_name()
+gst_caps_new_simple()
+gst_caps_unref()
+gst_sample_unref()
+gst_sample_get_caps()
+gst_caps_get_structure()
+gst_structure_get_int()
+gst_sample_get_buffer()
+gst_buffer_get_memory()
+gst_memory_map()
+gst_memory_unmap()
+gst_memory_unref()
+gst_tag_list_get_string_index()
+gst_tag_list_unref()
+g_signal_emit_by_name()
+g_object_set_data()
+g_object_get()
+gst_element_set_state()
+gst_element_query_duration()
+gst_element_get_bus()
+gst_bus_timed_pop_filtered()
+gst_message_unref()
+gst_object_unref()
+gst_element_state_get_name()
+gst_tag_list_get_sample_index()
+gst_structure_get_enum()
+gst_sample_ref()
+gst_buffer_map()
+gst_buffer_unmap()
+gst_message_parse_error()
+gst_message_get_structure()
+gst_element_query()
+gst_element_query_position()
+gst_element_post_message()
+gst_element_get_bus()
+g_signal_connect()
+g_object_set()
+gst_caps_copy()
+gst_structure_get_value()
+gst_structure_fixate_field_nearest_int()
+gst_event_new_seek()
+gst_element_send_event()
+gst_element_link_pads()
