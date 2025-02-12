@@ -105,13 +105,10 @@ typedef struct
 
 
 
-
-
 typedef struct _GstBtDemuxStream
 {
-  
-  GstPad pad;
 
+  GstPad pad;
 
   gchar *path;
 
@@ -125,8 +122,11 @@ typedef struct _GstBtDemuxStream
   gint file_idx;
 
   /*seeking segment range */
+  gint64 start_byte_global;
+  gint64 end_byte_global;
   gint64 start_byte;
   gint64 end_byte;
+
 
   /*pending segment flag*/
   gboolean pending_segment;
@@ -135,6 +135,9 @@ typedef struct _GstBtDemuxStream
   gboolean moov_after_mdat;
 
   gboolean requested;
+  gboolean added;
+
+  //what finished means?
   gboolean finished;
   gboolean buffering;
   gint buffering_level;
@@ -170,6 +173,7 @@ typedef struct _GstBtDemux
   gchar *temp_location;
   gboolean temp_remove;
 
+  //what finished means?
   gboolean finished;
   gboolean buffering;
   gint buffer_pieces;
@@ -189,7 +193,6 @@ typedef struct _GstBtDemux
   GStaticRecMutex task_lock;
 #endif
 
-  
   // gpointer ppi;
 
   gboolean completes_checking;

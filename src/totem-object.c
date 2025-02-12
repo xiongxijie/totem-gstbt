@@ -1299,8 +1299,7 @@ play_pause_set_label (TotemObject *totem, TotemStates state)
  **/
 void
 totem_object_play (TotemObject *totem)
-{
-					
+{			
 	g_autoptr(GError) err = NULL;
 	int retval;
 	g_autofree char *msg = NULL;
@@ -1313,9 +1312,10 @@ totem_object_play (TotemObject *totem)
 
 					printf("(totem_object_play) \n");
 
-
 	if (bacon_video_widget_is_playing (totem->bvw) != FALSE)
+	{
 		return;
+	}
 
 	retval = bacon_video_widget_play (totem->bvw,  &err);
 
@@ -1333,13 +1333,16 @@ totem_object_play (TotemObject *totem)
 		return;
 	}
 
-	// disp = totem_uri_escape_for_display (totem->mrl);
 	msg = g_strdup_printf(_("Videos could not play."));
 
 	totem_object_show_error (totem, msg, err->message);
 	bacon_video_widget_stop (totem->bvw);
 	play_pause_set_label (totem, STATE_STOPPED);
+
+	g_free (msg);
 }
+
+
 
 
 static void
@@ -1556,6 +1559,9 @@ totem_object_set_fullscreen (TotemObject *totem, gboolean state)
 static void
 totem_got_ppi_info (BaconVideoWidget *bvw, DownloadingBlocksSd* sd, TotemObject *totem)
 {
+
+			printf ("(totem_got_ppi_info) \n");
+
 	bitfield_scale_update_downloading_blocks (totem->seek, sd);
 
 	g_free (sd);
@@ -1680,7 +1686,7 @@ totem_got_torrent_videos_info (BaconVideoWidget* bvw ,TotemObject * totem)
 		int len = totem_playlist_get_last (totem->playlist) + 1;
 		printf ("(totem_got_torrent_videos_info) probe: len of playlist is %d\n", len);
 
-totem_playlist_set_next (totem->playlist);
+ totem_playlist_set_next (totem->playlist);
 
 		//********then we can set fileidx from playlist and play it
 		//if has two videos, get the second; if single video, play it
@@ -1819,10 +1825,14 @@ set_controls_visibility (TotemObject      *totem,
 {
 	gtk_widget_set_visible (GTK_WIDGET (gtk_builder_get_object (totem->xml, "toolbar")), visible);
 	if (totem->controls_visibility == TOTEM_CONTROLS_FULLSCREEN)
+	{
 		hdy_flap_set_reveal_flap (HDY_FLAP (totem->flap), visible);
+	}
 	bacon_video_widget_set_show_cursor (totem->bvw, visible);
 	if (visible && animate)
+	{
 		schedule_hiding_popup (totem);
+	}
 	totem->reveal_controls = visible;
 }
 
@@ -1895,6 +1905,8 @@ totem_object_set_fileidx (TotemObject *totem, gint file_index)
 	//when switch to another item in playlist, we should close the current one
 	if (totem->streaming_file_idx != -1) 
 	{
+									printf("(totem_object_set_fileidx, file_idx=%d) closing the current stream first \n", file_index);
+
 		totem->pause_start = FALSE;
 		bacon_video_widget_close (totem->bvw);
 		emit_file_closed (totem);
@@ -2023,7 +2035,7 @@ totem_object_direction (TotemObject *totem, TotemPlaylistDirection dir)
 	} 
 	else
 	{
-		// dont perform switch to another fileidx in playlist, just seek to the very beginning of the current movie
+		// don't perform switch to another fileidx in playlist, just seek to the very beginning of the current movie
 		totem_object_seek (totem, 0);
 	}
 }
@@ -2900,47 +2912,74 @@ on_video_button_press_event (BaconVideoWidget *bvw, GdkEventButton *event, Totem
 gboolean
 on_eos_event (GtkWidget *widget, TotemObject *totem)
 {
+	
 	gint fidx = -1;
-								printf("(totem-object/on_eos_event) \n");
 
 	reset_seek_status (totem);
 
-	if (totem_playlist_has_next_item (totem->playlist) == FALSE &&
+
+	//***For current stream is Last item in playlist
+	if (
+		//if it's last item of playlist, `totem_playlist_has_next_item` return FALSE
+		totem_playlist_has_next_item (totem->playlist) == FALSE &&
+	    //playlist repeat mode is OFF
 	    totem_playlist_get_repeat (totem->playlist) == FALSE &&
+		//There is more then one item in playlist OR current stream is NOT seekable
 	    (totem_playlist_get_last (totem->playlist) != 0 ||
-		totem_object_is_seekable (totem) == FALSE))
+		totem_object_is_seekable (totem) == FALSE)
+	)
 	{
+								printf("(totem-object/on_eos_event) FIRST\n");
+
 		//go back to start of playlist end pause
 		totem_playlist_set_at_start (totem->playlist);
 		update_buttons (totem);
 		bacon_video_widget_stop (totem->bvw);
 		play_pause_set_label (totem, STATE_STOPPED);
 
+		//such as when playing last item in playlist, when reach eos, it will start back at the first item in playlist and pause
 		fidx = totem_playlist_get_current_fileidx (totem->playlist);
+								printf("(totem-object/on_eos_event) get current fileidx:%d and set it \n", fidx);
 		if(fidx != -1)		
 		{
 			totem_object_set_fileidx (totem, fidx);
 		}
+								printf("(totem-object/on_eos_event) gonna  call bacon_video_widget_pause \n");
 		bacon_video_widget_pause (totem->bvw);
 	} 
+	//***For current stream is Non-Last item in playlist, will transition to next
 	else 
 	{
+								printf("(totem-object/on_eos_event) SECOND\n");
+		//***For playlist has only single item Case
 		if (totem_playlist_get_last (totem->playlist) == 0 &&
 		    totem_object_is_seekable (totem)) 
 		{
 			if (totem_playlist_get_repeat (totem->playlist) != FALSE) 
 			{
+
+						printf ("(totem-object/on_eos_event) single item in playlist, Repeat-mode is ON \n");
+
+				//play from start
 				totem_object_seek_time (totem, 0, FALSE);
 				totem_object_play (totem);
 			} 
 			else 
 			{
+
+						printf ("(totem-object/on_eos_event) single item in playlist, Repeat-mode is OFF \n");
+
+				//pause at start
 				totem_object_pause (totem);
 				totem_object_seek_time (totem, 0, FALSE);
 			}
 		} 
+		//***For playlist has multiple items Case
 		else 
 		{
+
+						printf ("(totem-object/on_eos_event) since playlist has multiple items, so seek next item\n");
+
 			totem_object_seek_next (totem);
 		}
 	}

@@ -13,7 +13,7 @@
 </object>
 
 <menu id="appmenu">
-	<section id="python-console-placeholder"/>
+	<!-- <section id="python-console-placeholder"/> -->
 	<section>
 		<item>
 			<attribute name="label" translatable="yes">Prefere_nces</attribute>
@@ -145,7 +145,7 @@
               <object class="TotemPlayerToolbar" id="player_header">
                 <property name="visible">True</property>
                 <property name="player-menu-model">playermenu</property>
-                <!-- <signal name="back-clicked" handler="back_button_clicked_cb"/> -->
+              
               </object>
             </child>
             <child>

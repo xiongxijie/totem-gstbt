@@ -605,7 +605,9 @@ totem_playlist_has_previous_item (TotemPlaylist *playlist)
 	g_return_val_if_fail (TOTEM_IS_PLAYLIST (playlist), FALSE);
 
 	if (update_current_from_playlist (playlist) == FALSE)
+	{
 		return FALSE;
+	}
 
 	/**
 	 * gtk_tree_model_get_iter:
@@ -628,6 +630,8 @@ totem_playlist_has_previous_item (TotemPlaylist *playlist)
 	return gtk_tree_model_iter_previous (playlist->model, &iter);
 }
 
+
+
 gboolean
 totem_playlist_has_next_item (TotemPlaylist *playlist)
 {
@@ -636,7 +640,9 @@ totem_playlist_has_next_item (TotemPlaylist *playlist)
 	g_return_val_if_fail (TOTEM_IS_PLAYLIST (playlist), FALSE);
 
 	if (update_current_from_playlist (playlist) == FALSE)
+	{
 		return FALSE;
+	}
 
 	/**
 	 * gtk_tree_model_get_iter:

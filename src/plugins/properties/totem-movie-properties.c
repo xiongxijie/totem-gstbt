@@ -257,6 +257,7 @@ totem_movie_properties_plugin_metadata_updated (TotemObject *totem,
 	GtkWidget *bvw;
 
 	bvw = totem_object_get_video_widget (totem);
+	
 	update_properties_from_bvw
 		(BACON_VIDEO_WIDGET_PROPERTIES (plugin->props), bvw);
 
