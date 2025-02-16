@@ -215,6 +215,9 @@ struct _BaconVideoWidget
   GstTagList                  *tagcache;
   GstTagList                  *audiotags;
   GstTagList                  *videotags;
+  GMutex                       get_audiotags_mutex;
+  GMutex                       get_videotags_mutex;
+
 
   GAsyncQueue                 *tag_update_queue;
   guint                        tag_update_id;
@@ -418,11 +421,6 @@ update_cursor (BaconVideoWidget *bvw)
   GdkWindow *window;
 
   window = gtk_widget_get_window (GTK_WIDGET (bvw));
-  if(window)
-  {
-      printf ("(update_cursor) gtk_widget_get_window\n");
-  }
-
 
   if (!gtk_window_is_active (bvw->parent_toplevel)) 
   {
@@ -440,8 +438,6 @@ update_cursor (BaconVideoWidget *bvw)
 static void
 bacon_video_widget_realize (GtkWidget * widget)
 {
-
-      printf ("(bacon_video_widget_realize) \n");
   BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
   GdkWindow *window = NULL;
   //// GdkDisplay *display;
@@ -449,37 +445,24 @@ bacon_video_widget_realize (GtkWidget * widget)
   GTK_WIDGET_CLASS (parent_class)->realize (widget);
 
 
-  if (gtk_widget_get_realized(widget))
+  if (gtk_widget_get_realized (widget))
   {
     window = gtk_widget_get_window (widget);
-      if(window)
-      {
-          printf ("(bacon_video_widget_realize) In Realize, get window success\n");
-      }
   }
-
-  //// display = gdk_window_get_display (window);
 
 
   bvw->parent_toplevel = GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (bvw)));
-  if (GTK_IS_WINDOW (bvw->parent_toplevel)) {
-      printf ("(bacon_video_widget_realize) gtk_widget_get_toplevel ok\n");
-  } else {
-      printf ("(bacon_video_widget_realize) gtk_widget_get_toplevel fail\n");
-  }
-
 
   g_signal_connect_swapped (G_OBJECT (bvw->parent_toplevel), "notify::is-active",
 			    G_CALLBACK (update_cursor), bvw);
 
-
 }
+
 
 static void
 bacon_video_widget_unrealize (GtkWidget *widget)
 {
-      printf ("(bacon_video_widget_unrealize) \n");
-
+  
   BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
 
   GTK_WIDGET_CLASS (parent_class)->unrealize (widget);
@@ -488,9 +471,9 @@ bacon_video_widget_unrealize (GtkWidget *widget)
     g_signal_handlers_disconnect_by_func (bvw->parent_toplevel, update_cursor, bvw);
     bvw->parent_toplevel = NULL;
   }
-  //// g_clear_object (&bvw->blank_cursor);
-  //// g_clear_object (&bvw->hand_cursor);
+
 }
+
 
 static void
 set_current_actor (BaconVideoWidget *bvw)
@@ -999,6 +982,8 @@ bvw_update_stream_info (BaconVideoWidget *bvw)
 
   parse_stream_info (bvw);
 
+printf ("(bvw_update_stream_info) emit got-metadata \n");
+
   g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0, NULL);
 
 }
@@ -1476,6 +1461,8 @@ bvw_update_tags (BaconVideoWidget * bvw, GstTagList *tag_list, const gchar *type
     // notify others, so notify::tags callback called  for both audio tags and video tags
     g_object_notify (G_OBJECT (bvw), property_name_str);
   }
+
+printf ("(bvw_update_tags) emit got-metadata \n");
 
   g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0);
 
@@ -2210,11 +2197,16 @@ bacon_video_widget_finalize (GObject * object)
   }
 
 
-
   g_mutex_clear (&bvw->seek_mutex);
+  g_mutex_clear (&bvw->get_audiotags_mutex);
+  g_mutex_clear (&bvw->get_videotags_mutex);
+  
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
+
 }
+
+
 
 
 
@@ -2266,15 +2258,15 @@ bacon_video_widget_get_property (GObject * object, guint property_id,
   bvw = BACON_VIDEO_WIDGET (object);
 
   switch (property_id) {
-    // case PROP_POSITION:
-    //   g_value_set_double (value, bacon_video_widget_get_position (bvw));
-    //   break;
-    // case PROP_STREAM_LENGTH:
-    //   g_value_set_int64 (value, bacon_video_widget_get_stream_length (bvw));
-    //   break;
-    // case PROP_PLAYING:
-    //   g_value_set_boolean (value, bacon_video_widget_is_playing (bvw));
-    //   break;
+    case PROP_POSITION:
+      g_value_set_double (value, bacon_video_widget_get_position (bvw));
+      break;
+    case PROP_STREAM_LENGTH:
+      g_value_set_int64 (value, bacon_video_widget_get_stream_length (bvw));
+      break;
+    case PROP_PLAYING:
+      g_value_set_boolean (value, bacon_video_widget_is_playing (bvw));
+      break;
     case PROP_SEEKABLE:
       g_value_set_boolean (value, bacon_video_widget_is_seekable (bvw));
       break;
@@ -2302,16 +2294,24 @@ bacon_video_widget_get_property (GObject * object, guint property_id,
     case PROP_SHOW_CURSOR:
       g_value_set_boolean (value, bvw->cursor_shown);
       break;
-    case PROP_CUR_AUDIO_TAGS:
-      // G_OBJECT_LOCK (object);
+    case PROP_CUR_AUDIO_TAGS: 
+    {
+          printf ("(bacon_video_widget_get_property) PROP_CUR_AUDIO_TAGS Locking\n");
+      g_mutex_lock (&bvw->get_audiotags_mutex);
       g_value_set_boxed (value, bvw->audiotags);
-      // G_OBJECT_UNLOCK (object);
+          printf ("(bacon_video_widget_get_property) PROP_CUR_AUDIO_TAGS UnLocking\n");
+      g_mutex_unlock (&bvw->get_audiotags_mutex);
       break;
+    }
     case PROP_CUR_VIDEO_TAGS:
-      // GST_OBJECT_LOCK (object);
+    {
+          printf ("(bacon_video_widget_get_property) PROP_CUR_VIDEO_TAGS Locking\n");
+      g_mutex_lock (&bvw->get_videotags_mutex);
       g_value_set_boxed (value, bvw->videotags);
-      // GST_OBJECT_UNLOCK (object);
+          printf ("(bacon_video_widget_get_property) PROP_CUR_VIDEO_TAGS UnLocking\n");
+      g_mutex_unlock (&bvw->get_videotags_mutex);
       break;
+    }
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -2428,6 +2428,7 @@ set_audio_filter (BaconVideoWidget *bvw)
   gst_object_unref (pad);
   
   caps = gst_pad_get_current_caps (peer_pad);
+
       if(caps == NULL)
       {
         printf("(bvw/set_audio_filter) caps is NULL \n");
@@ -2439,8 +2440,10 @@ set_audio_filter (BaconVideoWidget *bvw)
           printf("(set_audio_filter): Pad capabilities: %s\n", caps_str);
           g_free(caps_str);
       }
-  if(peer_pad)
+
+  if(peer_pad){
     gst_object_unref (peer_pad);
+  }
 
   if ((channels = get_num_audio_channels (bvw)) == -1)
   {
@@ -3695,9 +3698,12 @@ bvw_get_current_stream_num (BaconVideoWidget * bvw,
       stream_num = bvw->video_channels ? bvw->video_channels->len : 0;
   }
 
+
   // GST_LOG ("current %s stream: %d", stream_type, stream_num);
   return stream_num;
+
 }
+
 
 
 //stream_type - "video" or "audio"
@@ -3710,6 +3716,7 @@ bvw_get_tags_of_current_stream (BaconVideoWidget * bvw,
   GstPad *pad;
 
   stream_num = bvw_get_current_stream_num (bvw, stream_type);
+
   if (stream_num < 0)
   {
     return NULL;
@@ -3718,7 +3725,7 @@ bvw_get_tags_of_current_stream (BaconVideoWidget * bvw,
   //get tags
   if(stream_type == "audio")
   {
-     g_object_get (bvw, "cur-audio-tags", &tags, NULL);
+      g_object_get (bvw, "cur-audio-tags", &tags, NULL);
   }
   else if (stream_type == "video")
   {
@@ -3728,6 +3735,8 @@ bvw_get_tags_of_current_stream (BaconVideoWidget * bvw,
   GST_LOG ("current %s stream tags %" GST_PTR_FORMAT, stream_type, tags);
   return tags;
 }
+
+
 
 
 static GstCaps *
@@ -3744,19 +3753,24 @@ bvw_get_caps_of_current_stream (BaconVideoWidget * bvw,
     return NULL;
   }
 
+  //index is num minue one
   if(stream_type == "audio")
   {
-    current =  g_ptr_array_index (bvw->audio_channels, stream_num);
+    current =  g_ptr_array_index (bvw->audio_channels, stream_num-1);
   }
   else if (stream_type == "video")
   {
-    current =  g_ptr_array_index (bvw->video_channels, stream_num);
+    current =  g_ptr_array_index (bvw->video_channels, stream_num-1);
   }
 
   if (current != NULL) 
   {
     // Returns: (transfer full) (nullable)
     caps = gst_pad_get_current_caps (current);
+        printf ("(bvw_get_caps_of_current_stream) Get caps ok  %d %d %d\n",stream_num, bvw->audio_channels->len,bvw->video_channels->len);
+  }else
+  {
+        printf ("(bvw_get_caps_of_current_stream) Failed get pad from channels %d %d %d\n",stream_num, bvw->audio_channels->len,bvw->video_channels->len);
   }
 
   // GST_LOG ("current %s stream caps: %" GST_PTR_FORMAT, stream_type, caps);
@@ -3908,6 +3922,7 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget * bvw,
       caps = bvw_get_caps_of_current_stream (bvw, "audio");
       if (caps) 
       {
+              printf ("(bvw_get_metadata_string) Ok to get BVW_INFO_AUDIO_CHANNELS\n");
         gint channels = 0;
 
         s = gst_caps_get_structure (caps, 0);
@@ -3924,6 +3939,9 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget * bvw,
           }
         }
         gst_caps_unref (caps);
+      }else{
+              printf ("(bvw_get_metadata_string) Failed to get BVW_INFO_AUDIO_CHANNELS\n");
+
       }
       break;
     }
@@ -4019,9 +4037,13 @@ bacon_video_widget_get_metadata_int (BaconVideoWidget * bvw,
 
       caps = bvw_get_caps_of_current_stream (bvw, "audio");
       if (caps) {
+              printf ("(bvw_get_metadata_int) Ok to get BVW_INFO_AUDIO_SAMPLE_RATE\n");
+
         s = gst_caps_get_structure (caps, 0);
         gst_structure_get_int (s, "rate", &integer);
         gst_caps_unref (caps);
+      }else {
+              printf ("(bvw_get_metadata_int) Failed to get BVW_INFO_AUDIO_SAMPLE_RATE\n");
       }
       break;
     }
@@ -4491,7 +4513,7 @@ on_pad_removed (GstElement *element, GstPad *pad, BaconVideoWidget *bvw)
 
     GstStructure *structure;
     const gchar *media_type;
-    gulong notify_tags_handler;
+    gulong notify_tags_handler = 0;
 
     //caps is empty ,cant use it to distinguish audio or video
     const gchar *pad_type = gst_pad_get_element_private (pad);  // Retrieve stored type
@@ -4513,21 +4535,27 @@ on_pad_removed (GstElement *element, GstPad *pad, BaconVideoWidget *bvw)
               goto beach;
           }
 
-          if (sink_pad && gst_pad_is_linked (bvw->audio_sinpad_decodebin)) {
+          if (sink_pad && gst_pad_is_linked (bvw->audio_sinpad_decodebin)) 
+          {
             if (gst_pad_unlink (pad, sink_pad)){
                 printf ("(bvw/on_pad_removed for decodebin) unlink audio srcpad with audio_bin success \n");
-                gst_object_unref (g_ptr_array_index (bvw->audio_channels, x));
-                printf ("Removed decodebin's Audio pad from audio_channels\n");
-                g_ptr_array_remove (bvw->audio_channels, pad);
-            }
-            else{
+            } else {
                 printf ("(bvw/on_pad_removed for decodebin) unlink audio srcpad with audio_bin failed \n");
             }
           }
           else
           {
-                printf ("(bvw/on_pad_removed for decodebin) audio_bin sinkpad is not linked with any pad, no need to unlink \n");
+            printf ("(bvw/on_pad_removed for decodebin) audio_bin sinkpad is not linked with any pad, no need to unlink \n");
           }
+
+
+          gst_object_unref (g_ptr_array_index (bvw->audio_channels, x));
+          if (g_ptr_array_remove (bvw->audio_channels, pad)){
+            printf ("Removed decodebin's Audio pad from audio_channels, len after remove is %d\n",bvw->audio_channels->len);
+          }else{
+            printf ("Failed Removing decodebin's Audio pad from audio_channels\n");
+          }
+    
 
         }
     }
@@ -4538,7 +4566,6 @@ on_pad_removed (GstElement *element, GstPad *pad, BaconVideoWidget *bvw)
       {
         printf ("(bvw/on_pad_removed) existed in video channels at %d\n", x);
       
-
         //unlinking pad
         sink_pad = bvw->video_sinpad_decodebin;
         if (!sink_pad) {
@@ -4546,12 +4573,10 @@ on_pad_removed (GstElement *element, GstPad *pad, BaconVideoWidget *bvw)
             goto beach;
         }
 
-        if (sink_pad && gst_pad_is_linked (bvw->video_sinpad_decodebin)) {
+        if (sink_pad && gst_pad_is_linked (bvw->video_sinpad_decodebin)) 
+        {
             if (gst_pad_unlink (pad, sink_pad)){
                 printf ("(bvw/on_pad_removed for decodebin) unlink video srcpad with glsinkbin success \n");
-                gst_object_unref (g_ptr_array_index (bvw->video_channels, x));
-                printf ("Removed decodebin's Video pad from video_channels\n");
-                g_ptr_array_remove (bvw->video_channels, pad);
             }
             else{
                 printf ("(bvw/on_pad_removed for decodebin) unlink video srcpad with glsinkbin failed \n");
@@ -4559,7 +4584,14 @@ on_pad_removed (GstElement *element, GstPad *pad, BaconVideoWidget *bvw)
         }
         else
         {
-                printf ("(bvw/on_pad_removed for decodebin)  glsinkbin sinkpad is not linked with any pad, no need to unlink \n");
+            printf ("(bvw/on_pad_removed for decodebin)  glsinkbin sinkpad is not linked with any pad, no need to unlink \n");
+        }
+
+        gst_object_unref (g_ptr_array_index (bvw->video_channels, x));
+        if(g_ptr_array_remove (bvw->video_channels, pad)){
+          printf ("Removed decodebin's Video pad from video_channels, len after remove is %d\n",bvw->video_channels->len);
+        }else{
+          printf ("Failed Removing decodebin's Video pad from video_channels\n");
         }
 
       }
@@ -4567,6 +4599,7 @@ on_pad_removed (GstElement *element, GstPad *pad, BaconVideoWidget *bvw)
     else
     {
       printf ("(bvw/on_pad_removed for decodebin) %s not found \n", pad_type);
+      goto beach;
     }
 
     notify_tags_handler =
@@ -4581,7 +4614,6 @@ on_pad_removed (GstElement *element, GstPad *pad, BaconVideoWidget *bvw)
 
 
 beach:
-
 ;
 
 }
@@ -4663,6 +4695,7 @@ on_pad_added (GstElement *element, GstPad *pad, BaconVideoWidget *bvw)
           gst_pad_set_event_function (bvw->audio_sinpad_decodebin,
               GST_DEBUG_FUNCPTR (bvw_decodebin_audio_outpad_event));
       }
+
 
       //***cache the decodebiin's audio ouutput pad for later use
       g_ptr_array_add(bvw->audio_channels, gst_object_ref (pad));
@@ -4751,7 +4784,6 @@ beach:
 
 
 
-
 //Callback once `gst_element_add_pad` called 
 // Callback function for pad-added signal from btdemux (to handle dynamic src pad)
 // dont send stream-start event once you got an srcpadd on btdemux added, totem-playlsit choose the desired fileidx,
@@ -4772,8 +4804,7 @@ on_btdemux_pad_added (GstElement *element, GstPad *pad, BaconVideoWidget *bvw)
           //only link when we already set fileidx desired
          if (bvw->cur_video_fileidx_within_tor != -1)
          {
-
-            //before link, check whether there are existing link ,if any, unlink it
+            //before linking, check whether there are existing link ,if any, unlink it
             if (gst_pad_is_linked (decodebin_sink_pad)
                 && bvw->btdemux_srcpads->len > 0)
             {
@@ -4786,8 +4817,15 @@ on_btdemux_pad_added (GstElement *element, GstPad *pad, BaconVideoWidget *bvw)
               }
             }
 
+
             //and then link the new pad to gstdecodebin2
             GstPadLinkReturn ret = gst_pad_link (pad, decodebin_sink_pad);
+
+    
+                          int is_flushing = (int) GST_PAD_IS_FLUSHING (decodebin_sink_pad);
+                          printf ("(on_btdemux_pad_added) the decodebin_sink_pad is_flushing:%d \n", is_flushing);
+
+
             if (ret != GST_PAD_LINK_OK) 
             {
                 printf ("(on_btdemux_pad_added) Failed to link btdemux src pad (%s) to decodebin sink pad, ret(%d)\n", pad_name, (int)ret);
@@ -4841,6 +4879,26 @@ on_btdemux_pad_added (GstElement *element, GstPad *pad, BaconVideoWidget *bvw)
                       bvw->stream_id_seq++;
                       printf ("(on_btdemux_pad_added) Stream-start event pushed on pad '%s'\n", pad_name);
                   }
+
+
+                              // // g_object_set (dec_elem, "sink-caps", caps, NULL);
+                              // gboolean caps_set = gst_pad_has_current_caps (pad);
+                              // if (caps_set) {
+                              //   GstCaps* format = gst_pad_get_current_caps (pad);
+                              //   if (format) {
+                              //     gchar* capstr = gst_caps_to_string (format);
+                              //     printf ("(on_btdemux_pad_added) Got caps set on pad is %s",capstr);
+                              //     g_free (capstr);
+                              //     gst_object_unref (format);
+                              //   } else {
+                              //     printf ("(on_btdemux_pad_added) Failed Got caps set on pad\n");
+                              //   }
+                              // }else{
+                              //     printf ("(on_btdemux_pad_added) No caps set on pad\n");
+                              // }
+
+
+
 
                 }
 
@@ -4965,8 +5023,8 @@ bacon_video_widget_init (BaconVideoWidget *bvw)
         
   GstElement *audio_sink = NULL;
   gchar *version_str;
-  GstPlayFlags flags;
-  // GstElement *glsinkbin, *audio_bin;
+
+
   GstPad *audio_convert_pad;
   char *template;
 
@@ -4979,7 +5037,13 @@ bacon_video_widget_init (BaconVideoWidget *bvw)
   bvw->volume = -1.0;
   bvw->rate = FORWARD_RATE;
   bvw->tag_update_queue = g_async_queue_new_full ((GDestroyNotify) update_tags_delayed_data_destroy);
+
+
   g_mutex_init (&bvw->seek_mutex);
+  g_mutex_init (&bvw->get_audiotags_mutex);
+  g_mutex_init (&bvw->get_videotags_mutex);
+
+
   bvw->clock = gst_system_clock_obtain ();
   bvw->seek_req_time = GST_CLOCK_TIME_NONE;
   bvw->seek_time = -1;

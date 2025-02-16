@@ -1068,7 +1068,7 @@ totem_file_has_played (TotemObject *totem, gint fileidx)
  *
  * Emits the #TotemObject::metadata-updated signal on @totem,
  * with the specified stream data.
- * First get metadata can also be count as metada update
+ * First get metadata can also be count as metadata update
  **/
 static void
 emit_metadata_updated (TotemObject *totem,
@@ -1706,6 +1706,7 @@ cleanup:
 		// g_list_free_full (videos_info, (GDestroyNotify) g_hash_table_destroy);
 	printf ("(totem_got_torrent_videos_info) gotta free the GList* \n");
 		free_res_list ( videos_info );
+	return;
 
 beach:
 		printf("(totem_got_torrent_videos_info) EMPTY \n");
@@ -1742,6 +1743,8 @@ totem_get_nice_name_for_stream (TotemObject *totem)
 
 	tracknum = g_value_get_int (&value);			
 	g_value_unset (&value);
+
+							printf ("(totem_get_nice_name_for_stream) emit_metadata_updated \n");
 
 	emit_metadata_updated (totem,
 	                       g_value_get_string (&artist_value),

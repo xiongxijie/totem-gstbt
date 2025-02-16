@@ -31,7 +31,6 @@
 #include "gst_bt.h"
 #include "gst_bt_demux.hpp"
 #include <gst/base/gsttypefindhelper.h>
-
 #include <glib/gstdio.h>
 
 #include <iterator>
@@ -319,7 +318,6 @@ gst_bt_demux_stream_push_loop (gpointer user_data)
 
 
 
-
   if (demux->finished) 
   {
                                 printf("(bt_demux_stream_push_loop) %s demux->finished, so return\n", GST_PAD_NAME (thiz));
@@ -339,12 +337,51 @@ gst_bt_demux_stream_push_loop (gpointer user_data)
   }
 
 
-  //----PUSH in read_piece_alert in btdemux_handle_alerts, POP out here
+        gboolean have_type_emitted = FALSE;
+        gboolean need_re_push = FALSE;
+        // the peer pad of our btdemux src pad is 
+        // gstdecodebin2's static sink pad which is ghost pad to gsttypefindelement
+        GstPad* peerpad = gst_pad_get_peer (GST_PAD (thiz));
+        if (peerpad && GST_IS_GHOST_PAD (peerpad))
+        {
+            GstPad* internal_pad = gst_ghost_pad_get_target (GST_GHOST_PAD (peerpad));
+            if (!internal_pad) {
+                printf ("(bt_demux_stream_push_loop) decodebin ghost sink pad Has no target yet, return\n");
+              return;
+            } else {
+
+                printf ("(bt_demux_stream_push_loop) decodebin ghost sink pad is ok to have target\n");
+
+                GstObject* parent = gst_pad_get_parent (internal_pad);
+                if (parent) {
+                  g_object_get (G_OBJECT (parent), "have-type-emitted", &have_type_emitted, NULL);
+                  if (FALSE == have_type_emitted){
+                    printf ("(bt_demux_stream_push_loop) have_type not emitted yet\n");
+                  } else {
+                    printf ("(bt_demux_stream_push_loop) have_type emitted, proceeding \n");
+                  }
+                  gst_object_unref (parent);
+                } else {
+                  printf ("(bt_demux_stream_push_loop) parent is NULL \n");
+                } 
+                gst_object_unref (internal_pad);
+            }
+
+          gst_object_unref (peerpad);
+          
+        } else if (peerpad && !GST_IS_GHOST_PAD (peerpad)) {
+          printf ("(bt_demux_stream_push_loop) peer pad is not Ghost pad\n");
+          gst_object_unref (peerpad);
+        }
+
+
+  //----Pushed in read_piece_alert in btdemux_handle_alerts, POP out here
   // If thiz->ipc (gasyncqueue) is empty, `g_async_queue_pop` blocks until data becomes available
   ipc_data = (GstBtDemuxBufferData *) g_async_queue_pop (thiz->ipc);
   if (!ipc_data) 
   {
                           printf("(bt_demux_stream_push_loop) !ipc_data, so return\n");
+
     gst_pad_pause_task (GST_PAD (thiz));
     return;
   }
@@ -419,42 +456,6 @@ printf("(bt_demux_stream_push_loop) recovery lock (%d)\n", thiz->current_piece);
                                       printf("(bt_demux_stream_push_loop) Received piece (%d) of size %d and actual size %d on file %d \n", ipc_data->piece, ipc_data->size, buf_size,thiz->file_idx);
 
 
-  //----ADD PIECES
-  /* read the next piece, make sure not exceeds `end_piece` */
-  if (ipc_data->piece + 1 <= thiz->end_piece) 
-  {
-      // the next piece has been completely downloaded and written to disk
-      if (h.have_piece (ipc_data->piece + 1)) 
-      {
-        GST_DEBUG_OBJECT (thiz, "Reading next piece %d, current: %d",
-            ipc_data->piece + 1, thiz->current_piece);
-
-                                        printf("(bt_demux_stream_push_loop) Reading next piece %d, current: %d \n", ipc_data->piece + 1, thiz->current_piece);
-
-        //**fire the read on start_piece, the rest will follow automatically, like a chain reaction, or domino effect
-        h.read_piece (ipc_data->piece + 1);
-      } 
-      // if we do not hold the next piece we want, we need to buffering
-      else 
-      {
-        int i;
-
-        GST_DEBUG_OBJECT (thiz, "Start buffering next piece %d",
-            ipc_data->piece + 1);
-
-                                        printf("(bt_demux_stream_push_loop) We dont hold the next piece, buffering next piece %d \n", ipc_data->piece + 1);
-
-        /* start buffering now that the piece has not yet available (has not written/flush to disk) */
-        gst_bt_demux_stream_start_buffering (thiz, h,
-            demux->buffer_pieces);
-        update_buffering = TRUE;
-      }
-  }
-
-
-
-
-
   //----FOR SEEKING
   if (thiz->pending_segment) 
   {
@@ -504,9 +505,25 @@ printf("(bt_demux_stream_push_loop) recovery lock (%d)\n", thiz->current_piece);
 
 
   /* UPDATE THE Current Piece Index */
+  gint old_current_piece = thiz->current_piece;
   thiz->current_piece = ipc_data->piece;
 
+
+                // before pushing buffer on pad, check whether it is flushing
+                // if (GST_PAD_IS_FLUSHING (GST_PAD (thiz)))
+                // {
+                //   printf ("(bt_demux_stream_push_loop) Before pushing  buffer, it is flushing\n");
+                // }else
+                // {
+                //   printf ("(bt_demux_stream_push_loop) Before pushing  buffer, it is NOT flushing\n");
+                // }
+
+
+
+
                                           printf("(bt_demux_stream_push_loop) Pushing buffer, actual size: %d, file: %d, piece: (%d) \n", buf_size, thiz->file_idx, thiz->current_piece);
+
+
 
   ret = gst_pad_push (GST_PAD (thiz), buf);
 
@@ -530,15 +547,23 @@ printf("(bt_demux_stream_push_loop) recovery lock (%d)\n", thiz->current_piece);
     else if (ret == GST_FLOW_FLUSHING)
     {
         printf ("(bt_demux_stream_push_loop) it is flushing  \n");
+
+        if (FALSE == have_type_emitted) {
+              printf ("(bt_demux_stream_push_loop) have-type not sent yet, repush this piece \n");
+                
+          g_async_queue_push_front (thiz->ipc, ipc_data);
+          thiz->current_piece = old_current_piece;
+          need_re_push = TRUE;
+        }
     }
     // that is GST_FLOW_EOS, 
     // where is the EOS originated ? who populates it ?
-    // it was found in 'goto eos' eos labeled code in qtdemux_process_adapter in qtdemux.c
+    // it was found in 'goto eos' eos labeled code in qtdemux_process_adapter which gonna return GST_FLOW_EOS in qtdemux.c , 
     else if (ret == GST_FLOW_UNEXPECTED)
     {
       // if already got eos event when gst_pad_push, why not we don't send the same another eos event, 
-      // send eos or not ,does it matter that much ? No You can comment it out
-      //// send_eos = TRUE;
+      // send eos or not ,does it matter that much ? yes
+      send_eos = TRUE;
       printf ("(bt_demux_stream_push_loop) it is End of stream \n");
 
     }
@@ -564,6 +589,7 @@ printf("(bt_demux_stream_push_loop) recovery lock (%d)\n", thiz->current_piece);
   }
 #endif
 
+
   /* send the EOS downstream, check that last push didnt trigger a new seek */
   if (!thiz->moov_after_mdat && ipc_data->piece == thiz->last_piece && !thiz->pending_segment)
   {
@@ -588,11 +614,6 @@ printf("(bt_demux_stream_push_loop) recovery lock (%d)\n", thiz->current_piece);
     thiz->finished = TRUE;
   }
 
-                                  printf("(bt_demux_stream_push_loop) unlock (%d)\n", thiz->current_piece);
-  
-  g_static_rec_mutex_unlock (thiz->lock);
-
-
 
   //when moov header after mdat, reset pushing from first piece after push last piece
   if(thiz->moov_after_mdat && ipc_data->piece == thiz->end_piece)
@@ -608,10 +629,8 @@ printf("(bt_demux_stream_push_loop) recovery lock (%d)\n", thiz->current_piece);
       torrent_info ti = h.get_torrent_info ();
       int piece_length = ti.piece_length ();
 
-
       //// gst_bt_demux_stream_info (thiz, h, &start_offset,
       //// &start_piece, &end_offset, &end_piece, NULL, &start_byte, &end_byte);
-
 
       thiz->start_byte = thiz->start_byte_global;
       thiz->end_byte = thiz->end_byte_global;
@@ -620,7 +639,6 @@ printf("(bt_demux_stream_push_loop) recovery lock (%d)\n", thiz->current_piece);
       thiz->end_piece = thiz->end_byte / piece_length;
       thiz->end_offset = thiz->end_byte % piece_length; 
       
-    
       gboolean update_buffering = gst_bt_demux_stream_activate (thiz, h, demux->buffer_pieces);
       if (update_buffering) 
       {
@@ -636,6 +654,42 @@ printf("(bt_demux_stream_push_loop) recovery lock (%d)\n", thiz->current_piece);
   }
 
 
+  //----ADD PIECES
+  /* read the next piece, make sure not exceeds `end_piece` */
+  if (!need_re_push && (ipc_data->piece + 1 <= thiz->end_piece)) 
+  {
+      // the next piece has been completely downloaded and written to disk
+      if (h.have_piece (ipc_data->piece + 1)) 
+      {
+        GST_DEBUG_OBJECT (thiz, "Reading next piece %d, current: %d",
+            ipc_data->piece + 1, thiz->current_piece);
+
+                                        printf("(bt_demux_stream_push_loop) Reading next piece %d, current: %d \n", ipc_data->piece + 1, thiz->current_piece);
+
+        //**fire the read on start_piece, the rest will follow automatically, like a chain reaction, or domino effect
+        h.read_piece (ipc_data->piece + 1);
+      } 
+      // if we do not hold the next piece we want, we need to buffering
+      else 
+      {
+        int i;
+
+        GST_DEBUG_OBJECT (thiz, "Start buffering next piece %d",
+            ipc_data->piece + 1);
+
+                                        printf("(bt_demux_stream_push_loop) We dont hold the next piece, buffering next piece %d \n", ipc_data->piece + 1);
+
+        /* start buffering now that the piece has not yet available (has not written/flush to disk) */
+        gst_bt_demux_stream_start_buffering (thiz, h,
+            demux->buffer_pieces);
+        update_buffering = TRUE;
+      }
+  }
+
+                                  printf("(bt_demux_stream_push_loop) unlock (%d)\n", thiz->current_piece);
+
+  g_static_rec_mutex_unlock (thiz->lock);
+
   // g_mutex_unlock (demux->streams_lock);
 
   if (update_buffering)
@@ -643,9 +697,11 @@ printf("(bt_demux_stream_push_loop) recovery lock (%d)\n", thiz->current_piece);
     gst_bt_demux_send_buffering (demux, h);
   }
 
-  // g_mutex_unlock (demux->streams_lock);
 
-  gst_bt_demux_buffer_data_free (ipc_data);
+  // g_mutex_unlock (demux->streams_lock);
+  if (!need_re_push){
+    gst_bt_demux_buffer_data_free (ipc_data);
+  }
 
                                   printf("bt_demux_stream_push_loop, END \n");
 
@@ -1332,6 +1388,8 @@ gst_bt_demux_stream_init (GstBtDemuxStream * thiz)
   //and after added , when call ` gst_element_remove_pad` will set back to FALSE.
   thiz->added = FALSE;
 
+
+
   /* our ipc */
   thiz->ipc = g_async_queue_new_full (
       (GDestroyNotify) gst_bt_demux_buffer_data_free);
@@ -1358,7 +1416,7 @@ enum {
 
 enum
 {
-  SIGNAL_GET_STREAM_TAGS,
+  // SIGNAL_GET_STREAM_TAGS,
   SIGNAL_STREAMS_CHANGED,
   SIGNAL_GET_PPI,
   LAST_SIGNAL
@@ -1397,7 +1455,7 @@ gst_bt_demux_sink_chain (GstPad * pad, GstObject * object,
 
   GST_DEBUG_OBJECT (thiz, "Received buffer");
 
-          printf("Received buffer \n");
+          printf("(gst_bt_demux_sink_chain) Received some buffer.. \n");
 
   gst_adapter_push (thiz->adapter, gst_buffer_ref (buffer));
 
@@ -1429,10 +1487,11 @@ gst_bt_demux_sink_event (GstPad * pad, GstObject * object,
   GstMapInfo mi;
 #endif
 
-  /* On EOS, start processing the .torrent file */
+  /* On EOS, start processing the .torrent file once reading the entire .torrent file*/
+  // overlook any other events
   if (GST_EVENT_TYPE (event) != GST_EVENT_EOS)
   {
-          printf("(bt_demux_sink_event) Not EOS, return\n");
+          printf("(bt_demux_sink_event) Not EOS, skip and return\n");
     return res;
   }
 
@@ -1451,7 +1510,6 @@ gst_bt_demux_sink_event (GstPad * pad, GstObject * object,
 
         printf("(gst_bt_demux_sink_event) buflen is %ld \n", buf_len);
 
-
 #if HAVE_GST_1
   gst_buffer_map (buf, &mi, GST_MAP_READ);
   data = mi.data;
@@ -1459,36 +1517,30 @@ gst_bt_demux_sink_event (GstPad * pad, GstObject * object,
         printf("(gst_bt_demux_sink_event) adapter available len is %d \n", len);
 
     // fwrite (data, sizeof(guint8), len, stdout);  // Safe binary write
-
 #else
-
   data = GST_BUFFER_DATA (buf);
-
 #endif
 
-        
-          // if(buf != NULL)
-          // {
-          //   // Open a file for writing the torrent buffer content
-          //   FILE *file = fopen("/home/pal/Documents/log123456.torrent", "wb");  // Specify the path to save the file
-          //   if (file == NULL) {
-          //       printf("Error: could not open file for writing\n");   
-          //   }
-          //   else
-          //   {
-          //     // Write the buffer content to the file
-          //     size_t written = fwrite(data, sizeof(guint8), len, file);
-          //     if (written != len) {
-          //         printf("Error: could not write the entire buffer to the file\n");
-          //     } else {
-          //         printf("Buffer written to file successfully\n");
-          //     }
-
-          //     // Close the file after writing
-          //     fclose(file);
-          //   }
-          // }
-
+              // if(buf != NULL)
+              // {
+              //   // Open a file for writing the torrent buffer content
+              //   FILE *file = fopen("/home/pal/Documents/log123456.torrent", "wb");  // Specify the path to save the file
+              //   if (file == NULL) {
+              //       printf("Error: could not open file for writing\n");   
+              //   }
+              //   else
+              //   {
+              //     // Write the buffer content to the file
+              //     size_t written = fwrite(data, sizeof(guint8), len, file);
+              //     if (written != len) {
+              //         printf("Error: could not write the entire buffer to the file\n");
+              //     } else {
+              //         printf("Buffer written to file successfully\n");
+              //     }
+              //     // Close the file after writing
+              //     fclose(file);
+              //   }
+              // }
 
     libtorrent::session *session;
     session = (libtorrent::session *)thiz->session;
@@ -1516,9 +1568,7 @@ gst_bt_demux_sink_event (GstPad * pad, GstObject * object,
           printf("(gst_bt_demux_sink_event) atp.save_path = %s \n", thiz->temp_location);
     session->async_add_torrent (std::move(atp));
 
-
             printf("(gst_bt_demux_sink_event) libtorrent async_add_torrent called \n");
-
 
 #if HAVE_GST_1
   gst_buffer_unmap (buf, &mi);
@@ -1561,43 +1611,47 @@ gst_bt_demux_sink_event_simple (GstPad * pad, GstEvent * event)
 }
 #endif
 
+
 /* Code taken from playbin2 to marshal the action prototype */
-#define g_marshal_value_peek_int(v)      g_value_get_int (v)
-void
-gst_bt_demux_cclosure_marshal_BOXED__INT (GClosure     * closure,
-                             GValue       * return_value G_GNUC_UNUSED,
-                             guint         n_param_values,
-                             const GValue * param_values,
-                             gpointer      invocation_hint G_GNUC_UNUSED,
-                             gpointer      marshal_data)
-{
-  typedef gpointer (*GMarshalFunc_BOXED__INT) (gpointer     data1,
-                                               gint         arg_1,
-                                               gpointer     data2);
-  register GMarshalFunc_BOXED__INT callback;
-  register GCClosure * cc = (GCClosure *) closure;
-  register gpointer data1, data2;
-  gpointer v_return;
+// #define g_marshal_value_peek_int(v)      g_value_get_int (v)
+// void
+// gst_bt_demux_cclosure_marshal_BOXED__INT (GClosure     * closure,
+//                              GValue       * return_value G_GNUC_UNUSED,
+//                              guint         n_param_values,
+//                              const GValue * param_values,
+//                              gpointer      invocation_hint G_GNUC_UNUSED,
+//                              gpointer      marshal_data)
+// {
+//   typedef gpointer (*GMarshalFunc_BOXED__INT) (gpointer     data1,
+//                                                gint         arg_1,
+//                                                gpointer     data2);
+//   register GMarshalFunc_BOXED__INT callback;
+//   register GCClosure * cc = (GCClosure *) closure;
+//   register gpointer data1, data2;
+//   gpointer v_return;
 
-  g_return_if_fail (return_value != NULL);
-  g_return_if_fail (n_param_values == 2);
+//   g_return_if_fail (return_value != NULL);
+//   g_return_if_fail (n_param_values == 2);
 
-  if (G_CCLOSURE_SWAP_DATA (closure)) {
-    data1 = closure->data;
-    data2 = g_value_peek_pointer (param_values + 0);
-  }
-  else {
-    data1 = g_value_peek_pointer (param_values + 0);
-    data2 = closure->data;
-  }
-  callback =
-      (GMarshalFunc_BOXED__INT) (marshal_data ? marshal_data : cc->callback);
+//   if (G_CCLOSURE_SWAP_DATA (closure)) {
+//     data1 = closure->data;
+//     data2 = g_value_peek_pointer (param_values + 0);
+//   }
+//   else {
+//     data1 = g_value_peek_pointer (param_values + 0);
+//     data2 = closure->data;
+//   }
+//   callback =
+//       (GMarshalFunc_BOXED__INT) (marshal_data ? marshal_data : cc->callback);
 
-  v_return =
-      callback (data1, g_marshal_value_peek_int (param_values + 1), data2);
+//   v_return =
+//       callback (data1, g_marshal_value_peek_int (param_values + 1), data2);
 
-  g_value_take_boxed (return_value, v_return);
-}
+//   g_value_take_boxed (return_value, v_return);
+// }
+
+
+
 
 
 
@@ -2514,18 +2568,6 @@ gst_bt_demux_handle_alert (GstBtDemux * thiz, libtorrent::alert * a)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
           /*---------------------- create the streams -------------------*/
           /*-------------------------------------------------------------*/
           //there may be multiple videos within the torrent ,then create `GstBtDemuxStream` for each video
@@ -2550,13 +2592,13 @@ gst_bt_demux_handle_alert (GstBtDemux * thiz, libtorrent::alert * a)
             /* set the file idx within torrent*/
             stream->file_idx = i;
 
-
             stream->requested = FALSE;
+
+
 
             /* set the path */
             fe = ti->file_at (i);
             stream->path = g_strdup (fe.path.c_str ());
-
 
            //if not .mp4 file, skip, only support mp4/quicktime for now and is enough cuz video torrent mostly are .mp4
             if(!g_str_has_suffix (stream->path, ".mp4"))
@@ -2564,7 +2606,6 @@ gst_bt_demux_handle_alert (GstBtDemux * thiz, libtorrent::alert * a)
               continue;
             }
             thiz->num_video_file++;
-
 
             //reset           
             gst_bt_demux_stream_info (stream, h, &stream->start_offset,
@@ -2834,14 +2875,50 @@ printf("(bt_demux_handle_alert) recovery lock 2; alert piece idx(%d), stream->cu
         /* create the pad if has been requested */
         if (!gst_pad_is_active (GST_PAD (stream))) 
         {
-          
+
+
+          // whether to run typefind before negotiating
+          //since we run typefind to get caps  the btdemux srcpad can produce, so typefindelement in gstdecodebin2 become useless
+          // if (thiz->typefind) 
+          // {
+          //   GstTypeFindProbability prob;
+          //   GstCaps *caps;
+          //   GstBuffer *buf;
+
+          //   buf = gst_bt_demux_buffer_new (p->buffer, p->piece, p->size,
+          //       stream);
+
+          //   caps = gst_type_find_helper_for_buffer (GST_OBJECT (thiz), buf, &prob);
+          //   gst_buffer_unref (buf);
+
+          //   if (caps) 
+          //   {
+
+          //     gchar* capstr = gst_caps_to_string(caps);
+
+          //                           printf("(bt_demux_handle_alert) Manually call typefind helper, caps is %s \n", capstr);
+          //     // if(!g_str_has_prefix(capstr, "video/quicktime"))
+          //     // {
+          //     //                       printf("(bt_demux_handle_alert) this stream is not a video/quicktime which we only supoort, remove this stream \n");
+          //     //                 thiz->stream      
+          //     // }
+
+          //     gst_pad_set_caps (GST_PAD (stream), caps);
+          //     gst_caps_unref (caps);
+          //     g_free (capstr);
+          //   }else{
+          //                           printf("(bt_demux_handle_alert) Manually call typefind helper, get caps Failed\n");
+          //   }
+          // }
+      
+
                                     printf("(bt_demux_handle_alert) stream-idx(%d) create the pad if needed and add the pad to element (%d)\n", foo, static_cast<int>(p->piece));
 
           //then activate it 
-          if(!gst_pad_set_active (GST_PAD (stream), TRUE)){
-              printf ("(bt_demux_handle_alert) stream-idx(%d) ENABLE gst_pad_set_active failed %d\n", foo);
-          }else{  
-              printf ("(bt_demux_handle_alert) stream-idx(%d) ENABLE gst_pad_set_active ok %d\n", foo);
+          if(!gst_pad_set_active (GST_PAD (stream), TRUE)) {
+              printf ("(bt_demux_handle_alert) stream-idx(%d) ENABLE gst_pad_set_active failed\n", foo);
+          } else {  
+              printf ("(bt_demux_handle_alert) stream-idx(%d) ENABLE gst_pad_set_active ok\n", foo);
           }
           
           // `gst_element_add_pad` will emit the #GstElement::pad-added signal on the element btdemux
@@ -2850,36 +2927,7 @@ printf("(bt_demux_handle_alert) recovery lock 2; alert piece idx(%d), stream->cu
     
           stream->added = TRUE;
           topology_changed = TRUE;
-
-          // whether to run typefind before negotiating
-          if (thiz->typefind) 
-          {
-            GstTypeFindProbability prob;
-            GstCaps *caps;
-            GstBuffer *buf;
-
-            buf = gst_bt_demux_buffer_new (p->buffer, p->piece, p->size,
-                stream);
-
-            caps = gst_type_find_helper_for_buffer (GST_OBJECT (thiz), buf, &prob);
-            gst_buffer_unref (buf);
-
-            if (caps) 
-            {
-
-              gchar* capstr = gst_caps_to_string(caps);
-
-                                    printf("(bt_demux_handle_alert) if(thiz->typefind) caps is %s \n", capstr);
-              // if(!g_str_has_prefix(capstr, "video/quicktime"))
-              // {
-              //                       printf("(bt_demux_handle_alert) this stream is not a video/quicktime which we only supoort, remove this stream \n");
-              //                 thiz->stream      
-              // }
-
-              gst_pad_set_caps (GST_PAD (stream), caps);
-              gst_caps_unref (caps);
-            }
-          }
+      
         }
 
         /* fill the `ipc_data` with read piece post by read_piece_alert, send the data to the stream thread */
@@ -3311,14 +3359,15 @@ update_requested_stream (GstBtDemux* thiz)
 
             stream->requested = FALSE;
 
+
             // if (gst_pad_is_active (GST_PAD (stream))) 
             // {
                   printf("(btdemux/update_requested_stream) stream-idx(%d) disable undesired streams(src pads)\n", foo);
         
                 if(!gst_pad_set_active (GST_PAD (stream), FALSE)){
-                    printf ("(btdemux/update_requested_stream) stream-idx(%d) gst_pad_set_active failed\n");
+                    printf ("(btdemux/update_requested_stream) stream-idx(%d) DISABLE gst_pad_set_active failed\n");
                 }else{
-                    printf ("(btdemux/update_requested_stream) stream-idx(%d) gst_pad_set_active ok\n");
+                    printf ("(btdemux/update_requested_stream) stream-idx(%d) DISABLE gst_pad_set_active ok\n");
                 }
               
               // Remove only when we add it previously
@@ -3326,6 +3375,47 @@ update_requested_stream (GstBtDemux* thiz)
               // We should prohibit it happening
               if (stream->added)
               {
+
+                GstPad* peerpad = gst_pad_get_peer (GST_PAD (stream));
+                if (peerpad && GST_IS_GHOST_PAD (peerpad))
+                {
+                  GstPad* internal_pad = gst_ghost_pad_get_target (GST_GHOST_PAD (peerpad));
+                  if (!internal_pad) 
+                  {
+                      printf ("(btdemux/update_requested_stream) decodebin ghost sink pad Has no target yet, return\n");
+                    return;
+                  } 
+                  else 
+                  {
+                    GstObject* parent = gst_pad_get_parent (internal_pad);
+                    if (parent) 
+                    {
+                      printf ("(btdemux/update_requested_stream) re-set typefindelement have-type to FALSE\n");
+                      g_object_set (G_OBJECT (parent), "have-type-emitted", FALSE, NULL);
+                      gst_object_unref (parent);
+                    } 
+                    else 
+                    {
+                      printf ("(btdemux/update_requested_stream) parent is NULL \n");
+                    } 
+                    gst_object_unref (internal_pad);
+                  }
+                  gst_object_unref (peerpad);
+                
+                }
+                else if (peerpad && !GST_IS_GHOST_PAD (peerpad)) 
+                {
+                  printf ("(btdemux/update_requested_stream) peer pad is not Ghost pad\n");
+                  gst_object_unref (peerpad);
+                }
+                else if (!peerpad)
+                {
+                  printf ("(btdemux/update_requested_stream) peer pad is NULL\n");
+
+                }
+
+                
+
                 /// GstEvent *eos = gst_event_new_eos ();
                 /// gst_pad_push_event (GST_PAD (stream), eos);
                 ///                   printf("(btdemux/update_requested_stream) Sending EOS event on file %d before remove it, so we can send stream-start event later\n", foo );
@@ -3509,12 +3599,12 @@ gst_bt_demux_class_init (GstBtDemuxClass * klass)
           streams_changed), NULL, NULL, g_cclosure_marshal_VOID__VOID,
       G_TYPE_NONE, 0);
 
-  gst_bt_demux_signals[SIGNAL_GET_STREAM_TAGS] =
-      g_signal_new ("get-stream-tags", G_TYPE_FROM_CLASS (klass),
-      (GSignalFlags) (G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION),
-      G_STRUCT_OFFSET (GstBtDemuxClass, get_stream_tags), NULL, NULL,
-      gst_bt_demux_cclosure_marshal_BOXED__INT, GST_TYPE_TAG_LIST, 1,
-      G_TYPE_INT);
+  // gst_bt_demux_signals[SIGNAL_GET_STREAM_TAGS] =
+  //     g_signal_new ("get-stream-tags", G_TYPE_FROM_CLASS (klass),
+  //     (GSignalFlags) (G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION),
+  //     G_STRUCT_OFFSET (GstBtDemuxClass, get_stream_tags), NULL, NULL,
+  //     gst_bt_demux_cclosure_marshal_BOXED__INT, GST_TYPE_TAG_LIST, 1,
+  //     G_TYPE_INT);
 
 
   gst_bt_demux_signals[SIGNAL_GET_PPI] =
@@ -3589,14 +3679,13 @@ gst_bt_demux_init (GstBtDemux * thiz)
   thiz->num_blocks_last_piece = -1;
   thiz->blocks_per_piece_normal = -1;
 
-
   thiz->ppi_queue = g_async_queue_new_full (gst_free_ppi_data);
-
 
   lt::settings_pack p;
 	p.set_int(lt::settings_pack::alert_mask, alert_category::error | alert_category::storage | 
       alert_category::status | alert_category::piece_progress | alert_category::file_progress
   );
+
 
   /* create a new session */
   s = new session (p);

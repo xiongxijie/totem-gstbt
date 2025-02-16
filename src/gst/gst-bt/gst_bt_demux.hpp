@@ -134,8 +134,10 @@ typedef struct _GstBtDemuxStream
   gboolean is_user_seek;
   gboolean moov_after_mdat;
 
+
   gboolean requested;
   gboolean added;
+
 
   //what finished means?
   gboolean finished;
@@ -145,6 +147,8 @@ typedef struct _GstBtDemuxStream
 
   GStaticRecMutex *lock;
   GAsyncQueue *ipc;
+
+
 } GstBtDemuxStream;
 
 typedef struct _GstBtDemuxStreamClass {
