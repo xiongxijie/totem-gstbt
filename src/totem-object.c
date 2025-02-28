@@ -1333,7 +1333,7 @@ totem_object_play (TotemObject *totem)
 		return;
 	}
 
-	msg = g_strdup_printf(_("Videos could not play."));
+	msg = g_strdup_printf (_("Videos could not play."));
 
 	totem_object_show_error (totem, msg, err->message);
 	bacon_video_widget_stop (totem->bvw);
@@ -1358,7 +1358,10 @@ totem_object_seek (TotemObject *totem, double pos)
 	// 	return;
 
 	if (bacon_video_widget_is_seekable (totem->bvw) == FALSE)
+	{
+					printf ("(totem_object_seek) Not seekable, skip this seek\n");
 		return;
+	}
 
 	retval = bacon_video_widget_seek (totem->bvw, pos, &err);
 
@@ -1425,6 +1428,8 @@ totem_object_play_pause (TotemObject *totem)
 	} 
 	else 
 	{
+		printf("(totem_object_play_pause) next line to call bacon_video_widget_pause\n");
+
 		bacon_video_widget_pause (totem->bvw);
 		play_pause_set_label (totem, STATE_PAUSED);
 	}
@@ -1451,7 +1456,7 @@ totem_object_stop (TotemObject *totem)
 	if (fileidx != -1)
 	{
 
-						printf("totem_object_stop \n");
+						printf("(totem_object_stop) next line to call bacon_video_widget_pause\n");
 
 		totem_object_set_fileidx (totem, fileidx);
 		bacon_video_widget_pause (totem->bvw);
@@ -1469,9 +1474,11 @@ void
 totem_object_pause (TotemObject *totem)
 {
 
-									printf("(totem_object_pause)\n");
-
+	
 	if (bacon_video_widget_is_playing (totem->bvw) != FALSE) {
+
+					printf("(totem_object_pause) next line to call bacon_video_widget_pause\n");
+					
 		bacon_video_widget_pause (totem->bvw);
 		mark_popup_busy (totem, "paused");
 		play_pause_set_label (totem, STATE_PAUSED);
@@ -1903,7 +1910,7 @@ totem_object_set_fileidx (TotemObject *totem, gint file_index)
 {
 
 	char *fpath = NULL;
-									printf("totem_object_set_fileidx, file_idx=%d \n", file_index);
+									printf("(totem_object_set_fileidx), file_idx=%d \n", file_index);
 
 	//when switch to another item in playlist, we should close the current one
 	if (totem->streaming_file_idx != -1) 
@@ -1987,7 +1994,7 @@ totem_object_set_fileidx (TotemObject *totem, gint file_index)
 
 		fpath = totem_object_get_current_full_path (totem);
 		emit_file_opened (totem, fpath);
-		//dont free `fpath` here, let its user to be responsible for free it after use
+		// dont free `fpath` here, let its user to be responsible for free it after use
 		// g_free (fpath);
 	}
 
@@ -2059,7 +2066,6 @@ gboolean
 totem_object_can_seek_previous (TotemObject *totem)
 {
 	return 
-	// bacon_video_widget_has_previous_track (totem->bvw) ||
 		totem_playlist_has_previous_item (totem->playlist) ||
 		totem_playlist_get_repeat (totem->playlist);
 }
@@ -2070,11 +2076,13 @@ totem_object_can_seek_previous (TotemObject *totem)
  *
  * If a normal stream
  * is being played, goes to the start of the stream if possible. If seeking is
- * not possible, plays the previous entry in the playlist.
+ * not possible, plays the previous entry in the playlist.	// bacon_video_widget_has_previous_track (totem->bvw) ||
  **/
 void
 totem_object_seek_previous (TotemObject *totem)
 {
+				printf ("(totem_object_seek_next) Press Previous Chapter \n");
+
 	totem_object_direction (totem, TOTEM_PLAYLIST_DIRECTION_PREVIOUS);
 }
 
@@ -2103,6 +2111,7 @@ totem_object_can_seek_next (TotemObject *totem)
 void
 totem_object_seek_next (TotemObject *totem)
 {
+				printf ("(totem_object_seek_next) Press Next Chapter \n");
 	totem_object_direction (totem, TOTEM_PLAYLIST_DIRECTION_NEXT);
 }
 
@@ -2523,7 +2532,9 @@ update_slider_visibility (TotemObject *totem,
 }
 
 
+
 //handler of bvw_signals[SIGNAL_TICK], see totem.ui 
+//updating time label
 void
 update_current_time (BaconVideoWidget *bvw,
 		     gint64            current_time,

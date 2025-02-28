@@ -260,15 +260,14 @@ struct _BaconVideoWidget
    * which may change asynchronously or during buffering */
   GstState                     target_state;
   
-  //we're downloading the torrent, we are not seeder yet
+
   gboolean                     buffering;
-  gboolean                     download_buffering;
 
 
   /* for missing codecs handling */
   GList                       *missing_plugins;   /* GList of GstMessages */
 
-  /* for stepping */
+  /* for stepping frame*/
   float                        rate;
 
   GList                        *videos_info;
@@ -978,7 +977,7 @@ static void
 bvw_update_stream_info (BaconVideoWidget *bvw)
 {
 
-              printf("(bvw_update_stream_info) \n");
+              // printf("(bvw_update_stream_info) \n");
 
   parse_stream_info (bvw);
 
@@ -1076,17 +1075,18 @@ bvw_handle_application_message (BaconVideoWidget *bvw, GstMessage *msg)
 
     else if (strcmp (type_name, "start-ppi") == 0) 
     {
-              printf ("(bvw_handle_application_message) Pausing because we're not ready to play the buffer yet, set state to GST_STATE_PAUSED");
+              printf ("(bvw_handle_application_message) Pausing because we're not ready to play the buffer yet, SET bvw->pipeline state to PAUSED\n");
 
-      gst_element_set_state (GST_ELEMENT (bvw->pipeline), GST_STATE_PAUSED);
+      gst_element_set_state (GST_ELEMENT (bvw->pipeline), GST_STATE_PAUSED);//really need it ?
       bvw_reconfigure_ppi_timeout (bvw, 1000);
 
       goto done;
     }
     
-    //whole torrent finished  downloading
+    // whole torrent finished  downloading
     else if (strcmp (type_name, "stop-ppi") == 0) 
     {
+      
               printf ("(bvw_handle_application_message) torrent download finished, stopping the ppi \n");
             
         /* do query for the last time */
@@ -1181,6 +1181,7 @@ bvw_handle_element_message (BaconVideoWidget *bvw, GstMessage *msg)
                 {
                   gst_structure_get_int (stru, "fidx", &key);
                             // printf ("(bvw) fidx is %d\n", key);
+                            
                 }
               
                 if ( gst_structure_has_field (stru, "fname"))
@@ -1255,8 +1256,6 @@ done:
 }
 
 
-
-
 /* This is a hack to avoid doing poll_for_state_change() indirectly
  * from the bus message callback (via EOS => totem => close => wait for READY)
  * and deadlocking there. We need something like a
@@ -1270,6 +1269,8 @@ bvw_signal_eos_delayed (gpointer user_data)
   bvw->eos_id = 0;
   return FALSE;
 }
+
+
 
 static void
 bvw_reconfigure_tick_timeout (BaconVideoWidget *bvw, guint msecs)
@@ -1292,8 +1293,6 @@ bvw_reconfigure_tick_timeout (BaconVideoWidget *bvw, guint msecs)
     g_source_set_name_by_id (bvw->update_id, "[totem] bvw_query_timeout");
   }
 }
-
-
 
 
 
@@ -1605,9 +1604,69 @@ audio_tags_changed_cb (GstElement *elem, gint stream_id, gpointer user_data)
 
 
 
+/*Handling Three-Piece-Area Buffering msg from btdemux*/
+static void
+bvw_handle_buffering_message (GstMessage * message, BaconVideoWidget *bvw)
+{
+  gint percent = 0;
+
+  gst_message_parse_buffering (message, &percent);
+
+  /**********Three-Piece-Area Buffered finished***********/
+  if (percent >= 100) 
+  {
+    /* a 100% message means buffering is done */
+    bvw->buffering = FALSE;
+    /* if the desired state is playing, go back */
+    if (bvw->target_state == GST_STATE_PLAYING) 
+    {
+      // GST_DEBUG ("Buffering done, setting pipeline back to PLAYING");
+                printf("(bvw_handle_buffering_message) Buffering done, setting pipeline back to PLAYING\n");
+      bacon_video_widget_play (bvw, NULL);
+    } 
+    else 
+    {
+      // GST_DEBUG ("Buffering done, keeping pipeline PAUSED");
+                printf("(bvw_handle_buffering_message) Buffering done, keeping pipeline PAUSED\n");
+    }
+  } 
+
+  /**********Three-Piece-Area Buffered not finished And we are not paused***********/
+  else if (bvw->target_state == GST_STATE_PLAYING) 
+  {
+    GstState cur_state;
+
+    gst_element_get_state (bvw->pipeline, &cur_state, NULL, 0);
+    if (cur_state != GST_STATE_PAUSED) 
+    {
+      // GST_DEBUG ("Buffering ... temporarily pausing playback %d%%", percent);
+      
+                printf("(bvw_handle_buffering_message) Buffering... temporarily pausing playback %d%% and SET bvw->pipeline state to PAUSED\n", percent);
+
+      gst_element_set_state (bvw->pipeline, GST_STATE_PAUSED);
+    } 
+    else 
+    {
+                printf("(bvw_handle_buffering_message) Buffering (already paused) ... %d%%\n", percent);
+      // GST_LOG ("Buffering (already paused) ... %d%%", percent);
+    }
+    bvw->buffering = TRUE;
+  } 
+
+  /**********Three-Piece-Area Buffered not finished And we've already let paused , do nothing and just report the progress***********/
+  else 
+  {
+    // GST_LOG ("Buffering ... %d", percent);
+                printf("(bvw_handle_buffering_message)Buffering ... %d\n", percent);
+    bvw->buffering = TRUE;
+  }
+}
 
 
 
+
+
+/* GST MESSAGE HANDLING */
 static void
 bvw_bus_message_cb (GstBus * bus, GstMessage * message, BaconVideoWidget *bvw)
 {
@@ -1680,6 +1739,15 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, BaconVideoWidget *bvw)
       break;
     }
 
+    case GST_MESSAGE_BUFFERING:
+    {
+        printf("bvw_bus_message_cb GST_MESSAGE_BUFFERING \n");
+      bvw_handle_buffering_message (message, bvw);
+      break;
+    }
+
+
+
     case GST_MESSAGE_APPLICATION: 
     {
       bvw_handle_application_message (bvw, message);
@@ -1689,7 +1757,7 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, BaconVideoWidget *bvw)
 
 
 
-    //*****************************************************************************
+    //**************************************might see gstbasesink.c***************************************
     case GST_MESSAGE_STATE_CHANGED: 
     {
       GstState old_state, new_state;
@@ -1749,7 +1817,7 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, BaconVideoWidget *bvw)
         * to pause or to stop the pipeline */
         if (bvw->target_state == GST_STATE_PAUSED)
         {
-                  printf("(bvw_bus_message_cb) GST_MESSAGE_STATE_CHANGED: pause \n");
+                  printf("(bvw_bus_message_cb) GST_MESSAGE_STATE_CHANGED, next line call bacon_video_widget_pause\n");
 
 	        bacon_video_widget_pause (bvw);
         }
@@ -1795,7 +1863,7 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, BaconVideoWidget *bvw)
     }
 
     case GST_MESSAGE_ASYNC_DONE: {
-
+          printf ("(bvw_bus_message_cb) In GST_MESSAGE_ASYNC_DONE case \n");
 	gint64 _time;
 	/* When a seek has finished, set the playing state again */
 	g_mutex_lock (&bvw->seek_mutex);
@@ -2089,7 +2157,7 @@ bacon_video_widget_finalize (GObject * object)
 
   if (bvw->pipeline != NULL)
   {
-              printf ("(bacon_video_widget_finalize) SET bvw->pipeline state to GST_STATE_NULL\n");
+              printf ("(bacon_video_widget_finalize) SET bvw->pipeline state to NULL\n");
 
     gst_element_set_state (bvw->pipeline, GST_STATE_NULL);
   }
@@ -2296,19 +2364,19 @@ bacon_video_widget_get_property (GObject * object, guint property_id,
       break;
     case PROP_CUR_AUDIO_TAGS: 
     {
-          printf ("(bacon_video_widget_get_property) PROP_CUR_AUDIO_TAGS Locking\n");
+          // printf ("(bacon_video_widget_get_property) PROP_CUR_AUDIO_TAGS Locking\n");
       g_mutex_lock (&bvw->get_audiotags_mutex);
       g_value_set_boxed (value, bvw->audiotags);
-          printf ("(bacon_video_widget_get_property) PROP_CUR_AUDIO_TAGS UnLocking\n");
+          // printf ("(bacon_video_widget_get_property) PROP_CUR_AUDIO_TAGS UnLocking\n");
       g_mutex_unlock (&bvw->get_audiotags_mutex);
       break;
     }
     case PROP_CUR_VIDEO_TAGS:
     {
-          printf ("(bacon_video_widget_get_property) PROP_CUR_VIDEO_TAGS Locking\n");
+          // printf ("(bacon_video_widget_get_property) PROP_CUR_VIDEO_TAGS Locking\n");
       g_mutex_lock (&bvw->get_videotags_mutex);
       g_value_set_boxed (value, bvw->videotags);
-          printf ("(bacon_video_widget_get_property) PROP_CUR_VIDEO_TAGS UnLocking\n");
+          // printf ("(bacon_video_widget_get_property) PROP_CUR_VIDEO_TAGS UnLocking\n");
       g_mutex_unlock (&bvw->get_videotags_mutex);
       break;
     }
@@ -2634,15 +2702,13 @@ void
 bacon_video_widget_open (BaconVideoWidget *bvw, gint fileidx)
 {
   
-
-
   // g_return_if_fail (fileidx != -1);
   if(fileidx == -1)
   {
     
     //initially fileidx is -1, we start the pipeline, so btdemux can feed videos_info to retrieve playlist
 
-              printf("(bacon_video_widget_open) initial case: fileidx is -1 ,progressively set state to READY and then PAUSED\n");
+              printf("(bacon_video_widget_open) initial case: fileidx is -1 ,progressively SET bvw->pipeline state to READY and then PAUSED\n");
 
       bvw->target_state = GST_STATE_READY;
       //propagates the state change to all the elements inside the pipeline
@@ -2657,15 +2723,16 @@ bacon_video_widget_open (BaconVideoWidget *bvw, gint fileidx)
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
   g_return_if_fail (bvw->pipeline != NULL);
   
-
                 printf("(bacon_video_widget_open) set cur_video_fileidx_within_tor to %d\n", fileidx);
 
   bvw->cur_video_fileidx_within_tor = fileidx;
 
-
-  // /* So we aren't closed yet... */
+  /* So we aren't closed yet... */
   if (bvw->cur_video_fileidx_within_tor) 
   {
+
+                printf("(bacon_video_widget_open) So we aren't closed yet...\n");
+
     bacon_video_widget_close (bvw);
   }
   
@@ -2680,9 +2747,6 @@ bacon_video_widget_open (BaconVideoWidget *bvw, gint fileidx)
    */
   gst_bus_set_flushing (bvw->bus, TRUE);
 
-  // bvw->target_state = GST_STATE_READY;
-  // propagates the state change to all the elements inside the pipeline
-  // gst_element_set_state (bvw->pipeline, GST_STATE_READY);
   gst_bus_set_flushing (bvw->bus, FALSE);
 
 /******************************************************************/
@@ -2692,9 +2756,9 @@ bacon_video_widget_open (BaconVideoWidget *bvw, gint fileidx)
 /*******************************************************************/
 
   bvw->seekable = -1;
-  // bvw->target_state = GST_STATE_PAUSED;
+
   bvw_clear_missing_plugins_messages (bvw);
-  // gst_element_set_state (bvw->pipeline, GST_STATE_PAUSED);
+
 
 }
 
@@ -2737,12 +2801,13 @@ bacon_video_widget_play (BaconVideoWidget * bvw, GError ** error)
   }
 
   /* Or when we're buffering (the pieces data needed to streaming is downloading)*/
-  // if (bvw->buffering != FALSE) 
-  // {
-  //   GST_DEBUG ("buffering in progress, not playing");
-  //   /* just lie and do nothing in this case */
-  //   return TRUE;
-  // }
+  if (bvw->buffering != FALSE) 
+  {
+        printf ("(bacon_video_widget_play) buffering in progress, not playing \n");
+    // GST_DEBUG ("buffering in progress, not playing");
+    /* just lie and do nothing in this case */
+    return TRUE;
+  }
 
   /* Set direction to forward */
   if (bvw_set_playback_direction (bvw, TRUE) == FALSE) 
@@ -2757,7 +2822,7 @@ bacon_video_widget_play (BaconVideoWidget * bvw, GError ** error)
 
   GST_DEBUG ("play");
 
-              printf ("(bacon_video_widget_play) SET bvw->pipeline state to GST_STATE_PLAYING\n");
+              printf ("(bacon_video_widget_play) SET bvw->pipeline state to PLAYING\n");
 
   gst_element_set_state (bvw->pipeline, GST_STATE_PLAYING);
 
@@ -2785,10 +2850,6 @@ bacon_video_widget_can_direct_seek (BaconVideoWidget *bvw)
   if (bvw->cur_video_fileidx_within_tor == -1)
     return FALSE;
 
-  // if (bvw->download_buffering != FALSE)
-  //   return TRUE;
-
-
 
   return FALSE;
 }
@@ -2804,10 +2865,12 @@ bacon_video_widget_seek_time_no_lock (BaconVideoWidget *bvw,
 
   bvw->seek_time = -1;
 
-              printf ("(bacon_video_widget_seek_time_no_lock) SET bvw->pipeline state to GST_STATE_PAUSED\n");
+                  printf ("(bacon_video_widget_seek_time_no_lock) SET bvw->pipeline state to PAUSED\n");
 
   gst_element_set_state (bvw->pipeline, GST_STATE_PAUSED);
+
                   printf("(bacon_video_widget_seek_time_no_lock) Call gst_element_seek on pipeline \n");
+
   gst_element_seek (bvw->pipeline, bvw->rate,
 		    GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | flag,
 		    GST_SEEK_TYPE_SET, _time * GST_MSECOND,
@@ -2961,13 +3024,13 @@ bvw_stop_play_pipeline (BaconVideoWidget * bvw)
 
       GST_DEBUG ("stopping");
 
-              printf ("(bvw_stop_play_pipeline) SET bvw->pipeline state to GST_STATE_READY\n");
+              printf ("(bvw_stop_play_pipeline) SET bvw->pipeline state to READY\n");
 
       gst_element_set_state (bvw->pipeline, GST_STATE_READY);
 
       /* process all remaining state-change messages so everything gets
       * cleaned up properly (before the state change to NULL flushes them) */
-      GST_DEBUG ("processing pending state-change messages");
+      // GST_DEBUG ("processing pending state-change messages");
       while ((msg = gst_bus_pop_filtered (bvw->bus, GST_MESSAGE_STATE_CHANGED))) 
       {
         gst_bus_async_signal_func (bvw->bus, msg, NULL);
@@ -2986,9 +3049,8 @@ bvw_stop_play_pipeline (BaconVideoWidget * bvw)
     /* Now in READY or lower */
     bvw->target_state = GST_STATE_READY;
 
-    //// bvw->buffering = FALSE;
-    //// bvw->download_buffering = FALSE;
-
+    bvw->buffering = FALSE;
+   
     bvw_reconfigure_ppi_timeout (bvw, 0);
 
     g_object_set (bvw->video_sink,
@@ -3037,12 +3099,12 @@ bacon_video_widget_pause (BaconVideoWidget * bvw)
 
         printf("(bacon_video_widget_pause) Pausing\n");
 
-  GST_LOG ("Pausing");
+  // GST_LOG ("Pausing");
 
   bvw->target_state = GST_STATE_PAUSED;
   
 
-              printf ("(bacon_video_widget_pause) SET bvw->pipeline state to GST_STATE_PAUSED\n");
+              printf ("(bacon_video_widget_pause) SET bvw->pipeline state to PAUSED\n");
 
   gst_element_set_state (GST_ELEMENT (bvw->pipeline), GST_STATE_PAUSED);
 }
@@ -3067,7 +3129,7 @@ bacon_video_widget_stop (BaconVideoWidget * bvw)
 
                     printf ("(bacon_video_widget_stop) \n");
 
-  GST_LOG ("Stopping");
+  // GST_LOG ("Stopping");
   bvw_stop_play_pipeline (bvw);
 
   /* Reset time position (aka, bvw->current_time) to 0 when stopping */
@@ -3636,13 +3698,13 @@ bacon_video_widget_is_seekable (BaconVideoWidget * bvw)
     {
         gst_query_parse_seeking (query, NULL, &res, NULL, NULL);
 
-                            printf("(bacon_video_widget_is_seekable) seeking query says the stream is%s seekable", (res) ? "" : " not");
+                            printf ("(bacon_video_widget_is_seekable) seeking query says the stream is %s seekable \n", (res) ? "" : " not");
 
         bvw->seekable = (res) ? 1 : 0;
     } 
     else 
     {
-                            printf("(bacon_video_widget_is_seekable) seeking query failed \n");
+                            // printf("(bacon_video_widget_is_seekable) seeking query failed \n");
     }
     gst_query_unref (query);
   }
@@ -3767,10 +3829,10 @@ bvw_get_caps_of_current_stream (BaconVideoWidget * bvw,
   {
     // Returns: (transfer full) (nullable)
     caps = gst_pad_get_current_caps (current);
-        printf ("(bvw_get_caps_of_current_stream) Get caps ok  %d %d %d\n",stream_num, bvw->audio_channels->len,bvw->video_channels->len);
+        // printf ("(bvw_get_caps_of_current_stream) Get caps ok  %d %d %d\n",stream_num, bvw->audio_channels->len,bvw->video_channels->len);
   }else
   {
-        printf ("(bvw_get_caps_of_current_stream) Failed get pad from channels %d %d %d\n",stream_num, bvw->audio_channels->len,bvw->video_channels->len);
+        // printf ("(bvw_get_caps_of_current_stream) Failed get pad from channels %d %d %d\n",stream_num, bvw->audio_channels->len,bvw->video_channels->len);
   }
 
   // GST_LOG ("current %s stream caps: %" GST_PTR_FORMAT, stream_type, caps);
@@ -3922,7 +3984,7 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget * bvw,
       caps = bvw_get_caps_of_current_stream (bvw, "audio");
       if (caps) 
       {
-              printf ("(bvw_get_metadata_string) Ok to get BVW_INFO_AUDIO_CHANNELS\n");
+              // printf ("(bvw_get_metadata_string) Ok to get BVW_INFO_AUDIO_CHANNELS\n");
         gint channels = 0;
 
         s = gst_caps_get_structure (caps, 0);
@@ -3940,7 +4002,7 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget * bvw,
         }
         gst_caps_unref (caps);
       }else{
-              printf ("(bvw_get_metadata_string) Failed to get BVW_INFO_AUDIO_CHANNELS\n");
+              // printf ("(bvw_get_metadata_string) Failed to get BVW_INFO_AUDIO_CHANNELS\n");
 
       }
       break;
@@ -3971,7 +4033,14 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget * bvw,
     g_value_take_string (value, string);
     GST_DEBUG ("%s = '%s'", g_enum_to_string (BVW_TYPE_METADATA_TYPE, type), string);
 
-        printf("xxxxxxx %s = %s\n", g_enum_to_string (BVW_TYPE_METADATA_TYPE, type), string);
+                //Comment it out
+                //let log shorter and clearer, 
+                //since update_properties_from_bvw() in totem-movie-properties.c  will called many times, 
+                //if there are many update tags log lines, we no need to care about the details of which tag metadata is which,
+                // this will making log a little confusing, 
+                
+                // printf("xxxxxxx %s = %s\n", g_enum_to_string (BVW_TYPE_METADATA_TYPE, type), string);
+
   } else {
     g_value_set_string (value, NULL);
     g_free (string);
@@ -4037,13 +4106,13 @@ bacon_video_widget_get_metadata_int (BaconVideoWidget * bvw,
 
       caps = bvw_get_caps_of_current_stream (bvw, "audio");
       if (caps) {
-              printf ("(bvw_get_metadata_int) Ok to get BVW_INFO_AUDIO_SAMPLE_RATE\n");
+              // printf ("(bvw_get_metadata_int) Ok to get BVW_INFO_AUDIO_SAMPLE_RATE\n");
 
         s = gst_caps_get_structure (caps, 0);
         gst_structure_get_int (s, "rate", &integer);
         gst_caps_unref (caps);
       }else {
-              printf ("(bvw_get_metadata_int) Failed to get BVW_INFO_AUDIO_SAMPLE_RATE\n");
+              // printf ("(bvw_get_metadata_int) Failed to get BVW_INFO_AUDIO_SAMPLE_RATE\n");
       }
       break;
     }
@@ -4401,7 +4470,7 @@ bvw_decodebin_video_outpad_event (GstPad * pad, GstObject * parent, GstEvent * e
 //   else
 //       printf("(not taglist) \n");
 
-          //got audio tags means tags change from null to non-null, pass to tags-changed-relcated callbacks, even if tags actually not change for our torrent streaming
+          //got audio tags means tags change from null to non-null, pass to tags-changed-related callbacks, even if tags actually not change for our torrent streaming
           bvw_update_tags_delayed (bvw, tags, "video");
       }
   }
@@ -4424,7 +4493,7 @@ bvw_decodebin_audio_outpad_event (GstPad * pad, GstObject * parent, GstEvent * e
               "bvw.instance"));
   BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (instance);
 
-          printf("(bvw_decodebin_audio_outpad_event): %s \n", GST_EVENT_TYPE_NAME (event));
+          // printf("(bvw_decodebin_audio_outpad_event): %s \n", GST_EVENT_TYPE_NAME (event));
 
   if (GST_EVENT_TYPE (event) == GST_EVENT_TAG)
   {
@@ -4624,6 +4693,8 @@ beach:
 // docodebin -- audio,video output
 // dynamically check the type of the pad from decodebin (whether it's video or audio) 
 // and connect it to the appropriate sink elements
+//NOTE:when moov after mdat,qtdemux will initiate a seek, after btdemux push the piece contaning moov and reset 
+//pushing from first piece, after these done, can gstdecodebin2 srcpad added, so on_pad_added below will be called
 static void 
 on_pad_added (GstElement *element, GstPad *pad, BaconVideoWidget *bvw) 
 {
@@ -4774,10 +4845,8 @@ on_pad_added (GstElement *element, GstPad *pad, BaconVideoWidget *bvw)
         g_signal_emit (bvw, bvw_signals[SIGNAL_VIDEO_CHANGED], 0, NULL);
     }
 
-
 beach:
   gst_caps_unref (pad_caps);  // Unref the capabilities object
-
 }
 
 
@@ -4817,14 +4886,11 @@ on_btdemux_pad_added (GstElement *element, GstPad *pad, BaconVideoWidget *bvw)
               }
             }
 
-
             //and then link the new pad to gstdecodebin2
             GstPadLinkReturn ret = gst_pad_link (pad, decodebin_sink_pad);
 
-    
-                          int is_flushing = (int) GST_PAD_IS_FLUSHING (decodebin_sink_pad);
-                          printf ("(on_btdemux_pad_added) the decodebin_sink_pad is_flushing:%d \n", is_flushing);
-
+                          // int is_flushing = (int) GST_PAD_IS_FLUSHING (decodebin_sink_pad);
+                          // printf ("(on_btdemux_pad_added) the decodebin_sink_pad is_flushing:%d \n", is_flushing);
 
             if (ret != GST_PAD_LINK_OK) 
             {
@@ -4842,13 +4908,11 @@ on_btdemux_pad_added (GstElement *element, GstPad *pad, BaconVideoWidget *bvw)
                 // dont forget to free it after use
                 gchar *desired_pad_name = g_strdup_printf ("src_%02d", bvw->cur_video_fileidx_within_tor) ;
 
-                //check if the added pad's name match our desired_pad_name, if it is ,send stream-start event
-                if (g_strcmp0(pad_name, desired_pad_name) == 0){
-
+                //check if the added pad's name match our desired_pad_name, (such as src_00. src_01...) if it is ,send stream-start event
+                if (g_strcmp0(pad_name, desired_pad_name) == 0) {
 
                   // printf ("(on_btdemux_pad_added) GST_PAD_MODE (pad) is %d \n",(int)GST_PAD_MODE (pad));
                   printf ("(on_btdemux_pad_added) gst_pad_is_active (pad) is %d \n",(int)gst_pad_is_active (pad));
-
 
                   //if the pad previously added and removed ,and here we add it again, gst_pad_is_active may fail before gst_element_add_pad called 
                   //activate it again
@@ -4859,7 +4923,6 @@ on_btdemux_pad_added (GstElement *element, GstPad *pad, BaconVideoWidget *bvw)
                         printf ("(on_btdemux_pad_added) ENABLE gst_pad_set_active ok \n");
                     }
                   }
-
 
                   gchar *stream_id;
                   stream_id =
@@ -4880,7 +4943,6 @@ on_btdemux_pad_added (GstElement *element, GstPad *pad, BaconVideoWidget *bvw)
                       printf ("(on_btdemux_pad_added) Stream-start event pushed on pad '%s'\n", pad_name);
                   }
 
-
                               // // g_object_set (dec_elem, "sink-caps", caps, NULL);
                               // gboolean caps_set = gst_pad_has_current_caps (pad);
                               // if (caps_set) {
@@ -4896,10 +4958,6 @@ on_btdemux_pad_added (GstElement *element, GstPad *pad, BaconVideoWidget *bvw)
                               // }else{
                               //     printf ("(on_btdemux_pad_added) No caps set on pad\n");
                               // }
-
-
-
-
                 }
 
                 g_free (desired_pad_name);
@@ -5148,7 +5206,8 @@ bacon_video_widget_init (BaconVideoWidget *bvw)
 
             // Set location for the filesrc (assuming you have a torrent or file URL)
 
-            g_object_set(bvw->filesrc, "location", "/media/pal/E/FreeDsktop/gst-bt/install/lib/gstreamer-1.0/Japan.torrent", NULL);
+            // g_object_set(bvw->filesrc, "location", "/media/pal/E/FreeDsktop/gst-bt/install/lib/gstreamer-1.0/Japan.torrent", NULL);
+            g_object_set(bvw->filesrc, "location", "/media/pal/E/FreeDsktop/gst-bt/install/lib/gstreamer-1.0/Korea.torrent", NULL);
 
             // g_object_set(bvw->filesrc, "location", "/media/pal/E/FreeDsktop/gst-bt/install/lib/gstreamer-1.0/ForBiggerBlazes.mp4.torrent", NULL);
 
@@ -5281,6 +5340,7 @@ bacon_video_widget_init (BaconVideoWidget *bvw)
                   g_warning("Failed to link filesrc and btdemux");
               }
 
+
               // Then link btdemux -> decodebin thru 'on_btdemux_pad_added' callback (dynamically), once got src pad of btdemux, link it to decodebin
               g_signal_connect(bvw->btdemux, "pad-added", G_CALLBACK(on_btdemux_pad_added), bvw);
 
@@ -5288,8 +5348,6 @@ bacon_video_widget_init (BaconVideoWidget *bvw)
               g_signal_connect(bvw->btdemux, "pad-removed", G_CALLBACK(on_btdemux_pad_removed), bvw);
 
               g_signal_connect(bvw->btdemux, "no-more-pads", G_CALLBACK(on_btdemux_no_more_pads), bvw);
-
-
 
 
               // link the video pad from decodebin to the video sink (inside bvw->glsinkbin)
@@ -5301,15 +5359,7 @@ bacon_video_widget_init (BaconVideoWidget *bvw)
               g_signal_connect(bvw->decodebin, "pad-removed", G_CALLBACK(on_pad_removed), bvw);
             
 
-
-
-
-
-
-
-
               /* pipeline bus managemenet */
-
               // Retrieve the bus from the pipeline and store it in the BaconVideoWidget struct
               // only a GstPipeline will provide a bus for the application.
               bvw->bus = gst_element_get_bus(bvw->pipeline);
@@ -5322,13 +5372,11 @@ bacon_video_widget_init (BaconVideoWidget *bvw)
                     G_CALLBACK (bvw_bus_message_cb), bvw);
 
 
-
   // The notify::volume signal is emitted whenever the volume property changes
   // For example, if a user adjusts the volume via a slider in a user interface, 
   // your application can capture this change and update the playback accordingly.
   g_signal_connect (bvw, "notify::volume",
       G_CALLBACK (notify_volume_cb), bvw);
-
 
 
   // signal that the video output has changed such as switch between video tracks.
@@ -5339,7 +5387,6 @@ bacon_video_widget_init (BaconVideoWidget *bvw)
       G_CALLBACK (bvw_stream_changed_cb), NULL);
 
 
-  
   // For example, if a user is watching a movie and the movie's tags are updated 
   // (e.g., the title or genre is added or changed), your application can react accordingly
   g_signal_connect (bvw, "video-tags-changed",

@@ -134,22 +134,29 @@ typedef struct _GstBtDemuxStream
   gboolean is_user_seek;
   gboolean moov_after_mdat;
 
-
   gboolean requested;
   gboolean added;
 
 
-  //what finished means?
+  //finished means this stream(movie) has completed downloading, holds all pieces belonging to this stream now
   gboolean finished;
+
+  //buffering means this stream(movie) needs downloading
   gboolean buffering;
   gint buffering_level;
   gint buffering_count;
 
   GStaticRecMutex *lock;
+
+  //push ipc_data in read_piece_alert handling code <====> retrieve ipc_data in bt_demux_stream_push_loop
   GAsyncQueue *ipc;
 
+  //gboolean array, signaling whether piece needs to downloading/buffering in Three-Piece-Area
+  GArray* cur_buffering_flags;
 
 } GstBtDemuxStream;
+
+
 
 typedef struct _GstBtDemuxStreamClass {
   GstPadClass parent_class;
@@ -177,8 +184,10 @@ typedef struct _GstBtDemux
   gchar *temp_location;
   gboolean temp_remove;
 
-  //what finished means?
+  //finished doesn't means this torrent have finished downloading, we are seeder now
   gboolean finished;
+
+  //buffering means we are in downloading state
   gboolean buffering;
   gint buffer_pieces;
 
@@ -206,8 +215,9 @@ typedef struct _GstBtDemux
   GAsyncQueue *ppi_queue;
   //// std::vector<libtorrent::partial_piece_info> ppi;
   
-
 } GstBtDemux;
+
+
 
 
 typedef struct _GstBtDemuxClass

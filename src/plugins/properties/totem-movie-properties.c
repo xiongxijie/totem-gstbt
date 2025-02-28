@@ -97,6 +97,9 @@ update_properties_from_bvw (BaconVideoWidgetProperties *props,
 
 	bvw = BACON_VIDEO_WIDGET (widget);
 
+
+	//even if some tag has fetched,we still update it , such as BVW_INFO_CONTAINER will update everytime even if it is constant
+
 	/* General */
 	UPDATE_FROM_STRING (BVW_INFO_TITLE, "media-title");
 	UPDATE_FROM_STRING (BVW_INFO_ARTIST, "artist");
@@ -282,7 +285,7 @@ properties_action_cb (GSimpleAction              *simple,
 
 	// g_object_get (G_OBJECT (totem), "main-page", &main_page, NULL);
 	// if (g_strcmp0 (main_page, "player") == 0)
-	// 	gtk_widget_show (pi->props);
+		gtk_widget_show (pi->props);
 	// g_free (main_page);
 }
 

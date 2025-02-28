@@ -164,6 +164,7 @@ play_action_cb (GSimpleAction *action,
 		GVariant      *parameter,
 		gpointer       user_data)
 {
+			printf ("(totem-menu) Play/Pause Button Pressed \n");
 	totem_object_play_pause (TOTEM_OBJECT (user_data));
 }
 

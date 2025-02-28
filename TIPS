@@ -81,3 +81,11 @@ export PKG_CONFIG_PATH=/media/pal/E/Documents/libtorrent-RC_2_0/install/lib/pkgc
 
 gst-launch-1.0  filesrc location=/media/pal/E/FreeDsktop/gst-bt/install/lib/gstreamer-1.0/ForBiggerBlazes.mp4.torrent ! btdemux temp-location=/home/pal/Downloads ! decodebin name=dec ! queue ! autovideosink dec. ! queue ! audioconvert ! autoaudiosink
 
+
+
+# dont type commands one by one, it's too Boring and error-prone !
+# just write commands all together into a shell script
+
+chmod +x your.sh
+
+source ./your.sh
