@@ -1948,7 +1948,8 @@ totem_object_set_fileidx (TotemObject *totem, gint file_index)
 	char *fpath = NULL;
 									printf("(totem_object_set_fileidx), file_idx=%d \n", file_index);
 
-	//when switch to another item in playlist, we should close the current one
+	//when switch to another item in playlist, we should close the current one,
+	//FIXME:btdemux may keep pushing even if we Press Next Chapter, call below code, seems it knows nothing about our request
 	if (totem->streaming_file_idx != -1) 
 	{
 									printf("(totem_object_set_fileidx, file_idx=%d) Closing the current stream first \n", file_index);
@@ -2007,18 +2008,16 @@ totem_object_set_fileidx (TotemObject *totem, gint file_index)
 	//normal case
 	else 
 	{
-
-		
-		gboolean can_vol_seek;
-		
+		gboolean can_vol_seek;	
 		#if 2
-		if (totem->is_stream_length_set==TRUE) {
+		if (totem->is_stream_length_set==TRUE) 
+		{
 								printf ("(totem_object_set_fileidx) clear is_stream_length_set\n");
 								totem->is_stream_length_set = FALSE;
-							}
+		}
 		#endif 
 
-							printf("(totem_object_set_fileidx), file_idx=%d  gonna call bacon_video_widget_open\n", file_index);
+							printf("(totem_object_set_fileidx), file_idx=%d gonna call bacon_video_widget_open\n", file_index);
 							
 		g_application_mark_busy (G_APPLICATION (totem));
 		bacon_video_widget_open (totem->bvw, file_index);

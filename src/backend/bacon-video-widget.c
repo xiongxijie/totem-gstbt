@@ -3240,13 +3240,15 @@ bvw_stop_play_pipeline (BaconVideoWidget * bvw)
 
     gst_element_get_state (bvw->pipeline, &cur_state, NULL, 0);
   
+    //Paused or Playing
     if (cur_state > GST_STATE_READY) 
     {
       GstMessage *msg;
 
       // GST_DEBUG ("stopping");
 
-              printf ("(bvw_stop_play_pipeline) SET bvw->pipeline state to READY\n");
+      
+      printf ("(bvw_stop_play_pipeline) SET bvw->pipeline state to READY\n");
 
       gst_element_set_state (bvw->pipeline, GST_STATE_READY);
 
@@ -3259,6 +3261,8 @@ bvw_stop_play_pipeline (BaconVideoWidget * bvw)
         gst_message_unref (msg);
       }
     }
+
+
 
     /* and now drop all following messages until we start again. The
      * bus is set to flush=false again in bacon_video_widget_open()
@@ -3277,6 +3281,8 @@ bvw_stop_play_pipeline (BaconVideoWidget * bvw)
     g_object_set (bvw->video_sink,
                   "rotate-method", GST_VIDEO_ORIENTATION_AUTO,
                   NULL);
+
+              printf ("(bvw_stop_play_pipeline) stopped\n");
 
     // GST_DEBUG ("stopped");
 }
@@ -3375,8 +3381,10 @@ bacon_video_widget_close (BaconVideoWidget * bvw)
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
   g_return_if_fail (GST_IS_ELEMENT (bvw->pipeline));
   
+
   // GST_LOG ("Closing");
   bvw_stop_play_pipeline (bvw);
+
 
   bvw->rate = FORWARD_RATE;
 

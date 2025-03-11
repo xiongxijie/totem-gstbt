@@ -296,9 +296,10 @@ gst_bt_demux_stream_push_loop (gpointer user_data)
     return;
   }
 
+  //check requested, if modified , means we should not keep pushing the current stream
   if (!thiz->requested)
   {
-                                printf("(bt_demux_stream_push_loop) Undesired stream %s\n", GST_PAD_NAME (thiz));
+                                printf("(bt_demux_stream_push_loop) Undesired stream %s checked\n", GST_PAD_NAME (thiz));
     
     gst_pad_pause_task (GST_PAD (thiz));
 
@@ -414,7 +415,7 @@ printf("(bt_demux_stream_push_loop) recovery lock (%d)\n", thiz->current_piece);
     return;
   }
 
-  // 
+
   buf = gst_bt_demux_buffer_new (ipc_data->buffer, ipc_data->piece,
     ipc_data->size, thiz);
 
@@ -528,6 +529,9 @@ printf("(bt_demux_stream_push_loop) recovery lock (%d)\n", thiz->current_piece);
           //dont update the current_piece here, since we need re-push this piece data again to guarantee it pushed successful
           thiz->current_piece = old_current_piece;
           need_re_push = TRUE;
+        }else {
+          printf ("(bt_demux_stream_push_loop) otherwise, send eos downstream to avoid blcking on push_loop \n");
+          send_eos = TRUE;
         }
     }
     // that is GST_FLOW_EOS, 
@@ -659,7 +663,7 @@ printf("(bt_demux_stream_push_loop) recovery lock (%d)\n", thiz->current_piece);
             h.read_piece (next);
           } else {
                           //generally, it is reached when EOS occured
-                          printf ("(bt_demux_stream_push_loop) due to EOS or internal Error, suspend call read_piece() on next piece %d, current:%d, end/last:", ipc_data->piece + 1, thiz->current_piece, thiz->last_piece);
+                          printf ("(bt_demux_stream_push_loop) due to EOS or internal Error, suspend call read_piece() on next piece %d, current:%d, end/last:%d \n", ipc_data->piece + 1, thiz->current_piece, thiz->last_piece);
           }
         } 
         // if we do not hold the next piece following the current, we need to buffering the Three-Piece-Area 
@@ -3198,9 +3202,13 @@ gst_bt_demux_handle_alert (GstBtDemux * thiz, libtorrent::alert * a)
               printf ("(bt_demux_handle_alert) stream-idx(%d) ENABLE gst_pad_set_active ok\n", foo);
           }
           
-          // `gst_element_add_pad` will emit the #GstElement::pad-added signal on the element btdemux
-          gst_element_add_pad (GST_ELEMENT (thiz), GST_PAD (
-              gst_object_ref (stream)));
+          //avoid add an already-added one to btdemux 
+          if (stream->added == FALSE)
+          {
+            // `gst_element_add_pad` will emit the #GstElement::pad-added signal on the element btdemux
+            gst_element_add_pad (GST_ELEMENT (thiz), GST_PAD (
+                gst_object_ref (stream)));
+          }
     
           stream->added = TRUE;
           topology_changed = TRUE;
@@ -3231,16 +3239,16 @@ Video 1 territory (maybe moov header in the tail)        Video 2 territory
 
 
         /* start the task */
-if (stream->requested) {
-                                        printf("(bt_demux_handle_alert) stream-idx(%d) in read_piece_alert, Start the pad task(bt_demux_stream_push_loop) %d \n", foo,static_cast<int>(p->piece));
-#if HAVE_GST_1
-        gst_pad_start_task (GST_PAD (stream), gst_bt_demux_stream_push_loop,
-            stream, NULL);
-#else
-        gst_pad_start_task (GST_PAD (stream), gst_bt_demux_stream_push_loop,
-            stream);
-#endif
-}
+        if (stream->requested) {
+                printf("(bt_demux_handle_alert) stream-idx(%d) in read_piece_alert, Start the pad task(bt_demux_stream_push_loop) %d \n", foo,static_cast<int>(p->piece));
+                #if HAVE_GST_1
+                    gst_pad_start_task (GST_PAD (stream), gst_bt_demux_stream_push_loop,
+                    stream, NULL);
+                #else
+                    gst_pad_start_task (GST_PAD (stream), gst_bt_demux_stream_push_loop,
+                    stream);
+                #endif
+        }
 
 
         ++foo;
@@ -3560,11 +3568,12 @@ gst_bt_demux_change_state (GstElement * element, GstStateChange transition)
     if (thiz->task!=NULL && GST_IS_TASK(thiz->task))
     {
       tstate = gst_task_get_state (thiz->task);
-              printf("(gst_bt_demux_change_state) GstTaskState is %d\n",(int)tstate);
+              printf("(gst_bt_demux_change_state) GstTaskState is %d, transition is %d\n",(int)tstate, (int)transition);
     }
 
     switch (transition) 
     {
+
       case GST_STATE_CHANGE_READY_TO_PAUSED:
 
                                 printf("(bt_demux_change_state) READY_TO_PAUSED GstTaskState is:(%d)\n",
@@ -3576,10 +3585,13 @@ gst_bt_demux_change_state (GstElement * element, GstStateChange transition)
         }
 
         break;
-      //such as eos,but we do not close bt_demux_task 
+      //such as eos,but we do not close bt_demux_task ,should stop push_loop
       case GST_STATE_CHANGE_PAUSED_TO_READY:
+      {
 
-                                printf("(gst_bt_demux_change_state) PAUSED_TO_READY \n");
+        printf("(gst_bt_demux_change_state) PAUSED_TO_READY \n");
+
+      }
 
         // gst_bt_demux_task_cleanup (thiz);
         break;
@@ -3678,8 +3690,11 @@ update_requested_stream (GstBtDemux* thiz)
   gint desired_file_index;
   g_object_get (thiz, "current-video-file-index", &desired_file_index, NULL);
 
-                          printf ("(btdemux/update_requested_stream) desired fileidx %d \n", desired_file_index);
-
+                          if (desired_file_index != -1)
+                          {
+                              printf ("(btdemux/update_requested_stream) desired fileidx %d \n", desired_file_index);
+                          }
+                         
   if(thiz->streams)
   {
       gint foo = 0;
@@ -3900,11 +3915,11 @@ gst_bt_demux_class_init (GstBtDemuxClass * klass)
   gobject_class->set_property = GST_DEBUG_FUNCPTR (gst_bt_demux_set_property);
   gobject_class->get_property = GST_DEBUG_FUNCPTR (gst_bt_demux_get_property);
 
-    g_object_class_install_property (gobject_class, PROP_LOCATION,
-      g_param_spec_string ("location", "Torrent File Location",
-          "Location of torrent file to read", NULL,
-          (GParamFlags)(G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS |
-          GST_PARAM_MUTABLE_READY)));
+  g_object_class_install_property (gobject_class, PROP_LOCATION,
+    g_param_spec_string ("location", "Torrent File Location",
+        "Location of torrent file to read", NULL,
+        (GParamFlags)(G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS |
+        GST_PARAM_MUTABLE_READY)));
 
   g_object_class_install_property (gobject_class, PROP_N_STREAMS,
       g_param_spec_int ("n-video-mp4", "Number of mp4/quicktime streams",
@@ -3913,8 +3928,8 @@ gst_bt_demux_class_init (GstBtDemuxClass * klass)
 
   g_object_class_install_property (gobject_class, PROP_CURRENT_STREAM,
       g_param_spec_int ("current-video-file-index", "Desired video file_index of Current Played Stream",
-          "Get file_index in torrent of Current Played Stream (default to starts from 0) ",
-          0, G_MAXINT, 0, G_PARAM_READWRITE));
+          "Get file_index in torrent of Current Played Stream (default is 0) ",
+          -1, G_MAXINT, 0, G_PARAM_READWRITE));
 
   // g_object_class_install_property (gobject_class, PROP_SELECTOR_POLICY,
   //     g_param_spec_enum ("selector-policy", "Stream selector policy",
