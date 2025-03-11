@@ -19,7 +19,6 @@ allowed_plugins = [
   'properties',
   'rotation',
   'screensaver',
-  'screenshot',
   'variable-rate',
 ]
 
@@ -34,7 +33,6 @@ if plugins_option != 'none'
     'properties',
     'rotation',
     'screensaver',
-    'screenshot',
     'variable-rate',
   ]
 

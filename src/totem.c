@@ -17,6 +17,7 @@
 
 #include "totem.h"
 
+//ENTRY POINT
 int
 main (int argc, char **argv)
 {

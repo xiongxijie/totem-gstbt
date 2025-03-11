@@ -206,6 +206,7 @@ totem_movie_properties_plugin_fileidx_opened (TotemObject *totem,
 											  const char *fpath, /*No Use Here*/
 											  TotemMoviePropertiesPlugin *plugin)
 {
+
 				printf("In totem_movie_properties_plugin_fileidx_opened \n");
 
 	GtkWidget *bvw;
@@ -232,6 +233,8 @@ totem_movie_properties_plugin_file_closed (TotemObject *totem,
 					   TotemMoviePropertiesPlugin *plugin)
 {
 
+				printf("In totem_movie_properties_plugin_fileidx_closed \n");
+
 	/* Reset the properties and wait for the signal*/
 	bacon_video_widget_properties_reset (BACON_VIDEO_WIDGET_PROPERTIES (plugin->props));
 
@@ -255,7 +258,7 @@ totem_movie_properties_plugin_metadata_updated (TotemObject *totem,
 						TotemMoviePropertiesPlugin *plugin)
 {
 
-				printf("In totem_movie_properties_plugin_metadata_updated \n");
+				// printf("In totem_movie_properties_plugin_metadata_updated \n");
 
 	GtkWidget *bvw;
 

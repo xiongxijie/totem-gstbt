@@ -83,7 +83,7 @@ gst-launch-1.0  filesrc location=/media/pal/E/FreeDsktop/gst-bt/install/lib/gstr
 
 
 
-# dont type commands one by one, it's too Boring and error-prone !
+# don't type commands one by one, it's too Boring and error-prone !
 # just write commands all together into a shell script
 
 chmod +x your.sh

@@ -77,7 +77,7 @@ void bacon_video_widget_pause			 (BaconVideoWidget *bvw);
 gboolean bacon_video_widget_is_playing           (BaconVideoWidget *bvw);
 
 /* Seeking and length */
-gboolean bacon_video_widget_is_seekable          (BaconVideoWidget *bvw);
+gboolean bacon_video_widget_update_and_get_seekable          (BaconVideoWidget *bvw);
 gboolean bacon_video_widget_seek		 (BaconVideoWidget *bvw,
 						  double position,
 						  GError **error);
@@ -85,13 +85,13 @@ gboolean bacon_video_widget_seek_time		 (BaconVideoWidget *bvw,
 						  gint64 _time,
 						  gboolean accurate,
 						  GError **error);
-gboolean bacon_video_widget_step		 (BaconVideoWidget *bvw,
-						  gboolean forward,
-						  GError **error);
+// gboolean bacon_video_widget_step		 (BaconVideoWidget *bvw,
+// 						  gboolean forward,
+// 						  GError **error);
 gboolean bacon_video_widget_can_direct_seek	 (BaconVideoWidget *bvw);
 double bacon_video_widget_get_position           (BaconVideoWidget *bvw);
 gint64 bacon_video_widget_get_current_time       (BaconVideoWidget *bvw);
-gint64 bacon_video_widget_get_stream_length      (BaconVideoWidget *bvw);
+gint64 bacon_video_widget_update_and_get_stream_length      (BaconVideoWidget *bvw);
 
 void bacon_video_widget_stop                     (BaconVideoWidget *bvw);
 void bacon_video_widget_close                    (BaconVideoWidget *bvw);
@@ -296,11 +296,6 @@ typedef enum {
 } BvwTrackType;
 
 
-
-/* Screenshot functions */
-gboolean bacon_video_widget_can_get_frames       (BaconVideoWidget *bvw,
-						  GError **error);
-GdkPixbuf *bacon_video_widget_get_current_frame (BaconVideoWidget *bvw);
 
 /* Audio-out functions */
 /**

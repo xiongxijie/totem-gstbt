@@ -35,9 +35,9 @@
 	<section>
 		<section id="opendirectory-placeholder"/>
 	</section>
-	<section>
+	<!-- <section>
 		<section id="screenshot-placeholder"/>
-	</section>
+	</section> -->
 	<section>
 		<submenu>
 			<attribute name="label" translatable="yes">_Aspect Ratio</attribute>
@@ -70,11 +70,11 @@
 			</section>
 		</submenu>
 		<section id="rotation-placeholder"/>
-		<item>
+		<!-- <item>
 			<attribute name="label" translatable="yes">Switch An_gles</attribute>
 			<attribute name="action">app.next-angle</attribute>
 			<attribute name="accel">&lt;Ctrl&gt;G</attribute>
-		</item>
+		</item> -->
 	</section>
 
 	<section>
@@ -90,14 +90,14 @@
 	<section>
 		<section id="properties-placeholder"/>
 	</section>
-	<section>
+	<!-- <section>
 		<item>
 			<attribute name="label" translatable="yes">_Eject</attribute>
 			<attribute name="action">app.eject</attribute>
 			<attribute name="accel">&lt;Ctrl&gt;E</attribute>
 			<attribute name="hidden-when">action-disabled</attribute>
 		</item>
-	</section>
+	</section> -->
 </menu>
 
 

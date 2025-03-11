@@ -61,6 +61,9 @@ totem_open_directory_plugin_open (GSimpleAction       *action,
 				  GVariant            *parameter,
 				  TotemOpenDirectoryPlugin *pi)
 {
+
+	printf ("(totem_open_directory_plugin_open) full_path=%s\n", pi->full_path);
+
 	XdpParent *parent;
 
 	g_assert (pi->full_path != NULL);
@@ -79,34 +82,14 @@ static void
 totem_open_directory_fileidx_closed (TotemObject *totem,
 				 TotemOpenDirectoryPlugin *pi)
 {
+						printf ("(totem_open_directory_fileidx_closed) \n");
+
 	g_clear_pointer (&pi->full_path, g_free);
 
 	g_simple_action_set_enabled (G_SIMPLE_ACTION (pi->action), FALSE);
 }
 
 
-
-
-static gboolean
-scheme_is_supported (const char *scheme)
-{
-	const gchar * const *schemes;
-	guint i;
-
-	if (!scheme)
-		return FALSE;
-
-	if (g_str_equal (scheme, "http") ||
-	    g_str_equal (scheme, "https"))
-		return FALSE;
-
-	schemes = g_vfs_get_supported_uri_schemes (g_vfs_get_default ());
-	for (i = 0; schemes[i] != NULL; i++) {
-		if (g_str_equal (schemes[i], scheme))
-			return TRUE;
-	}
-	return FALSE;
-}
 
 
 
@@ -116,7 +99,8 @@ totem_open_directory_fileidx_opened (TotemObject              *totem,
 				  const char               *full_path,
 				  TotemOpenDirectoryPlugin *pi)
 {
-	// char *scheme;
+
+						// printf ("(totem_open_directory_fileidx_opened) full_path=%s\n", full_path);
 
 	g_clear_pointer (&pi->full_path, g_free);
 
@@ -125,16 +109,8 @@ totem_open_directory_fileidx_opened (TotemObject              *totem,
 		return;
 	}
 
-	// scheme = g_uri_parse_scheme (full_path);
-	// if (!scheme_is_supported (scheme)) {
-	// 	g_debug ("Not enabling open-directory as scheme for '%s' not supported", full_path);
-	// 	g_free (scheme);
-	// 	return;
-	// }
-	// g_free (scheme);
-
 	g_simple_action_set_enabled (G_SIMPLE_ACTION (pi->action), TRUE);
-	pi->full_path = g_strdup (full_path);
+	pi->full_path = g_strconcat ("file://", full_path, NULL);
 }
 
 
@@ -175,9 +151,10 @@ impl_activate (PeasActivatable *plugin)
 	item = g_menu_item_new (_("Open Containing Folder"), "app.open-dir");
 	g_menu_append_item (G_MENU (menu), item);
 
-	fpath = totem_object_get_current_full_path (pi->totem);
-	totem_open_directory_fileidx_opened (pi->totem, fpath, pi);
-	g_free (fpath);
+	//resume playing not impl
+	// fpath = totem_object_get_current_full_path (pi->totem);
+	// totem_open_directory_fileidx_opened (pi->totem, fpath, pi);
+	// g_free (fpath);
 }
 
 

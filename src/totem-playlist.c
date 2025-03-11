@@ -361,14 +361,14 @@ totem_playlist_add_one_row_impl (TotemPlaylist *playlist,
 
 
 
-											/*
-											* gtk_list_store_insert_with_values:
-											* @list_store: A `GtkListStore`
-											* @iter: (out) (optional): An unset `GtkTreeIter` to set to the new row
-											* @position: position to insert the new row, or -1 to append after existing
-											*    rows
-											* @...: pairs of column number and value, terminated with -1
-											*/
+											// /*
+											// * gtk_list_store_insert_with_values:
+											// * @list_store: A `GtkListStore`
+											// * @iter: (out) (optional): An unset `GtkTreeIter` to set to the new row
+											// * @position: position to insert the new row, or -1 to append after existing
+											// *    rows
+											// * @...: pairs of column number and value, terminated with -1
+											// */
 											//transfer none
 											// gtk_list_store_insert_with_values (store, &iter, -1,
 											// 				   PLAYING_COL, playing ? TOTEM_PLAYLIST_STATUS_PAUSED : TOTEM_PLAYLIST_STATUS_NONE,
@@ -404,7 +404,7 @@ totem_playlist_add_one_row_impl (TotemPlaylist *playlist,
 	// }
 	// else
 	// {
-							printf ("(totem_playlist_add_one_row_impl) use insert_with_values \n");
+							// printf ("(totem_playlist_add_one_row_impl) use insert_with_values \n");
 		// If there is no current item, insert a new row.
     	gtk_list_store_insert_with_values (store, &insert_iter, -1,  // Insert at the end
                                       PLAYING_COL, playing ? TOTEM_PLAYLIST_STATUS_PAUSED : TOTEM_PLAYLIST_STATUS_NONE,
@@ -609,20 +609,20 @@ totem_playlist_has_previous_item (TotemPlaylist *playlist)
 		return FALSE;
 	}
 
-	/**
-	 * gtk_tree_model_get_iter:
-	 * @tree_model: a `GtkTreeModel`
-	 * @iter: (out): the uninitialized `GtkTreeIter`
-	 * @path: the `GtkTreePath`
-	 *
-	 * Sets @iter to a valid iterator pointing to @path.
-	 *
-	 * If @path does not exist, @iter is set to an invalid
-	 * iterator and %FALSE is returned.
-	 *
-	 * Returns: %TRUE, if @iter was set
-	 *
-	 */
+	// /**
+	//  * gtk_tree_model_get_iter:
+	//  * @tree_model: a `GtkTreeModel`
+	//  * @iter: (out): the uninitialized `GtkTreeIter`
+	//  * @path: the `GtkTreePath`
+	//  *
+	//  * Sets @iter to a valid iterator pointing to @path.
+	//  *
+	//  * If @path does not exist, @iter is set to an invalid
+	//  * iterator and %FALSE is returned.
+	//  *
+	//  * Returns: %TRUE, if @iter was set
+	//  *
+	//  */
 	gtk_tree_model_get_iter (playlist->model,
 				 &iter,
 				 playlist->current);
@@ -644,20 +644,20 @@ totem_playlist_has_next_item (TotemPlaylist *playlist)
 		return FALSE;
 	}
 
-	/**
-	 * gtk_tree_model_get_iter:
-	 * @tree_model: a `GtkTreeModel`
-	 * @iter: (out): the uninitialized `GtkTreeIter`
-	 * @path: the `GtkTreePath`
-	 *
-	 * Sets @iter to a valid iterator pointing to @path.
-	 *
-	 * If @path does not exist, @iter is set to an invalid
-	 * iterator and %FALSE is returned.
-	 *
-	 * Returns: %TRUE, if @iter was set
-	 *
-	 */
+	// /**
+	//  * gtk_tree_model_get_iter:
+	//  * @tree_model: a `GtkTreeModel`
+	//  * @iter: (out): the uninitialized `GtkTreeIter`
+	//  * @path: the `GtkTreePath`
+	//  *
+	//  * Sets @iter to a valid iterator pointing to @path.
+	//  *
+	//  * If @path does not exist, @iter is set to an invalid
+	//  * iterator and %FALSE is returned.
+	//  *
+	//  * Returns: %TRUE, if @iter was set
+	//  *
+	//  */
 	gtk_tree_model_get_iter (playlist->model,
 				 &iter,
 				 playlist->current);
@@ -795,35 +795,35 @@ totem_playlist_set_previous (TotemPlaylist *playlist)
 				 &iter,
 				 playlist->current);
 
-	/**
-	 * gtk_tree_model_iter_previous:
-	 * @tree_model: a `GtkTreeModel`
-	 * @iter: (in): the `GtkTreeIter`
-	 *
-	 * Sets @iter to point to the previous node at the current level.
-	 *
-	 * If there is no previous @iter, %FALSE is returned and @iter is
-	 * set to be invalid.
-	 *
-	 * Returns: %TRUE if @iter has been changed to the previous node
-	 */
+	// /**
+	//  * gtk_tree_model_iter_previous:
+	//  * @tree_model: a `GtkTreeModel`
+	//  * @iter: (in): the `GtkTreeIter`
+	//  *
+	//  * Sets @iter to point to the previous node at the current level.
+	//  *
+	//  * If there is no previous @iter, %FALSE is returned and @iter is
+	//  * set to be invalid.
+	//  *
+	//  * Returns: %TRUE if @iter has been changed to the previous node
+	//  */
 	if (!gtk_tree_model_iter_previous (playlist->model, &iter))
 	{
 		g_assert_not_reached ();
 	}
 	gtk_tree_path_free (playlist->current);
-	/**
-	 * gtk_tree_model_get_path:
-	 * @tree_model: a `GtkTreeModel`
-	 * @iter: the `GtkTreeIter`
-	 *
-	 * Returns a newly-created `GtkTreePath` referenced by @iter.
-	 *
-	 * This path should be freed with gtk_tree_path_free().
-	 *
-	 * Returns: a newly-created `GtkTreePath`
-	 *
-	 */
+	// /**
+	//  * gtk_tree_model_get_path:
+	//  * @tree_model: a `GtkTreeModel`
+	//  * @iter: the `GtkTreeIter`
+	//  *
+	//  * Returns a newly-created `GtkTreePath` referenced by @iter.
+	//  *
+	//  * This path should be freed with gtk_tree_path_free().
+	//  *
+	//  * Returns: a newly-created `GtkTreePath`
+	//  *
+	//  */
 	playlist->current = gtk_tree_model_get_path(playlist->model, &iter);
 }
 
@@ -845,53 +845,53 @@ totem_playlist_set_next (TotemPlaylist *playlist)
 
 	totem_playlist_unset_playing (playlist);
 
-	/**
-	 * gtk_tree_model_get_iter:
-	 * @tree_model: a `GtkTreeModel`
-	 * @iter: (out): the uninitialized `GtkTreeIter`
-	 * @path: the `GtkTreePath`
-	 *
-	 * Sets @iter to a valid iterator pointing to @path.
-	 *
-	 * If @path does not exist, @iter is set to an invalid
-	 * iterator and %FALSE is returned.
-	 *
-	 * Returns: %TRUE, if @iter was set
-	 */
+	// /**
+	//  * gtk_tree_model_get_iter:
+	//  * @tree_model: a `GtkTreeModel`
+	//  * @iter: (out): the uninitialized `GtkTreeIter`
+	//  * @path: the `GtkTreePath`
+	//  *
+	//  * Sets @iter to a valid iterator pointing to @path.
+	//  *
+	//  * If @path does not exist, @iter is set to an invalid
+	//  * iterator and %FALSE is returned.
+	//  *
+	//  * Returns: %TRUE, if @iter was set
+	//  */
 	gtk_tree_model_get_iter (playlist->model,
 				 &iter,
 				 playlist->current);
 
-	/**
-	 * gtk_tree_model_iter_next:
-	 * @tree_model: a `GtkTreeModel`
-	 * @iter: (in): the `GtkTreeIter`
-	 *
-	 * Sets @iter to point to the node following it at the current level.
-	 *
-	 * If there is no next @iter, %FALSE is returned and @iter is set
-	 * to be invalid.
-	 *
-	 * Returns: %TRUE if @iter has been changed to the next node
-	 */
+	// /**
+	//  * gtk_tree_model_iter_next:
+	//  * @tree_model: a `GtkTreeModel`
+	//  * @iter: (in): the `GtkTreeIter`
+	//  *
+	//  * Sets @iter to point to the node following it at the current level.
+	//  *
+	//  * If there is no next @iter, %FALSE is returned and @iter is set
+	//  * to be invalid.
+	//  *
+	//  * Returns: %TRUE if @iter has been changed to the next node
+	//  */
 	if (!gtk_tree_model_iter_next (playlist->model, &iter))
 	{
 		g_assert_not_reached ();
 	}
 	gtk_tree_path_free (playlist->current);
-	/**
-	 * gtk_tree_model_get_path:
-	 * @tree_model: a `GtkTreeModel`
-	 * @iter: the `GtkTreeIter`
-	 *
-	 * Returns a newly-created `GtkTreePath` referenced by @iter.
-	 *
-	 * This path should be freed with gtk_tree_path_free().
-	 *
-	 * Returns: a newly-created `GtkTreePath`
-	 *
-	 * Deprecated: 4.10
-	 */
+	// /**
+	//  * gtk_tree_model_get_path:
+	//  * @tree_model: a `GtkTreeModel`
+	//  * @iter: the `GtkTreeIter`
+	//  *
+	//  * Returns a newly-created `GtkTreePath` referenced by @iter.
+	//  *
+	//  * This path should be freed with gtk_tree_path_free().
+	//  *
+	//  * Returns: a newly-created `GtkTreePath`
+	//  *
+	//  * Deprecated: 4.10
+	//  */
 	playlist->current = gtk_tree_model_get_path (playlist->model, &iter);
 }
 

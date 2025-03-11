@@ -85,7 +85,7 @@ zoom_action_change_state (GSimpleAction *action,
 }
 
 
-//playlist repeat mode, when last song finished,start back at begining item
+//playlist repeat mode, when last movie finished,start back at begining and play then, no pause
 static void
 repeat_change_state (GSimpleAction *action,
 		     GVariant      *value,

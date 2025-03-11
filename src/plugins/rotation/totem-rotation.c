@@ -57,8 +57,12 @@ store_state_cb (GObject      *source_object,
 		}
 		g_error_free (error);
 	}
+
+			// printf ("(totem-rotation) store_state_cb success \n");
+
 }
 
+//save rotation state on the video file
 static void
 store_state (TotemRotationPlugin *pi)
 {
@@ -68,13 +72,16 @@ store_state (TotemRotationPlugin *pi)
 	char *fpath;
 	GFile *file;
 
+	//rotation state which is a enum integer
 	rotation = bacon_video_widget_get_rotation (BACON_VIDEO_WIDGET (pi->bvw));
 	rotation_s = g_strdup_printf ("%u", rotation);
 	info = g_file_info_new ();
+	//save it as a file attribute
 	g_file_info_set_attribute_string (info, GIO_ROTATION_FILE_ATTRIBUTE, rotation_s);
 	g_free (rotation_s);
 
 	fpath = totem_object_get_current_full_path (pi->totem);
+	fpath = g_strconcat ("file://", fpath, NULL);
 	file = g_file_new_for_uri (fpath);
 	g_free (fpath);
 	g_file_set_attributes_async (file,
@@ -84,9 +91,11 @@ store_state (TotemRotationPlugin *pi)
 				     pi->cancellable,
 				     store_state_cb,
 				     pi);
+
 	g_object_unref (file);
 }
 
+//resume rotation state you previously set
 static void
 restore_state_cb (GObject      *source_object,
 		  GAsyncResult *res,
@@ -114,6 +123,9 @@ restore_state_cb (GObject      *source_object,
 	if (!rotation_s || *rotation_s == '\0')
 		goto out;
 
+		// printf ("(totem-rotation) restore_state_cb success \n");
+
+
 	rotation = atoi (rotation_s);
 	bacon_video_widget_set_rotation (BACON_VIDEO_WIDGET (pi->bvw), rotation);
 
@@ -121,34 +133,55 @@ out:
 	g_object_unref (info);
 }
 
+
+
 static void
 restore_state (TotemRotationPlugin *pi)
-{
+{			
 	char *fpath;
 	GFile *file;
 
+	//file must already created even it is downloading if we not seeder
 	fpath = totem_object_get_current_full_path (pi->totem);
+	fpath = g_strconcat ("file://", fpath, NULL);
 	file = g_file_new_for_uri (fpath);
 	g_free (fpath);
 
-	g_file_query_info_async (file,
-				 GIO_ROTATION_FILE_ATTRIBUTE,
-				 G_FILE_QUERY_INFO_NONE,
-				 G_PRIORITY_DEFAULT,
-				 pi->cancellable,
-				 restore_state_cb,
-				 pi);
+	gboolean file_exists = g_file_query_exists (file, NULL);
+	if(file_exists)
+	{
+		g_file_query_info_async (file,
+			GIO_ROTATION_FILE_ATTRIBUTE,
+			G_FILE_QUERY_INFO_NONE,
+			G_PRIORITY_DEFAULT,
+			pi->cancellable,
+			restore_state_cb,
+			pi);
+	}
+	//file has not created in libtorrent,so skip restore rotation state from video file attribute
+	else 
+	{
+		// printf ("(totem-rotation/restore_state) file has not created, no op \n");
+	}
 	g_object_unref (file);
 }
+
+
 
 static void
 update_state (TotemRotationPlugin *pi,
 	      const char          *fpath)
 {
-	if (fpath == NULL) {
+	if (fpath == NULL) 
+	{
 		g_simple_action_set_enabled (pi->rotate_left_action, FALSE);
 		g_simple_action_set_enabled (pi->rotate_right_action, FALSE);
-	} else {
+	} 
+	else 
+	{
+
+				//printf ("(totem-rotation) update_state\n");
+
 		g_simple_action_set_enabled (pi->rotate_left_action, TRUE);
 		g_simple_action_set_enabled (pi->rotate_right_action, TRUE);
 		restore_state (pi);
@@ -248,9 +281,10 @@ impl_activate (PeasActivatable *plugin)
 	g_menu_item_set_attribute (item, "accel", "s", "<Primary><Shift>R");
 	g_menu_append_item (G_MENU (menu), item);
 
-	fpath = totem_object_get_current_full_path (pi->totem);
-	update_state (pi, fpath);
-	g_free (fpath);
+	//resume playing not impl
+	// fpath = totem_object_get_current_full_path (pi->totem);
+	// update_state (pi, fpath);
+	// g_free (fpath);
 }
 
 static void

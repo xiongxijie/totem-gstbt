@@ -90,8 +90,8 @@ typedef struct {
 
 typedef struct 
 {
-  guint32 piece_index;
-  guint8*  blocks_progress;
+    guint32  piece_index;
+    guint8*  blocks_progress;
 } DownloadingBlocks;
 
 typedef struct 
@@ -214,6 +214,12 @@ typedef struct _GstBtDemux
 
   GAsyncQueue *ppi_queue;
   //// std::vector<libtorrent::partial_piece_info> ppi;
+
+  //since ppi may not accurate enough, use this array to keep track of each piece 
+  //when piece_finished_alert comes, we set corresponding bit 
+  guint8* piece_matrix_fallback;
+
+
   
 } GstBtDemux;
 

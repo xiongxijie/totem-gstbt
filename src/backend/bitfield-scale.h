@@ -44,3 +44,7 @@ bitfield_scale_set_piece_block_info (GtkWidget *widget, gint num_blocks, gint nu
 
 void 
 bitfield_scale_set_whole_piece_finished (GtkWidget *widget, guint8 * finished_pieces);
+
+
+void 
+bitfield_scale_update_piece_matrix_fallback (GtkWidget *widget, guint8 * piece_matrix);

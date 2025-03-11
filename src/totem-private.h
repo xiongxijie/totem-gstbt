@@ -62,7 +62,7 @@ struct _TotemObject {
 	GtkWidget *seek;
 
 	GtkAdjustment *seekadj;
-	gboolean seek_lock;
+	gboolean seek_lock;/*a bool can also func as a lock*/
 	gboolean seekable;
 
 	/* Volume */
@@ -108,6 +108,10 @@ struct _TotemObject {
 
 	gboolean disable_kbd_shortcuts;
 	gboolean has_played_emitted;
+
+	#if 2
+	gboolean is_stream_length_set;
+	#endif
 };
 
 #define SEEK_FORWARD_OFFSET 60
@@ -124,14 +128,17 @@ struct _TotemObject {
 // void	totem_object_open			(Totem *totem);
 // void	totem_object_open_location		(Totem *totem);
 // void	totem_object_eject			(Totem *totem);
+
 void	totem_object_show_help			(Totem *totem);
 void	totem_object_show_keyboard_shortcuts	(Totem *totem);
 void    totem_object_set_fileidx			(TotemObject *totem,
 						 						gint fileidx);
 
 void	totem_object_set_fullscreen		(TotemObject *totem, gboolean state);
+
 // void	totem_object_set_main_page		(TotemObject *totem,
 // 						 const char  *page_id);
-const char * totem_object_get_main_page		(Totem *totem);
+// const char * totem_object_get_main_page		(Totem *totem);
+
 void	totem_object_add_items_to_playlist	(TotemObject *totem,
 						 GList       *items);

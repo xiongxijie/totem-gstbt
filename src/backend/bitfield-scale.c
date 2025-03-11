@@ -21,7 +21,11 @@ struct _BitfieldScale
     guint8 *have_bitfield;/*bitfield represent what pieces we already have*/
     UnfinishedPieceInfo*  unfinished_block_bitfield;/*bitfield of blocks within the piece for partial-downloaded pieces*/
     GMutex lock;  // Mutex for synchronizing access to downloading_blocks
+
+  
 };
+
+
 
 
 
@@ -33,12 +37,17 @@ G_DEFINE_TYPE (BitfieldScale, bitfield_scale, GTK_TYPE_SCALE)
 
 /***************************helper******************************/
 static gboolean 
-is_bit_set(guint8 *byte_array, gint byte_array_len, gint bit_index) 
+is_bit_set (guint8 *byte_array, gint byte_array_len, gint bit_index) 
 {
-    g_return_val_if_fail(byte_array != NULL, FALSE);
+    // g_return_val_if_fail(byte_array != NULL, FALSE);
+    if (byte_array == NULL) 
+    {
+        return FALSE;
+    }
 
     // Check that the bit_index is valid
-    if (bit_index >= byte_array_len * 8) {
+    if (bit_index >= byte_array_len * 8) 
+    {
         g_warning("bit_index out of bounds");
         return FALSE;  // or return FALSE to indicate invalid bit index
     }
@@ -47,17 +56,32 @@ is_bit_set(guint8 *byte_array, gint byte_array_len, gint bit_index)
     gsize byte_index = bit_index / 8;
     gint bit_position = bit_index % 8;
 
+    if (byte_index >= byte_array_len)
+    {
+        printf ("bit_index invalid %ld, %d\n", byte_index, byte_array_len);
+        return FALSE;  // or return FALSE to indicate invalid bit index
+    }
+
     // Get the byte at the calculated index
     guint8 byte = byte_array[byte_index];  
 
+    gint ret = byte & (1 << bit_position);
     // Check if the bit at the given position is set
-    if (byte & (1 << bit_position)) 
+
+    if (ret != 0) 
     {
         return TRUE;  // The bit is set
-    } else {
+    } 
+    else 
+    {
         return FALSE; // The bit is unset
     }
+
+    // return TRUE;
+
 }
+
+
 
 static void 
 print_bit_status(guint8 *byte_array, gsize bitfield_len) 
@@ -169,12 +193,25 @@ bitfield_scale_draw (GtkWidget* widget, cairo_t *cr)
     //Draw Bitfield
     BitfieldScale *self = BITFIELD_SCALE (widget);
 
-
-    /*g_return_val_if_fail*/if (self->num_blocks <= 0 || self->have_bitfield==NULL || self->unfinished_block_bitfield==NULL);
-                            {
-                                return FALSE;
-                            }
-
+    
+    if(FALSE) {
+        return FALSE;
+    }
+    
+    
+    if (self == NULL || 
+        self->num_blocks <= 0 || 
+        self->num_pieces <= 0 || 
+        self->block_per_piece_normal <=0 || 
+        self->block_in_last_piece <= 0 || 
+        self->have_bitfield==NULL || 
+        self->unfinished_block_bitfield==NULL
+    )
+    {                       
+        return FALSE;
+    }
+        
+                            // printf ("(bitfield_scale_draw) start to draw\n");
 
     GtkAllocation allocation;
     gint width, height;
@@ -189,12 +226,17 @@ bitfield_scale_draw (GtkWidget* widget, cairo_t *cr)
     segment_width = (double) width / self->num_blocks;
 
     //Iterate each piece (Sequentially)
-    for (int i = 0; i < self->num_pieces; i++) 
+    for (int i=0; i < self->num_pieces; i++) 
     {
         gint block_index;
         
         // if this piece is the one we're downloading
         // if downloading_blocks is NULL, Loop will not entered
+        // from piece_info_alert, but it may not be accurate (aka. even when i keep downloading from zero to whole torrent, 
+        // the bitfield still not complete) , So, we should also use piece_finished_alert as a fallback to mark whole piece completed 
+        // if this piece not colored in bitfield
+        // This may Looks stupid, but just do what you can do at your *level*, don't want to endless improvement, we need a closure
+        // if it still sucks, just f_Uck it
         if(self->downloading_blocks)
         {
             for (gint d_idx=0; d_idx<self->downloading_blocks->size; ++d_idx) 
@@ -207,14 +249,12 @@ bitfield_scale_draw (GtkWidget* widget, cairo_t *cr)
                 if (current_piece_index == i) 
                 {
                     UnfinishedPieceInfo info = self->unfinished_block_bitfield[i];
-
+                    
                     guint8* prog = self->downloading_blocks->array[d_idx].blocks_progress;
 
                     gdouble is_last_piece = (info.piece_index==self->num_pieces-1);
 
-                    gint blocks_bitfield_len = is_last_piece ? self->block_in_last_piece : self->block_per_piece_normal;
-
-
+                    gint blocks_bitfield_len = is_last_piece ? (self->block_in_last_piece+7)/8 : (self->block_per_piece_normal+7)/8;
 
                     if(!prog)
                     {
@@ -223,53 +263,52 @@ bitfield_scale_draw (GtkWidget* widget, cairo_t *cr)
 
                     //if it is last piece
                     guint b_idx_end = self->block_per_piece_normal;
-                    if(current_piece_index ==self->num_pieces-1)
+                    if(current_piece_index == self->num_pieces-1)
                     {
                         b_idx_end = self->block_in_last_piece;
                     }
 
-
-                    //loop every block within this piece
+                    //loop through every block within this piece
                     for (gint b_idx=0; b_idx<b_idx_end; ++b_idx)
                     {
-                        if(prog[b_idx])
+                        if(prog[b_idx]) 
+                        {
                             block_progress = prog[b_idx]/100;
+                        }
 
                         // Calculate the filled width based on progress.
                         double filled_width = block_progress * segment_width;
-                        cairo_set_source_rgb(cr, 1.0, 0.647, 0.0); // Orange color
+                        cairo_set_source_rgb (cr, 1.0, 0.647, 0.0); // Orange color
                         // Draw the block's progress.
-                        cairo_rectangle(cr, i*self->block_per_piece_normal*segment_width+b_idx*segment_width, 0, 
+                        cairo_rectangle (cr, i*self->block_per_piece_normal*segment_width+b_idx*segment_width, 0, 
                         filled_width, height);
-                        cairo_fill(cr);
+                        cairo_fill (cr);
 
-                        if (block_progress == 1.0) 
+                        if (block_progress >= 1.0) 
                         {   
                             // Update the unfinished_block_bitfield to mark this block as downloaded.
                             set_bit_in_bitfield (info.blocks_bitfield, blocks_bitfield_len, b_idx);
                         }
-
                     }
 
                     // Check if the entire piece is downloaded by checking all blocks in the piece.
                     if (is_block_bitfield_complete_cur_piece (info.blocks_bitfield,  self->block_per_piece_normal, self->block_in_last_piece, is_last_piece))
                     {
                         // Mark the entire piece as downloaded in the have_bitfield.
-                        set_bit_in_bitfield(self->have_bitfield, self->num_pieces,  i);
+                        set_bit_in_bitfield (self->have_bitfield, (self->num_pieces+7)/8,  i);
                     } 
                 }
-        
             }
         }
 
 
-        //resume data
-        if (is_bit_set(self->have_bitfield, self->num_pieces, i)) 
-        {
-            cairo_set_source_rgb(cr, 0.0, 1.0, 0.0); // Green color
+        // resume data
+        if (is_bit_set (self->have_bitfield, (self->num_pieces+7)/8, i)) 
+        { 
+            cairo_set_source_rgb (cr, 0.0, 1.0, 0.0); // Green color
             gint block_width = (i < self->num_pieces - 1) ? self->block_per_piece_normal : self->block_in_last_piece;
 
-            cairo_rectangle(cr, i * self->block_per_piece_normal * segment_width, 0, 
+            cairo_rectangle (cr, i * self->block_per_piece_normal * segment_width, 0, 
                 block_width * segment_width, height);
 
             cairo_fill(cr);
@@ -280,16 +319,16 @@ bitfield_scale_draw (GtkWidget* widget, cairo_t *cr)
             if (i < self->num_pieces - 1) 
             {
                 // For non-last pieces, we know the block count is normal.
-                for (int j = 0; j < self->block_per_piece_normal; j++) 
+                for (int j=0; j < self->block_per_piece_normal; j++) 
                 {
-                    UnfinishedPieceInfo info = self->unfinished_block_bitfield[j];
-                    // `j` is whthin [0, block_per_piece_normal]
-                    if (is_bit_set (info.blocks_bitfield, self->block_per_piece_normal, j))
+                    UnfinishedPieceInfo info = self->unfinished_block_bitfield[i];
+            
+                    if (is_bit_set (info.blocks_bitfield, (self->block_per_piece_normal+7)/8, j))
                     {
-                        cairo_set_source_rgb(cr, 0.0, 1.0, 0.0); // Green color
-                        cairo_rectangle(cr, i * self->block_per_piece_normal * segment_width + j * segment_width, 0, 
+                        cairo_set_source_rgb (cr, 0.0, 1.0, 0.0); // Green color
+                        cairo_rectangle (cr, i * self->block_per_piece_normal * segment_width + j * segment_width, 0, 
                         segment_width, height);
-                        cairo_fill(cr);
+                        cairo_fill (cr);
                     }
                 }
             } 
@@ -299,9 +338,9 @@ bitfield_scale_draw (GtkWidget* widget, cairo_t *cr)
                 // For the last piece, use the block_in_last_piece count.
                 for (int j = 0; j < self->block_in_last_piece; j++) 
                 {
-                    UnfinishedPieceInfo info = self->unfinished_block_bitfield[j];
+                    UnfinishedPieceInfo info = self->unfinished_block_bitfield[i];
                     // `j` is whthin [0, block_in_last_piece]
-                    if (is_bit_set (info.blocks_bitfield, self->block_per_piece_normal, j)) 
+                    if (is_bit_set (info.blocks_bitfield, (self->block_in_last_piece+7)/8, j)) 
                     {
                         cairo_set_source_rgb (cr, 0.0, 1.0, 0.0); // Green color
                         cairo_rectangle (cr, i*self->block_per_piece_normal*segment_width+j*segment_width, 0, 
@@ -317,6 +356,8 @@ g_mutex_unlock(&self->lock);/***************************************************
 
     return FALSE;
 }
+
+
 
 
 
@@ -345,6 +386,9 @@ bitfield_scale_class_init (BitfieldScaleClass *klass)
 static void
 bitfield_scale_init (BitfieldScale *self)
 {   
+
+                        printf ("(bitfield_scale_init) \n");
+
     self->downloading_blocks = NULL;
 
     self->num_blocks = -1;
@@ -355,6 +399,7 @@ bitfield_scale_init (BitfieldScale *self)
     self->have_bitfield = NULL;
     self->unfinished_block_bitfield = NULL;
 
+
     // Initialize the mutex when the object is created
     g_mutex_init(&self->lock);
 }
@@ -362,10 +407,11 @@ bitfield_scale_init (BitfieldScale *self)
 
 
 static void 
-bitfield_scale_finalize(GObject *object) 
+bitfield_scale_finalize (GObject *object) 
 {
     BitfieldScale *self = BITFIELD_SCALE(object);
 
+printf ("(bitfield_scale_finalize) \n");
 
     if (self->downloading_blocks != NULL) 
     {
@@ -427,13 +473,35 @@ bitfield_scale_update_downloading_blocks (BitfieldScale *self, DownloadingBlocks
 {
     g_return_if_fail(BITFIELD_IS_SCALE (self));
     g_return_if_fail (self->num_blocks > 0);
+    g_return_if_fail (self->num_pieces > 0);
+
     g_return_if_fail (sd!=NULL);
 
 g_mutex_lock(&self->lock);/**************************************/
 
 
+// printf ("(third ppi addr %p) \n", sd);
 
-    // Ensure that we take ownership of the list
+    /*local test*/
+    for (gint d_idx=0; d_idx<sd->size; ++d_idx) 
+    {
+        gint current_piece_index = sd->array[d_idx].piece_index;
+
+        guint8* prog = sd->array[d_idx].blocks_progress;
+
+        guint b_idx_end = self->block_per_piece_normal;
+        if(current_piece_index == self->num_pieces-1)
+        {
+            b_idx_end = self->block_in_last_piece;
+        }
+
+        //loop through every block within this piece
+        for (gint b_idx=0; b_idx<b_idx_end; ++b_idx)
+        {
+            // printf ("%d>>%d\n", current_piece_index, prog[b_idx]);
+        }
+    }
+
     if (self->downloading_blocks != sd) 
     {
         //free previous
@@ -444,17 +512,19 @@ g_mutex_lock(&self->lock);/**************************************/
                 for(gint i=0;i<self->downloading_blocks->size;i++)
                 {
                     g_free (self->downloading_blocks->array[i].blocks_progress);
-
                 }
                 g_free (self->downloading_blocks->array);
             }
             g_free (self->downloading_blocks);  
-         }
-         self->downloading_blocks = sd;
+        }
+
+        // Take Ownership, no copy
+        self->downloading_blocks = sd;
 
         // Mark widget to be redrawn
-        gtk_widget_queue_draw(GTK_WIDGET(self));
+        gtk_widget_queue_draw (GTK_WIDGET (self));
     }
+
 
 g_mutex_unlock(&self->lock);/**************************************/
 
@@ -474,10 +544,13 @@ bitfield_scale_set_piece_block_info (GtkWidget *widget,
                                     guint8                 *finished_pieces,
                                     UnfinishedPieceInfo    *unfinished_pieces)
 {
+
     BitfieldScale *self = BITFIELD_SCALE (widget);
-
-    g_return_if_fail(BITFIELD_IS_SCALE (self));
-
+    
+    g_return_if_fail (BITFIELD_IS_SCALE (self));
+    
+    printf ("(bitfield_scale_set_piece_block_info) %d,%d,%d,%d\n", num_blocks, num_pieces, block_per_piece_normal, block_last_piece);
+    
     //Mandatory
     if(self->num_blocks < 0)
     {
@@ -485,14 +558,16 @@ bitfield_scale_set_piece_block_info (GtkWidget *widget,
     }
     if(self->num_pieces < 0)
     {
-        self->num_pieces = num_pieces;
+        self->num_pieces = num_pieces;      
     }
     if(self->block_per_piece_normal < 0)
     {
+
         self->block_per_piece_normal = block_per_piece_normal;
     }
     if(self->block_in_last_piece < 0)
     {
+
         self->block_in_last_piece = block_last_piece;
     }
 
@@ -500,12 +575,19 @@ bitfield_scale_set_piece_block_info (GtkWidget *widget,
     {
         if( finished_pieces != NULL )
         {
-                //Take Ownership
-            self->have_bitfield = finished_pieces;
+            //Duplicate our own copy
+            self->have_bitfield = g_memdup (finished_pieces, (self->num_pieces + 7) / 8);
+// printf ("fourth PieceBlockInfoSd addr %p \n", self->have_bitfield);
+            /* local test */
+            // for (int i=0; i<(self->num_pieces+7)/8; i++)
+            // {
+            //     guint8 line = self->have_bitfield[i];
+            //     printf ("have_bitfield>>%d \n",line);
+            // }
         }
         else
         {
-            g_warning("have_bitfield is NULL\n");
+            printf ("(bitfield_scale_set_piece_block_info) EMPTY have_bitfield\n");
         }
     }
 
@@ -513,15 +595,40 @@ bitfield_scale_set_piece_block_info (GtkWidget *widget,
     {   
         if (unfinished_pieces != NULL)
         {
-                //Take Ownership
-            self->unfinished_block_bitfield = unfinished_pieces;
+            //Duplicate our own copy
+            UnfinishedPieceInfo* copy = g_new0 (UnfinishedPieceInfo, self->num_pieces);
+            for (gsize i=0;i<self->num_pieces; i++)
+            {
+                copy[i].piece_index = unfinished_pieces[i].piece_index;
+                if (unfinished_pieces[i].blocks_bitfield != NULL){
+                    copy[i].blocks_bitfield = g_memdup (unfinished_pieces[i].blocks_bitfield, (self->block_per_piece_normal+ 7) / 8);
+                }
+            }
+            
+            self->unfinished_block_bitfield = copy;
+
+            /*local test*/
+            // for (int pidx=0; pidx<self->num_pieces; pidx++)
+            // {
+            //     UnfinishedPieceInfo info = self->unfinished_block_bitfield[pidx];
+            //     if (info.blocks_bitfield)
+            //     {
+            //         for (int i=0; i<(self->block_per_piece_normal+7)/8; i++)
+            //         {
+            //             printf ("unfinished>>%d \n",info.blocks_bitfield[i]); 
+            //         }
+            //     }
+            // }
+
         }
-        else
+        else 
         {
-            g_warning("unfinished_block_bitfield is NULL\n");
+            printf ("(bitfield_scale_set_piece_block_info) EMPTY unfinished_block_bitfield\n");
         }
     }
+
 }
+
 
 
 
@@ -530,13 +637,16 @@ bitfield_scale_set_piece_block_info (GtkWidget *widget,
 void 
 bitfield_scale_set_whole_piece_finished (GtkWidget *widget, guint8 * finished_pieces)
 {
+                
     BitfieldScale *self = BITFIELD_SCALE (widget);
 
     g_return_if_fail(BITFIELD_IS_SCALE (self));
     g_return_if_fail (finished_pieces != NULL);
     g_return_if_fail (self->num_pieces != -1);
 
-    if(self->have_bitfield != NULL)
+            printf ("(bitfield_scale_set_whole_piece_finished)\n");
+
+    if (self->have_bitfield != NULL)
     {
         for (gint i=0; i<self->num_pieces; ++i)
         {
@@ -544,7 +654,7 @@ bitfield_scale_set_whole_piece_finished (GtkWidget *widget, guint8 * finished_pi
             gboolean bit_status_new = is_bit_set (finished_pieces, self->num_pieces, i);
             if (bit_status_new == TRUE && bit_status == FALSE)
             {
-                set_bit_in_bitfield (self->have_bitfield, self->num_pieces, i);
+                set_bit_in_bitfield (self->have_bitfield, (self->num_pieces+7)/8, i);
             }
         }
     }
@@ -554,5 +664,36 @@ bitfield_scale_set_whole_piece_finished (GtkWidget *widget, guint8 * finished_pi
 
 
 
+
+//this func called periodically, collecting from piece_finished_alerts , as a fallback to ppi who may not be accurate represent the piece bitfield,
+//it just show the currently piece that have outstanding requests or writes
+void 
+bitfield_scale_update_piece_matrix_fallback (GtkWidget *widget, guint8 * piece_matrix)
+{
+                
+    BitfieldScale *self = BITFIELD_SCALE (widget);
+
+    g_return_if_fail(BITFIELD_IS_SCALE (self));
+    g_return_if_fail (self->num_pieces != -1);
+    if (piece_matrix == NULL)
+    {
+        return;
+    }
+    
+    if(self->have_bitfield != NULL)
+    {
+        for (gint i=0; i<self->num_pieces; ++i)
+        {
+            gboolean bit_status = is_bit_set (self->have_bitfield, self->num_pieces, i);
+            gboolean bit_status_new = is_bit_set (piece_matrix, self->num_pieces, i);
+
+            //if it not set, then set it or skip
+            if (!bit_status && bit_status_new == TRUE)
+            {
+                set_bit_in_bitfield (self->have_bitfield, (self->num_pieces+7)/8, i);
+            }
+        }
+    }
+}
 
 

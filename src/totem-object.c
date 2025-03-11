@@ -77,7 +77,7 @@ static const GtkTargetEntry target_table[] = {
 
 
 static void update_buttons (TotemObject *totem);
-static void playlist_changed_cb (GtkWidget *playlist, TotemObject *totem);
+// static void playlist_changed_cb (GtkWidget *playlist, TotemObject *totem);
 static void play_pause_set_label (TotemObject *totem, TotemStates state);
 static void totem_object_set_fileidx_and_play (TotemObject *totem, gint fileidx);
 static void mark_popup_busy (TotemObject *totem, const char *reason);
@@ -90,6 +90,8 @@ static void totem_got_torrent_videos_info (BaconVideoWidget* bvw ,TotemObject * 
 static void totem_got_piece_block_info (BaconVideoWidget* bvw ,PieceBlockInfoSd *sd, TotemObject * totem);
 static void totem_got_finished_piece_info (BaconVideoWidget* bvw ,guint8 *byte_array, TotemObject * totem);
 static void totem_got_ppi_info (BaconVideoWidget *bvw, DownloadingBlocksSd *sd, TotemObject *totem);
+static void totem_got_piece_matrix (BaconVideoWidget* bvw ,guint8 *piece_matrix, TotemObject * totem);
+
 
 #define action_set_sensitive(name, state)					\
 	{										\
@@ -206,6 +208,8 @@ totem_object_plugins_shutdown (TotemObject *totem)
 
 
 
+
+//totem will become a sub "widget" of transmission, so GApplication no more used
 static void
 totem_object_app_open (GApplication  *application,
 		       GFile        **files,
@@ -214,26 +218,19 @@ totem_object_app_open (GApplication  *application,
 {
 
 					printf("(totem_object_app_open) \n");
-
 					for (gint i = 0; i < n_files; i++) 
 					{
 						GFile *file = files[i];
 						gchar *file_path = g_file_get_path(file);
-
 						// Use the file_path as needed
 						g_print("File %d: %s\n", i, file_path);
-
 						// Free the allocated file path
 						g_free(file_path);
 					}
-
-
 	GSList *slist = NULL;
 	Totem *totem = TOTEM_OBJECT (application);
 	int i;
-
 	// optionstate.had_filenames = (n_files > 0);
-
 	g_application_activate (application);
 	gtk_window_present_with_time (GTK_WINDOW (totem->win),
 				      gtk_get_current_event_time ());
@@ -247,6 +244,11 @@ totem_object_app_open (GApplication  *application,
 	// totem_object_open_files_list (TOTEM_OBJECT (application), slist);
 	g_slist_free_full (slist, g_free);
 }
+
+
+
+
+
 
 
 
@@ -289,6 +291,9 @@ totem_object_app_activate (GApplication *app)
 
 
 					g_signal_connect (totem->bvw, "ppi-info", G_CALLBACK (totem_got_ppi_info), totem);
+
+					
+					g_signal_connect (totem->bvw, "piece-matrix", G_CALLBACK (totem_got_piece_matrix), totem);
 
 
 	totem->win = GTK_WIDGET (gtk_builder_get_object (totem->xml, "totem_main_window"));
@@ -371,10 +376,8 @@ totem_object_app_activate (GApplication *app)
 				printf("(totem_object_app_activate) set fileidx as -1 to start pipeline but not playing yet \n");
 			//initially set fileidx as -1, we start the pipeline, so btdemux can start loop , so can it feed videos_info to retrieve playlist
 			totem_object_set_fileidx (totem, TOTEM_NULL_STREAMING_FILE_IDX);
-			bacon_video_widget_open (totem->bvw, -1);
+			bacon_video_widget_open (totem->bvw, TOTEM_NULL_STREAMING_FILE_IDX);
 
-
-			//// totem_object_play(totem);
 
 			g_application_unmark_busy (G_APPLICATION (totem));
 
@@ -613,7 +616,10 @@ totem_object_init (TotemObject *totem)
 
 	totem->settings = g_settings_new (TOTEM_GSETTINGS_SCHEMA);
 
-	// g_application_add_main_option_entries (G_APPLICATION (totem), all_options);
+	totem->is_stream_length_set = FALSE;
+
+	//in the future, totem should not a gapplication in gnome desktop env, it should be a gobject that can be used by others
+	//// g_application_add_main_option_entries (G_APPLICATION (totem), all_options);
 	g_application_add_option_group (G_APPLICATION (totem), bacon_video_widget_get_option_group ());
 	
 						// printf("totem->busy_popup_ht INIT \n");
@@ -656,7 +662,7 @@ totem_object_get_property (GObject *object,
 		g_value_set_boolean (value, totem_object_is_playing (totem));
 		break;
 	case PROP_STREAM_LENGTH:
-		g_value_set_int64 (value, bacon_video_widget_get_stream_length (totem->bvw));
+		g_value_set_int64 (value, bacon_video_widget_update_and_get_stream_length (totem->bvw));
 		break;
 	// case PROP_CURRENT_TIME:
 	// 	g_value_set_int64 (value, bacon_video_widget_get_current_time (totem->bvw));
@@ -1008,6 +1014,7 @@ show_popup (TotemObject *totem)
 
 
 
+//when this func called, the video file maybe not exist for initial time of start torrenting
 static void
 emit_file_opened (TotemObject *totem
 				,const char *fpath)
@@ -1024,12 +1031,15 @@ emit_file_opened (TotemObject *totem
 	//also to tell totem-open-directory plugin the full path of the video being played
 	g_signal_emit (G_OBJECT (totem),
 		       totem_table_signals[FILEIDX_OPENED],
-		       0);
+		       0, fpath);
 }
+
+
 
 /*
  * THIS is used for save playlist, playing state, all for resume, 
  * so next time you open totem, it will resume playing the video you left last time
+ * Also, if property dialog opened, it will emit FILEIDX_CLOSED signal
  **/
 static void
 emit_file_closed (TotemObject *totem)
@@ -1089,21 +1099,30 @@ emit_metadata_updated (TotemObject *totem,
 
 
 
+
 static void
 reset_seek_status (TotemObject *totem)
 {
 	/* Release the lock and reset everything so that we
 	 * avoid being "stuck" seeking on errors */
-
 	if (totem->seek_lock != FALSE) 
 	{
+					printf ("(totem/reset_seek_status) Release lock\n");
+		//release seek_lock
 		totem->seek_lock = FALSE;
 		unmark_popup_busy (totem, "seek started");
 		bacon_video_widget_seek (totem->bvw, 0, NULL);
 		bacon_video_widget_stop (totem->bvw);
 		play_pause_set_label (totem, STATE_STOPPED);
+	}else{
+		printf ("(totem/reset_seek_status) Lock already unlocked\n");
+
 	}
 }
+
+
+
+
 
 /**
  * totem_object_show_error:
@@ -1252,18 +1271,18 @@ play_pause_set_label (TotemObject *totem, TotemStates state)
 
 	switch (state)
 	{
-		case STATE_PLAYING:
+		case STATE_PLAYING://Double Bar
 			id = "media-playback-pause-symbolic";
 			tip = N_("Pause");
 			bacon_time_label_set_show_msecs (totem->time_label, FALSE);
 			totem_playlist_set_playing (totem->playlist, TOTEM_PLAYLIST_STATUS_PLAYING);
 			break;
-		case STATE_PAUSED:
+		case STATE_PAUSED://Triangle
 			id = "media-playback-start-symbolic";
 			tip = N_("Play");
 			totem_playlist_set_playing (totem->playlist, TOTEM_PLAYLIST_STATUS_PAUSED);
 			break;
-		case STATE_STOPPED:
+		case STATE_STOPPED://Triangle
 			bacon_time_label_reset (totem->time_label);
 			bacon_time_label_reset (totem->time_rem_label);
 			id = "media-playback-start-symbolic";
@@ -1283,9 +1302,6 @@ play_pause_set_label (TotemObject *totem, TotemStates state)
 
 	g_object_notify (G_OBJECT (totem), "playing");
 }
-
-
-
 
 
 
@@ -1348,38 +1364,38 @@ totem_object_play (TotemObject *totem)
 static void
 totem_object_seek (TotemObject *totem, double pos)
 {
-
-					printf("(totem_object_seek) %lf \n", pos);
-
 	g_autoptr(GError) err = NULL;
 	int retval;
-
-	// if (totem->mrl == NULL)
-	// 	return;
-
-	if (bacon_video_widget_is_seekable (totem->bvw) == FALSE)
+	
+	if (totem->streaming_file_idx == -1)
 	{
-					printf ("(totem_object_seek) Not seekable, skip this seek\n");
 		return;
 	}
+	
+	if (bacon_video_widget_update_and_get_seekable (totem->bvw) == FALSE)
+	{
+		printf ("(totem_object_seek) Not seekable, skip this seek\n");
+		return;
+	}
+
+								printf("(totem_object_seek) seek pos:%lf \n", pos);
 
 	retval = bacon_video_widget_seek (totem->bvw, pos, &err);
 
 	if (retval == FALSE)
 	{
 		g_autofree char *msg = NULL;
-		g_autofree char *disp = NULL;
-
-		// disp = totem_uri_escape_for_display (totem->mrl);
-		// msg = g_strdup_printf(_("Videos could not play “%s”."), disp);
+		
+		msg = g_strdup_printf(_("Videos could not play ."));
 
 					printf("(totem_object_seek)Videos could not play  \n");
 
 		reset_seek_status (totem);
 
-		// totem_object_show_error (totem, msg, err->message);
+		totem_object_show_error (totem, msg, err->message);
 	}
 }
+
 
 
 
@@ -1389,6 +1405,7 @@ totem_object_set_fileidx_and_play (TotemObject *totem, gint file_index)
 							printf("totem_object_set_fileidx_and_play, file_index=%d \n", file_index);
 
 	totem_object_set_fileidx (totem, file_index);
+
 	totem_object_play (totem);
 }
 
@@ -1408,11 +1425,11 @@ totem_object_play_pause (TotemObject *totem)
 {
 				printf("(totem_object_play_pause) \n");
 
+	//only after we received the videos_info from btdemux, which will be used to update playlist, can we call this function
 	if (totem->streaming_file_idx == -1) 
 	{
-		/* Try to pull an file_idx from the playlist */
-		if (!totem_object_set_current_fileidx_and_play (totem))
-			play_pause_set_label (totem, STATE_STOPPED);
+		play_pause_set_label (totem, STATE_STOPPED);
+		//bail out early
 		return;
 	}
 
@@ -1436,6 +1453,7 @@ totem_object_play_pause (TotemObject *totem)
 }
 
 
+//historically server for Remote-command
 /**
  * totem_object_stop:
  * @totem: a #TotemObject
@@ -1463,6 +1481,7 @@ totem_object_stop (TotemObject *totem)
 	}
 }
 
+//historically server for Remote-command
 /**
  * totem_object_pause:
  * @totem: a #TotemObject
@@ -1486,7 +1505,7 @@ totem_object_pause (TotemObject *totem)
 }
 
 
-//FullScreen Switch
+//FullScreen Switch Handling
 gboolean
 window_state_event_cb (GtkWidget           *window,
 		       GdkEventWindowState *event,
@@ -1563,6 +1582,17 @@ totem_object_set_fullscreen (TotemObject *totem, gboolean state)
 
 
 
+
+/************** Data transfer from btdemux **************/
+static void totem_got_piece_matrix (BaconVideoWidget* bvw ,guint8 *piece_matrix, TotemObject * totem)
+{
+// printf ("third piece-matrix addr %p \n", piece_matrix);
+
+	//we here just read the piece_matrix and do nothing modification to it
+	bitfield_scale_update_piece_matrix_fallback (totem->seek, piece_matrix);
+	//no need to free the piece_matrix here, it is a dynamically allocated guint8* made in btdemux, and maintained by btdemux
+}
+
 static void
 totem_got_ppi_info (BaconVideoWidget *bvw, DownloadingBlocksSd* sd, TotemObject *totem)
 {
@@ -1571,7 +1601,7 @@ totem_got_ppi_info (BaconVideoWidget *bvw, DownloadingBlocksSd* sd, TotemObject 
 
 	bitfield_scale_update_downloading_blocks (totem->seek, sd);
 
-	g_free (sd);
+	/// g_free (sd);
 }
 
 
@@ -1580,6 +1610,7 @@ totem_got_ppi_info (BaconVideoWidget *bvw, DownloadingBlocksSd* sd, TotemObject 
 static void
 totem_got_finished_piece_info (BaconVideoWidget* bvw ,guint8 *byte_array, TotemObject * totem)
 {
+
 	bitfield_scale_set_whole_piece_finished (totem->seek, byte_array);
 
 	// Remove the data (association) from the GObject to prevent double-free
@@ -1593,11 +1624,13 @@ static void
 totem_got_piece_block_info (BaconVideoWidget* bvw ,PieceBlockInfoSd *sd, TotemObject * totem)
 {
 
-				printf("(totem_got_piece_block_info) entering \n");
+// printf ("third PieceBlockInfoSd addr %p \n", sd->info.finished_pieces);
+
+						printf ("(totem_got_piece_block_info) entering \n");
 
     if (!sd) 
 	{
-        g_warning("Received NULL shared data.");
+        g_warning ("Received NULL shared data.");
         return;
     }
 
@@ -1606,10 +1639,12 @@ totem_got_piece_block_info (BaconVideoWidget* bvw ,PieceBlockInfoSd *sd, TotemOb
 	guint blocks_per_piece_normal = sd->info.blocks_per_piece_normal;
 	guint num_blocks_last_piece = sd->info.num_blocks_last_piece;
 	
-    bitfield_scale_set_piece_block_info(totem->seek, total_num_blocks, total_num_pieces,
+
+    bitfield_scale_set_piece_block_info (totem->seek, total_num_blocks, total_num_pieces,
                                         blocks_per_piece_normal, num_blocks_last_piece,
                                         sd->info.finished_pieces, 
                                         sd->info.unfinished_pieces);
+
 
 	// Remove the data (association) from the GObject to prevent double-free
 	bvw_g_object_association_clear (bvw, "piece-block-info");
@@ -1693,7 +1728,8 @@ totem_got_torrent_videos_info (BaconVideoWidget* bvw ,TotemObject * totem)
 		int len = totem_playlist_get_last (totem->playlist) + 1;
 		printf ("(totem_got_torrent_videos_info) probe: len of playlist is %d\n", len);
 
- totem_playlist_set_next (totem->playlist);
+//set to second item just for test		
+//  totem_playlist_set_next (totem->playlist);
 
 		//********then we can set fileidx from playlist and play it
 		//if has two videos, get the second; if single video, play it
@@ -1738,7 +1774,6 @@ totem_get_nice_name_for_stream (TotemObject *totem)
 	int tracknum;
 
 
-
 	// Free the #GValue with g_value_unset().
 	bacon_video_widget_get_metadata (totem->bvw, BVW_INFO_TITLE, &title_value);
 	bacon_video_widget_get_metadata (totem->bvw, BVW_INFO_ARTIST, &artist_value);
@@ -1753,6 +1788,7 @@ totem_get_nice_name_for_stream (TotemObject *totem)
 
 							printf ("(totem_get_nice_name_for_stream) emit_metadata_updated \n");
 
+	//tell totem-movie-properties
 	emit_metadata_updated (totem,
 	                       g_value_get_string (&artist_value),
 	                       g_value_get_string (&title_value),
@@ -1915,8 +1951,8 @@ totem_object_set_fileidx (TotemObject *totem, gint file_index)
 	//when switch to another item in playlist, we should close the current one
 	if (totem->streaming_file_idx != -1) 
 	{
-									printf("(totem_object_set_fileidx, file_idx=%d) closing the current stream first \n", file_index);
-
+									printf("(totem_object_set_fileidx, file_idx=%d) Closing the current stream first \n", file_index);
+		//totem->pause_start maybe useless ,cuz we dont impl resume playing now
 		totem->pause_start = FALSE;
 		bacon_video_widget_close (totem->bvw);
 		emit_file_closed (totem);
@@ -1924,7 +1960,7 @@ totem_object_set_fileidx (TotemObject *totem, gint file_index)
 		play_pause_set_label (totem, STATE_STOPPED);
 	}
 
-	//Initial case, this is just for starting the pipeline, so wen then can get playlist and choose which video to play
+	//Initial case (this is just for starting the pipeline, so wen then can get playlist and choose which video to play)
 	if (file_index == TOTEM_NULL_STREAMING_FILE_IDX) 
 	{
 		play_pause_set_label (totem, STATE_PAUSED);
@@ -1968,11 +2004,22 @@ totem_object_set_fileidx (TotemObject *totem, gint file_index)
 
 		g_object_notify (G_OBJECT (totem), "playing");
 	}
-
+	//normal case
 	else 
 	{
+
+		
 		gboolean can_vol_seek;
-	
+		
+		#if 2
+		if (totem->is_stream_length_set==TRUE) {
+								printf ("(totem_object_set_fileidx) clear is_stream_length_set\n");
+								totem->is_stream_length_set = FALSE;
+							}
+		#endif 
+
+							printf("(totem_object_set_fileidx), file_idx=%d  gonna call bacon_video_widget_open\n", file_index);
+							
 		g_application_mark_busy (G_APPLICATION (totem));
 		bacon_video_widget_open (totem->bvw, file_index);
 		mark_popup_busy (totem, "opening file");
@@ -1981,7 +2028,7 @@ totem_object_set_fileidx (TotemObject *totem, gint file_index)
 
 		totem->streaming_file_idx = file_index;
 
-		/* Play/Pause */
+		// Enable Play/Pause Button
 		action_set_sensitive ("play", TRUE);
 
 		/* Volume */
@@ -1993,15 +2040,16 @@ totem_object_set_fileidx (TotemObject *totem, gint file_index)
 		play_pause_set_label (totem, STATE_PAUSED);
 
 		fpath = totem_object_get_current_full_path (totem);
+		//update the totem-movie-properties if it opened
 		emit_file_opened (totem, fpath);
 		// dont free `fpath` here, let its user to be responsible for free it after use
-		// g_free (fpath);
+		//// g_free (fpath);
 	}
 
 	g_object_notify (G_OBJECT (totem), "current-fileidx");
 
+	// update Previous and Next Button sensitivity per playlist 
 	update_buttons (totem);
-
 }
 
 
@@ -2033,7 +2081,7 @@ totem_object_direction (TotemObject *totem, TotemPlaylistDirection dir)
 
 
 	if (dir == TOTEM_PLAYLIST_DIRECTION_NEXT ||
-	    bacon_video_widget_is_seekable (totem->bvw) == FALSE ||
+	    bacon_video_widget_update_and_get_seekable (totem->bvw) == FALSE ||
 	    totem_time_within_seconds (totem) != FALSE) 
 	{
 				printf ("(totem_object_direction) switch to next item in playlist \n");
@@ -2129,7 +2177,7 @@ totem_seek_time_rel (TotemObject *totem, gint64 _time, gboolean relative, gboole
 	{
 		return;
 	}
-	if (bacon_video_widget_is_seekable (totem->bvw) == FALSE)
+	if (bacon_video_widget_update_and_get_seekable (totem->bvw) == FALSE)
 	{
 		return;
 	}
@@ -2257,6 +2305,7 @@ totem_object_get_rate (TotemObject *totem)
 gboolean
 totem_object_set_rate (TotemObject *totem, float rate)
 {
+				printf ("(totem-object/totem_object_set_rate) rate is %lf\n", rate);
 	return bacon_video_widget_set_rate (totem->bvw, rate);
 }
 
@@ -2477,43 +2526,55 @@ on_bvw_motion_notify_cb (BaconVideoWidget *bvw,
 
 
 
+
 static void
 update_seekable (TotemObject *totem)
 {
-
 							// printf("(totem-object/update_seekable) \n");
-
 	gboolean seekable;
-	gboolean notify;
+	//// gboolean notify;
 
-	seekable = bacon_video_widget_is_seekable (totem->bvw);
-	notify = (totem->seekable == seekable);
+	seekable = bacon_video_widget_update_and_get_seekable (totem->bvw);
+	//// notify = (totem->seekable == seekable);
+			
 	totem->seekable = seekable;
 
 	/* Check if the stream is seekable */
 	gtk_widget_set_sensitive (totem->seek, seekable);
+	
+	
+	//delay enable Play/Pause Button, but we dont use it now
+	// if (seekable)
+	// {
+	// 	/*Enable Play/Pause Button since we can seekable now*/
+	// 	action_set_sensitive ("play", TRUE);
+	// }
 
-	if (seekable != FALSE) 
-	{
-		gint64 starttime;
-		starttime = 0;
-		if (starttime != 0) 
-		{
-			bacon_video_widget_seek_time (totem->bvw,
-						      starttime * 1000, FALSE, NULL);
-			if (totem->pause_start) 
-			{
-				totem_object_pause (totem);
-				totem->pause_start = FALSE;
-			}
-		}
-	}
+	//seeking to resume time point, usually happen open a video previously watched and saved resume data
+	// if (seekable != FALSE) 
+	// {
+	// 	gint64 starttime;
+	// 	starttime = 0;
+	// 	if (starttime != 0) 
+	// 	{
+	// 		bacon_video_widget_seek_time (totem->bvw,
+	// 					      starttime * 1000, FALSE, NULL);
+	// 		if (totem->pause_start) 
+	// 		{
+	// 			totem_object_pause (totem);
+	// 			totem->pause_start = FALSE;
+	// 		}
+	// 	}
+	// }
+	
 
-	if (notify)
-	{
-		g_object_notify (G_OBJECT (totem), "seekable");
-	}
+	//// if (notify)
+	//// {
+	//// 	g_object_notify (G_OBJECT (totem), "seekable");
+	//// }
+
 }
+
 
 
 
@@ -2521,10 +2582,17 @@ static void
 update_slider_visibility (TotemObject *totem,
 			  gint64 stream_length)
 {
+	//if stream_length not change, do nothing
 	if (totem->stream_length == stream_length)
+	{
 		return;
+	}
+	//if old and new stream_length are both > 0,keep as it is 
 	if (totem->stream_length > 0 && stream_length > 0)
+	{
 		return;
+	}
+	
 	if (stream_length != 0)
 		gtk_range_set_range (GTK_RANGE (totem->seek), 0., 65535.);
 	else
@@ -2534,7 +2602,7 @@ update_slider_visibility (TotemObject *totem,
 
 
 //handler of bvw_signals[SIGNAL_TICK], see totem.ui 
-//updating time label
+//updating slider and time label
 void
 update_current_time (BaconVideoWidget *bvw,
 		     gint64            current_time,
@@ -2548,38 +2616,58 @@ update_current_time (BaconVideoWidget *bvw,
 
 	update_slider_visibility (totem, stream_length);
 
-	//update position of progress bar and time label
 	if (totem->seek_lock == FALSE) 
 	{
+		//update position of progress bar
 		gtk_adjustment_set_value (totem->seekadj,
 					  current_position * 65535);
 
+		/* and current/remaining time label*/
+		// fileidx is set (this maybe redundant cuz when this func get called, fileidx is guaranteed to already be set)
+		// and stream_length is unknown, not set yet
 		if (stream_length == 0 && totem->streaming_file_idx != -1) 
 		{
+			// current time label shown as "--:--"
 			bacon_time_label_set_time (totem->time_label,
-						   current_time, -1);
+						   current_time, -1); 
+			// remaining time label shown as "--:--"
 			bacon_time_label_set_time (totem->time_rem_label,
 						   current_time, -1);
 		} 
+		//stream_length is received and is valid (a positive number)
 		else 
 		{
+			// current time label shown eg: "0:03"
 			bacon_time_label_set_time (totem->time_label,
 						   current_time,
 						   stream_length);
+			// remaining time label shown eg: "-19:30"
 			bacon_time_label_set_time (totem->time_rem_label,
 						   current_time,
 						   stream_length);
 		}
 	}
 
+	//monitor the change on stream_length
 	if (totem->stream_length != stream_length) 
 	{
+
+					#if 2
+					if (!totem->is_stream_length_set && stream_length >0 && totem->stream_length==0) {
+						totem->is_stream_length_set = TRUE;
+						printf ("(update_current_time) From now on, We get the stream_length, which is %ld \n", stream_length);
+					}
+					#endif
+
+		//notify totem-movie-properties.c
 		g_object_notify (G_OBJECT (totem), "stream-length");
 		totem->stream_length = stream_length;
 	}
 
-
 }
+
+
+
 
 
 
@@ -2635,18 +2723,23 @@ update_volume_sliders (TotemObject *totem)
 	g_signal_handlers_unblock_by_func (totem->volume, volume_button_value_changed_cb, totem);
 }
 
+
+//called when g_object_notify (G_OBJECT (bvw), "volume") called
 void
 property_notify_cb_volume (BaconVideoWidget *bvw, GParamSpec *spec, TotemObject *totem)
 {
 	update_volume_sliders (totem);
 }
 
+
+//called when g_object_notify (G_OBJECT (bvw), "seekable") called
 void
 property_notify_cb_seekable (BaconVideoWidget *bvw, GParamSpec *spec, TotemObject *totem)
 {
 			// printf("(totem-object) property_notify_cb_seekable \n");
 	update_seekable (totem);
 }
+
 
 gboolean
 seek_slider_pressed_cb (GtkWidget *widget, GdkEventButton *event, TotemObject *totem)
@@ -2662,47 +2755,48 @@ seek_slider_pressed_cb (GtkWidget *widget, GdkEventButton *event, TotemObject *t
 		      "gtk-primary-button-warps-slider", GINT_TO_POINTER(TRUE),
 		      NULL);
 
+	//acquire seek_lock
 	totem->seek_lock = TRUE;
+
 	mark_popup_busy (totem, "seek started");
 
 	return FALSE;
 }
 
 
-
+//called once you do a seek in GUI 
 void
 seek_slider_changed_cb (GtkAdjustment *adj, TotemObject *totem)
 {
 	double pos;
 	gint64 _time;
-
 	if (totem->seek_lock == FALSE)
+	{
 		return;
-
+	}
+	//get the pos in percent you point the seek bar to
 	pos = gtk_adjustment_get_value (adj) / 65535;
 	// in milliseconds
-	_time = bacon_video_widget_get_stream_length (totem->bvw);
-
+	_time = bacon_video_widget_update_and_get_stream_length (totem->bvw);
 	bacon_time_label_set_time (totem->time_label,
 				   pos * _time, _time);
 	bacon_time_label_set_time (totem->time_rem_label,
 				   pos * _time, _time);
-
-					// printf eg. "seek_slider_changed_cb, pos is 0.759259"
-					printf("(totem-object/seek_slider_changed_cb), pos is %lf \n", pos);
-
-	// if (bacon_video_widget_can_direct_seek (totem->bvw) != FALSE)
+	if (bacon_video_widget_can_direct_seek (totem->bvw) != FALSE) 
+	{
+									// printf eg. "seek_slider_changed_cb, pos is 0.759259"
+									printf("(totem-object/seek_slider_changed_cb), pos is %lf \n", pos);
 		totem_object_seek (totem, pos);
+	}
 }
+
+
 
 
 
 gboolean
 seek_slider_released_cb (GtkWidget *widget, GdkEventButton *event, TotemObject *totem)
 {
-
-
-				printf("(totem-object/seek_slider_released_cb) \n");
 
 	GtkAdjustment *adj;
 	gdouble val;
@@ -2719,11 +2813,15 @@ seek_slider_released_cb (GtkWidget *widget, GdkEventButton *event, TotemObject *
 	adj = gtk_range_get_adjustment (GTK_RANGE (widget));
 	val = gtk_adjustment_get_value (adj);
 
-	if (bacon_video_widget_can_direct_seek (totem->bvw) == FALSE)
+	if (bacon_video_widget_can_direct_seek (totem->bvw) == FALSE){
+			printf("(totem-object/seek_slider_released_cb) \n");
+
 		totem_object_seek (totem, val / 65535.0);
+	}
 
 	return FALSE;
 }
+
 
 
 
@@ -2761,44 +2859,39 @@ seek_slider_scroll_event_cb (GtkWidget      *widget,
 
 
 /*called when item added-remove in playlist, although it seems useful, we dont need it now*/
-static void
-playlist_changed_cb (GtkWidget *playlist, TotemObject *totem)
-{
-	gint fileidx = -1;;
-
-	update_buttons (totem);
-
-	fileidx = totem_playlist_get_current_fileidx (totem->playlist);
-	if (fileidx == -1)
-	{
-		return;
-	}
-
-	if (totem_playlist_get_playing (totem->playlist) == TOTEM_PLAYLIST_STATUS_NONE) {
-		if (totem->pause_start)
-		{
-			totem_object_set_fileidx (totem, fileidx);
-		}
-		else
-		{
-			totem_object_set_fileidx_and_play (totem, fileidx);
-		}
-	}
-
-	totem->pause_start = FALSE;
-}
-
-
-
+// static void
+// playlist_changed_cb (GtkWidget *playlist, TotemObject *totem)
+// {
+// 	gint fileidx = -1;;
+// 	update_buttons (totem);
+// 	fileidx = totem_playlist_get_current_fileidx (totem->playlist);
+// 	if (fileidx == -1)
+// 	{
+// 		return;
+// 	}
+// 	if (totem_playlist_get_playing (totem->playlist) == TOTEM_PLAYLIST_STATUS_NONE) {
+// 		if (totem->pause_start)
+// 		{
+// 			totem_object_set_fileidx (totem, fileidx);
+// 		}
+// 		else
+// 		{
+// 			totem_object_set_fileidx_and_play (totem, fileidx);
+// 		}
+// 	}
+// 	totem->pause_start = FALSE;
+// }
 
 
 /*called when double-click one row in tree view in playlist*/
-static void
-item_activated_cb (GtkWidget *playlist, TotemObject *totem)
-{
-	//seek to the right start
-	totem_object_seek (totem, 0);
-}
+// static void
+// item_activated_cb (GtkWidget *playlist, TotemObject *totem)
+// {
+// 	//seek to the right start
+// 	totem_object_seek (totem, 0);
+// }
+
+
 
 
 
@@ -2884,7 +2977,7 @@ totem_object_is_seekable (TotemObject *totem)
 	if (totem->bvw == NULL)
 		return FALSE;
 
-	return bacon_video_widget_is_seekable (totem->bvw) != FALSE;
+	return bacon_video_widget_update_and_get_seekable (totem->bvw) != FALSE;
 }
 
 static gboolean
@@ -2926,19 +3019,17 @@ on_video_button_press_event (BaconVideoWidget *bvw, GdkEventButton *event, Totem
 gboolean
 on_eos_event (GtkWidget *widget, TotemObject *totem)
 {
-	
 	gint fidx = -1;
 
 	reset_seek_status (totem);
 
-
-	//***For current stream is Last item in playlist
+	//***For current stream is Last item in playlist and repeat mode is OFF
 	if (
 		//if it's last item of playlist, `totem_playlist_has_next_item` return FALSE
 		totem_playlist_has_next_item (totem->playlist) == FALSE &&
 	    //playlist repeat mode is OFF
 	    totem_playlist_get_repeat (totem->playlist) == FALSE &&
-		//There is more then one item in playlist OR current stream is NOT seekable
+		//There is more than one item in playlist OR current stream is NOT seekable
 	    (totem_playlist_get_last (totem->playlist) != 0 ||
 		totem_object_is_seekable (totem) == FALSE)
 	)
@@ -2961,7 +3052,8 @@ on_eos_event (GtkWidget *widget, TotemObject *totem)
 								printf("(totem-object/on_eos_event) gonna  call bacon_video_widget_pause \n");
 		bacon_video_widget_pause (totem->bvw);
 	} 
-	//***For current stream is Non-Last item in playlist, will transition to next
+	//***For current stream is Non-Last item in playlist, or Reapt-mode is ON, 
+	// no pause and play next no matter the current stream is in last or not
 	else 
 	{
 								printf("(totem-object/on_eos_event) SECOND\n");
@@ -3088,18 +3180,18 @@ totem_object_handle_key_press (TotemObject *totem, GdkEventKey *event)
 	case GDK_KEY_K:
 		totem_object_play_pause (totem);
 		break;
-	case GDK_KEY_comma:
-	case GDK_KEY_FrameBack:
-		totem_object_pause (totem);
-		bacon_time_label_set_show_msecs (totem->time_label, TRUE);
-		bacon_video_widget_step (totem->bvw, FALSE, NULL);
-		break;
-	case GDK_KEY_period:
-	case GDK_KEY_FrameForward:
-		totem_object_pause (totem);
-		bacon_time_label_set_show_msecs (totem->time_label, TRUE);
-		bacon_video_widget_step (totem->bvw, TRUE, NULL);
-		break;
+	// case GDK_KEY_comma:
+	// case GDK_KEY_FrameBack:
+	// 	totem_object_pause (totem);
+	// 	bacon_time_label_set_show_msecs (totem->time_label, TRUE);
+	// 	bacon_video_widget_step (totem->bvw, FALSE, NULL);
+	// 	break;
+	// case GDK_KEY_period:
+	// case GDK_KEY_FrameForward:
+	// 	totem_object_pause (totem);
+	// 	bacon_time_label_set_show_msecs (totem->time_label, TRUE);
+	// 	bacon_video_widget_step (totem->bvw, TRUE, NULL);
+	// 	break;
 	case GDK_KEY_AudioPause:
 	case GDK_KEY_Pause:
 	case GDK_KEY_AudioStop:
@@ -3262,7 +3354,7 @@ window_key_press_event_cb (GtkWidget *win, GdkEventKey *event, TotemObject *tote
 }
 
 
-
+//this is to update disable or enable of Previous and Next Button 
 static void
 update_buttons (TotemObject *totem)
 {
@@ -3379,7 +3471,6 @@ totem_callback_connect (TotemObject *totem)
 				   g_variant_new_boolean (totem_playlist_get_repeat (totem->playlist)));
 
 
-
 	/* Controls */
 	box = GTK_BOX (gtk_builder_get_object (totem->xml, "controls_box"));
 	gtk_widget_insert_action_group (GTK_WIDGET (box), "app", G_ACTION_GROUP (totem));
@@ -3406,10 +3497,10 @@ totem_callback_connect (TotemObject *totem)
 	gtk_widget_set_size_request (GTK_WIDGET (popover), 175, -1);
 
 				
-	/* Set sensitivity of the toolbar buttons */
+	// Set sensitivity of the toolbar buttons, (maybe redundant and useless, but doesn't matters that much) 
 	action_set_sensitive ("play", FALSE);
 	action_set_sensitive ("next-chapter", FALSE);
-	// action_set_sensitive ("previous-chapter", FALSE);
+	action_set_sensitive ("previous-chapter", FALSE);
 
 	/* Volume */
 	update_volume_sliders (totem);
@@ -3437,13 +3528,13 @@ playlist_widget_setup (TotemObject *totem)
 
 	//emitted when double-click a tree-view row in playlist GUI, 
 	// see `treeview_row_changed` in totem-playlic.c,
-	g_signal_group_connect (totem->playlist_signals, "item-activated",
-				G_CALLBACK (item_activated_cb), totem);
+	// g_signal_group_connect (totem->playlist_signals, "item-activated",
+	// 			G_CALLBACK (item_activated_cb), totem);
 	
 
 	//emitted when items added/removed from playlist, NO Need For now
-	g_signal_group_connect (totem->playlist_signals, "changed",
-				G_CALLBACK (playlist_changed_cb), totem);
+	// g_signal_group_connect (totem->playlist_signals, "changed",
+	// 			G_CALLBACK (playlist_changed_cb), totem);
 
 
 	//emitted when repeat property modified, whether enable repeat-mode
@@ -3455,8 +3546,6 @@ playlist_widget_setup (TotemObject *totem)
 	//Totally
 	g_signal_group_set_target (totem->playlist_signals, totem->playlist);
 }
-
-
 
 
 
