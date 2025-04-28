@@ -1,51 +1,11 @@
-pal@pal-desktop79:/media/pal/E/GnomeApp/totem-gstbt/install/bin$ gdb ./totem 
-GNU gdb (Ubuntu 15.0.50.20240403-0ubuntu1) 15.0.50.20240403-git
-Copyright (C) 2024 Free Software Foundation, Inc.
-License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
-This is free software: you are free to change and redistribute it.
-There is NO WARRANTY, to the extent permitted by law.
-Type "show copying" and "show warranty" for details.
-This GDB was configured as "x86_64-linux-gnu".
-Type "show configuration" for configuration details.
-For bug reporting instructions, please see:
-<https://www.gnu.org/software/gdb/bugs/>.
-Find the GDB manual and other documentation resources online at:
-    <http://www.gnu.org/software/gdb/documentation/>.
-
-For help, type "help".
-Type "apropos word" to search for commands related to "word"...
-Reading symbols from ./totem...
-(gdb) r
-Starting program: /media/pal/E/GnomeApp/totem-gstbt/install/bin/totem 
-
-This GDB supports auto-downloading debuginfo from the following URLs:
-  <https://debuginfod.ubuntu.com>
-Enable debuginfod for this session? (y or [n]) 
-Debuginfod has been disabled.
-To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
-warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libgobject-2.0.so.0
-warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libglib-2.0.so.0
-[Thread debugging using libthread_db enabled]
-Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
-warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libgdk-3.so.0
-warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libpeas-1.0.so.0
-warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libgmodule-2.0.so.0
-warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libgdk_pixbuf-2.0.so.0
-warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libbrotlidec.so.1
-warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libbrotlicommon.so.1
-warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libcap.so.2
+pal@pal-desktop79:/media/pal/E/GnomeApp/totem-gstbt$ source ./setup_environment_for_run.sh 
+pal@pal-desktop79:/media/pal/E/GnomeApp/totem-gstbt$ cd install/bin/
+pal@pal-desktop79:/media/pal/E/GnomeApp/totem-gstbt/install/bin$ ./totem 
 (totem_object_class_init) 
 (totem-object/totem_object_init) 
-[New Thread 0x7ffff53c96c0 (LWP 43825)]
-[New Thread 0x7fffec9ff6c0 (LWP 43826)]
-[New Thread 0x7ffff4bc86c0 (LWP 43827)]
-[New Thread 0x7fffeffff6c0 (LWP 43828)]
-[Detaching after fork from child process 43829]
+GST::gst_soup_http_src_uri_handler_init 
 (gst_bt_demux_class_init) 
 (totem_object_app_handle_local_options) 
-warning: could not find '.gnu_debugaltlink' file for /usr/lib/x86_64-linux-gnu/gio/modules/libgvfsdbus.so
-warning: could not find '.gnu_debugaltlink' file for /usr/lib/x86_64-linux-gnu/gvfs/libgvfscommon.so
-warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libcanberra.so.0
 NOT g_application_get_is_remote 
 (totem-object/totem_object_app_activate)
 (totem_player_toolbar_class_init) 
@@ -54,35 +14,24 @@ bacon_video_widget_class_init
 (gst_bt_demux_class_init) 
 (bt_demux_init) 
 (gst_bt_demux_init) add sink pad to element
-[New Thread 0x7fffee7ff6c0 (LWP 43831)]
 (gstdecodebin2)add static sink pad
 (ghostpad_pad_constructed) GST_PAD_UNSET_FLUSHING
-warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libtinfo.so.6
-[New Thread 0x7fffedffe6c0 (LWP 43832)]
 GTK-GLSINK:: gst_gtk_gl_sink_init 
-warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libnss_mdns4_minimal.so.2
 GL-SINKBIN::gst_gl_sink_bin_init 
 (ghostpad_pad_constructed) GST_PAD_UNSET_FLUSHING
 (ghostpad_pad_constructed) GST_PAD_UNSET_FLUSHING
 GL-SINKBIN::gst_gl_sink_bin_set_sink 
-[New Thread 0x7fffe99ff6c0 (LWP 43833)]
 (ghostpad_pad_constructed) GST_PAD_UNSET_FLUSHING
 bacon_time_label_class_init 
 (bitfield_scale_init) 
-[New Thread 0x7fffe89ff6c0 (LWP 43834)]
 (totem_setup_window) 
 (totem-object/video_widget_create) 
-[New Thread 0x7fffdddff6c0 (LWP 43835)]
-[New Thread 0x7fffdd5fe6c0 (LWP 43836)]
-[New Thread 0x7fffdcdfd6c0 (LWP 43837)]
-[New Thread 0x7fffc7fff6c0 (LWP 43838)]
-[New Thread 0x7fffc77fe6c0 (LWP 43839)]
-[New Thread 0x7fffc6ffd6c0 (LWP 43840)]
 (totem_callback_connect) 
-(bacon_video_widget_get_volume)
-[New Thread 0x7fffc67fc6c0 (LWP 43841)]
-[New Thread 0x7fffc5ffb6c0 (LWP 43842)]
-[New Thread 0x7fffc57fa6c0 (LWP 43843)]
+(update_volume_sliders) -1.000000
+(set video property) PROP_CONTRAST 
+(set video property) PROP_SATURATION 
+(set video property) PROP_BRIGHTNESS 
+(set video property) PROP_HUE 
 (bvw/set_audio_filter) caps is NULL 
 IN totem_plugins_engine_get_default ,path[]=/home/pal/.local/share/totem/plugins
 IN totem_plugins_engine_get_default ,path[]=/media/pal/E/GnomeApp/totem-gstbt/install/lib/x86_64-linux-gnu/totem/plugins
@@ -97,28 +46,20 @@ OPEN-DIRECTORY: impl_activate
 (totem_object_app_activate) set fileidx as -1 to start pipeline but not playing yet 
 (totem_object_set_fileidx), file_idx=-1 
 (bacon_video_widget_open) initial case: fileidx is -1 ,progressively SET bvw->pipeline state to READY and then PAUSED
-warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libpulse.so.0
-warning: could not find '.gnu_debugaltlink' file for /usr/lib/x86_64-linux-gnu/pulseaudio/libpulsecommon-16.1.so
-[New Thread 0x7fffc4ff96c0 (LWP 43845)]
-[Thread 0x7fffc4ff96c0 (LWP 43845) exited]
-[New Thread 0x7fffc4ff96c0 (LWP 43846)]
-[New Thread 0x7fffaffff6c0 (LWP 43847)]
-[New Thread 0x7fffaf7fe6c0 (LWP 43848)]
-[New Thread 0x7fffaeffd6c0 (LWP 43849)]
 (gstdecodebin2) state changed from READY to PAUSED 
 (gstTYPEFIND) start_typefinding 
 (bt_demux_change_state) READY_TO_PAUSED GstTaskState is:(1)
 (bt_demux_task_setup) setting up task......
-[New Thread 0x7fffae7fc6c0 (LWP 43850)]
-[New Thread 0x7fffadffb6c0 (LWP 43851)]
 (bt_demux_sink_event) 
 (bt_demux_sink_event) Not EOS, skip and return
 (bt_demux_sink_event) 
 (bt_demux_sink_event) Not EOS, skip and return
+(bvw_bus_message_cb) bvw-pipeline changed state from NULL to READY
+(bvw_bus_message_cb) disable updating slider and time label
+(bvw_query_timeout) could not get position
 (bt_demux_sink_event) 
 (gst_bt_demux_sink_event) atp.save_path = /home/pal/Documents 
 (gst_bt_demux_sink_event) libtorrent async_add_torrent called 
-[New Thread 0x7fffad7fa6c0 (LWP 43852)]
 Got add_torrent_alert 
 Start download, num files: 2, num pieces: 2034, piece length: 1048576 
 gst_bt_demux_stream_class_init 
@@ -128,9 +69,6 @@ gst_bt_demux_stream_init
 gst_bt_demux_stream_init 
 (gst_bt_demux_handle_alert) create src pad src_01 (aka.BtDemuxStream) 
 (bt_demux_handle_alert) Adding stream src_01 for file Singnapore/HotSopt.mp4 at fileidx 1, start_piece:905, start_ofset:771995,end_piece:2033,end_ofset:54374 (949733275,2131809382]
-(bvw_bus_message_cb) bvw-pipeline changed state from NULL to READY
-(bvw_bus_message_cb) disable updating slider and time label
-(bvw_query_timeout) could not get position
 (bvw_handle_application_message) entering 
 (bvw_handle_application_message) Initially start-ppi 
 (bvw_reconfigure_ppi_timeout) adding ppi timeout (at 1000ms)
@@ -138,10 +76,8 @@ gst_bt_demux_stream_init
 (totem_got_piece_block_info) entering 
 (bitfield_scale_set_piece_block_info) 130116,2034,64,4
 (free_piece_block_info_sd) called 
-[New Thread 0x7fffacff96c0 (LWP 43853)]
-[Thread 0x7fffc67fc6c0 (LWP 43841) exited]
-[Thread 0x7fffc5ffb6c0 (LWP 43842) exited]
-[New Thread 0x7fffc5ffb6c0 (LWP 43854)]
+(update_volume_sliders) 1.000000
+(notify_volume_idle_cb) 1.000000
 Piece 0 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
 Piece 1 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
 Piece 2 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
@@ -361,8 +297,6 @@ Piece 215 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1)
 Piece 216 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
 Piece 217 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
 Piece 218 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-(gst_bt_demux_get_ppi) empty, post one
-(bt_demux_handle_alert) got piece_info_alert, but ppi is empty 
 Piece 219 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
 Piece 220 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
 Piece 221 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
@@ -472,6 +406,8 @@ Piece 324 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1)
 Piece 325 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
 Piece 326 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
 Piece 327 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
+(gst_bt_demux_get_ppi) empty, post one
+(bt_demux_handle_alert) got piece_info_alert, but ppi is empty 
 Piece 328 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
 Piece 329 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
 Piece 330 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
@@ -689,350 +625,8 @@ Piece 541 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1)
 Piece 542 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
 Piece 543 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
 Piece 544 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 545 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 546 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 547 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 548 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 549 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 550 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 551 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 552 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 553 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 554 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 555 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 556 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 557 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 558 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 559 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 560 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 561 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 562 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 563 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 564 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 565 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 566 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 567 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 568 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 569 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 570 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 571 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 572 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 573 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 574 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 575 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 576 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 577 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 578 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 579 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 580 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 581 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 582 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 583 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 584 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 585 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 586 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 587 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 588 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 589 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 590 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 591 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 592 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 593 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 594 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 595 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 596 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 597 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 598 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 599 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 600 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 601 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 602 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 603 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 604 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 605 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 606 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 607 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 608 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 609 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 610 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 611 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 612 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 613 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 614 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 615 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 616 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 617 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 618 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 619 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 620 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 621 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 622 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 623 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 624 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 625 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 626 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 627 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 628 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 629 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 630 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 631 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 632 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 633 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 634 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 635 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 636 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 637 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 638 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 639 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 640 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 641 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 642 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 643 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 644 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 645 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 646 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 647 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 648 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 649 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 650 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 651 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 652 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 653 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 654 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 655 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 656 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 657 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 658 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 659 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 660 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 661 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 662 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 663 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 664 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 665 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 666 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 667 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 668 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 669 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 670 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 671 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 672 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 673 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 674 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 675 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 676 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 677 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 678 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 679 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 680 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 681 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 682 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 683 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 684 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 685 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 686 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 687 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 688 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 689 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 690 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 691 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 692 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 693 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 694 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 695 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 696 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 697 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 698 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 699 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 700 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 701 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 702 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 703 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 704 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 705 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 706 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 707 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 708 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 709 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 710 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 711 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 712 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 713 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 714 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 715 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 716 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 717 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 718 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 719 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 720 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 721 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 722 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 723 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 724 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 725 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 726 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 727 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 728 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 729 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 730 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 731 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 732 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 733 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 734 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 735 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 736 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 737 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 738 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 739 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 740 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 741 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 742 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 743 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 744 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 745 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 746 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 747 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 748 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 749 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 750 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 751 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 752 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 753 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 754 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 755 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 756 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 757 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 758 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 759 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 760 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 761 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 762 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 763 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 764 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 765 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 766 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 767 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 768 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 769 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 770 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 771 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 772 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 773 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 774 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 775 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 776 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 777 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 778 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 779 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 780 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 781 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 782 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 783 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 784 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 785 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 786 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 787 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 788 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 789 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 790 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 791 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 792 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 793 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 794 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 795 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 796 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 797 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 798 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 799 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
 (gst_bt_demux_get_ppi) empty, post one
 (bt_demux_handle_alert) got piece_info_alert, but ppi is empty 
-Piece 800 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 801 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 802 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 803 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 804 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 805 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 806 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 807 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 808 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 809 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 810 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 811 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 812 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 813 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 814 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 815 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 816 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 817 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 818 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 819 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 820 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 821 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 822 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 823 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 824 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 825 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 826 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 827 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 828 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 829 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 830 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 831 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 832 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 833 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 834 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 835 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 836 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 837 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 838 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 839 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 840 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 841 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 842 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 843 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 844 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 845 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 846 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 847 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 848 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 849 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 850 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 851 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 852 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 853 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 854 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 855 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 856 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 857 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 858 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 859 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 860 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 861 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 862 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 863 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 864 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 865 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 866 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 867 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 868 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 869 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 870 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 871 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 872 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 873 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 874 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 875 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 876 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 877 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 878 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 879 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 880 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 881 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 882 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 883 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 884 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 885 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 886 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
 Piece 887 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
 Piece 888 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
 Piece 889 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
@@ -1052,7 +646,6 @@ Piece 902 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1)
 Piece 903 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
 Piece 904 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
 Piece 905 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-(bt_demux_handle_alert) file at file_idx (0) has finished downloading 
 Piece 906 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
 Piece 907 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
 Piece 908 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
@@ -1069,10 +662,6 @@ Piece 918 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1)
 Piece 919 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
 Piece 920 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
 Piece 921 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 922 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 923 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 924 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 925 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
 Piece 926 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
 Piece 927 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
 Piece 928 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
@@ -1081,438 +670,8 @@ Piece 930 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1)
 Piece 931 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
 Piece 932 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
 Piece 933 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 934 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 935 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 936 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 937 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 938 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 939 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 940 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 941 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 942 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 943 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 944 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 945 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 946 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 947 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 948 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 949 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 950 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 951 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 952 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 953 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 954 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 955 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 956 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 957 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 958 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 959 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 960 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 961 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 962 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 963 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 964 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 965 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 966 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 967 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 968 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 969 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 970 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 971 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 972 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 973 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 974 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 975 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 976 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 977 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 978 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 979 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 980 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 981 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 982 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 983 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 984 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 985 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 986 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 987 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 988 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 989 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 990 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 991 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 992 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 993 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 994 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 995 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 996 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 997 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 998 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 999 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1000 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1001 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1002 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1003 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1004 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1005 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1006 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1007 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1008 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1009 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1010 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1011 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1012 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1013 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1014 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1015 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1016 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1017 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1018 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1019 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1020 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1021 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1022 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1023 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1024 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1025 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1026 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1027 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1028 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1029 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1030 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1031 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1032 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1033 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1034 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1035 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1036 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1037 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1038 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1039 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1040 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1041 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1042 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1043 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1044 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1045 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1046 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1047 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1048 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1049 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1050 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1051 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1052 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1053 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1054 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1055 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1056 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1057 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1058 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1059 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1060 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1061 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1062 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1063 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1064 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1065 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1066 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1067 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1068 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1069 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1070 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1071 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1072 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1073 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1074 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1075 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1076 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1077 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1078 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1079 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1080 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1081 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1082 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1083 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1084 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1085 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1086 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1087 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1088 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1089 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1090 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1091 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1092 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1093 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1094 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1095 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1096 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1097 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1098 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1099 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1100 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1101 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1102 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1103 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1104 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1105 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1106 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1107 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1108 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1109 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1110 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1111 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1112 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1113 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1114 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1115 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1116 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1117 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1118 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1119 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1120 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1121 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1122 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1123 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1124 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1125 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1126 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1127 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1128 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1129 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1130 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1131 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1132 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1133 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1134 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1135 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1136 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1137 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1138 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1139 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1140 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1141 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1142 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1143 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1144 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1145 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1146 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1147 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1148 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1149 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1150 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1151 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1152 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1153 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1154 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1155 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1156 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1157 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1158 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1159 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1160 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1161 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1162 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1163 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1164 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1165 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1166 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1167 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1168 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1169 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1170 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1171 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1172 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1173 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1174 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1175 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1176 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1177 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1178 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1179 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1180 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1181 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1182 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1183 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1184 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1185 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1186 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1187 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1188 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1189 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1190 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1191 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1192 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1193 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1194 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1195 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1196 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1197 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1198 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1199 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1200 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1201 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1202 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1203 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1204 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1205 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1206 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1207 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1208 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1209 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1210 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1211 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1212 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1213 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1214 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1215 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1216 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1217 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1218 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1219 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1220 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1221 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1222 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1223 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1224 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1225 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1226 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1227 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1228 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1229 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1230 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1231 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1232 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1233 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1234 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1235 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1236 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1237 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1238 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1239 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1240 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1241 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1242 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1243 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1244 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1245 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1246 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1247 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1248 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1249 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1250 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1251 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1252 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1253 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1254 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1255 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1256 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1257 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1258 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1259 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1260 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1261 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1262 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1263 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1264 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1265 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1266 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1267 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1268 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1269 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1270 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1271 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1272 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1273 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1274 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1275 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1276 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1277 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1278 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1279 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1280 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1281 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1282 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1283 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1284 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1285 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1286 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1287 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1288 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1289 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1290 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1291 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1292 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1293 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1294 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1295 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1296 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1297 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1298 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1299 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1300 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1301 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1302 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1303 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1304 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1305 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1306 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1307 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1308 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1309 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1310 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1311 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1312 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1313 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1314 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1315 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1316 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1317 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1318 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1319 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1320 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1321 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1322 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1323 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1324 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1325 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1326 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1327 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1328 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1329 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1330 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1331 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1332 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1333 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1334 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1335 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1336 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1337 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1338 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1339 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1340 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1341 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1342 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1343 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1344 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1345 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1346 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1347 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1348 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1349 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1350 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1351 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1352 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1353 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1354 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1355 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1356 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1357 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1358 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1359 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1360 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1361 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1362 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1363 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1364 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1365 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
+(gst_bt_demux_get_ppi) empty, post one
+(bt_demux_handle_alert) got piece_info_alert, but ppi is empty 
 Piece 1366 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
 Piece 1367 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
 Piece 1368 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
@@ -1529,474 +688,6 @@ Piece 1378 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1)
 Piece 1379 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
 Piece 1380 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
 Piece 1381 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1382 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1383 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1384 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1385 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1386 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1387 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1388 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1389 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1390 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1391 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1392 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1393 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1394 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1395 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1396 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1397 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1398 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1399 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1400 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1401 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1402 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1403 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1404 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1405 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1406 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1407 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1408 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1409 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1410 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1411 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1412 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1413 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1414 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1415 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1416 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1417 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1418 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1419 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1420 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1421 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1422 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1423 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1424 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1425 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1426 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1427 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1428 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1429 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1430 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1431 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1432 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1433 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1434 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1435 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1436 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1437 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1438 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1439 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1440 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1441 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1442 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1443 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1444 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1445 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-(gst_bt_demux_get_ppi) empty, post one
-Piece 1446 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-(bt_demux_handle_alert) got piece_info_alert, but ppi is empty 
-Piece 1447 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1448 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1449 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1450 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1451 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1452 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1453 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1454 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1455 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1456 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1457 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1458 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1459 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1460 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1461 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1462 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1463 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1464 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1465 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1466 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1467 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1468 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1469 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1470 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1471 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1472 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1473 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1474 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1475 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1476 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1477 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1478 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1479 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1480 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1481 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1482 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1483 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1484 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1485 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1486 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1487 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1488 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1489 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1490 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1491 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1492 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1493 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1494 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1495 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1496 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1497 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1498 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1499 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1500 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1501 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1502 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1503 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1504 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1505 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1506 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1507 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1508 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1509 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1510 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1511 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1512 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1513 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1514 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1515 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1516 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1517 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1518 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1519 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1520 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1521 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1522 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1523 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1524 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1525 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1526 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1527 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1528 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1529 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1530 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1531 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1532 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1533 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1534 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1535 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1536 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1537 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1538 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1539 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1540 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1541 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1542 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1543 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1544 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1545 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1546 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1547 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1548 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1549 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1550 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1551 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1552 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1553 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1554 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1555 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1556 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1557 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1558 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1559 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1560 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1561 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1562 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1563 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1564 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1565 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1566 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1567 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1568 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1569 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1570 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1571 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1572 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1573 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1574 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1575 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1576 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1577 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1578 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1579 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1580 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1581 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1582 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1583 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1584 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1585 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1586 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1587 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1588 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1589 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1590 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1591 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1592 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1593 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1594 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1595 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1596 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1597 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1598 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1599 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1600 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1601 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1602 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1603 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1604 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1605 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1606 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1607 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1608 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1609 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1610 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1611 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1612 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1613 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1614 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1615 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1616 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1617 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1618 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1619 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1620 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1621 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1622 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1623 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1624 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1625 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1626 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1627 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1628 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1629 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1630 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1631 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1632 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1633 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1634 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1635 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1636 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1637 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1638 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1639 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1640 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1641 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1642 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1643 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1644 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1645 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1646 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1647 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1648 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1649 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1650 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1651 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1652 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1653 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1654 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1655 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1656 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1657 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1658 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1659 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1660 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1661 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1662 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1663 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1664 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1665 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1666 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1667 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1668 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1669 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1670 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1671 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1672 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1673 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1674 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1675 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1676 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1677 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1678 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1679 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1680 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1681 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1682 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1683 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1684 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1685 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1686 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1687 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1688 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1689 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1690 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1691 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1692 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1693 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1694 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1695 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1696 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1697 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1698 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1699 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1700 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1701 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1702 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1703 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1704 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1705 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1706 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1707 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1708 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1709 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1710 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1711 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1712 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1713 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1714 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1715 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1716 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1717 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1718 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1719 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1720 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1721 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1722 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1723 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1724 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1725 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1726 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1727 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1728 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1729 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1730 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1731 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1732 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1733 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1734 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1735 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1736 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1737 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1738 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1739 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1740 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1741 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1742 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1743 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1744 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1745 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1746 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1747 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1748 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1749 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1750 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1751 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1752 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1753 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1754 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1755 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1756 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1757 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1758 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1759 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1760 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1761 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1762 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1763 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1764 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1765 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1766 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1767 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1768 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1769 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1770 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1771 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1772 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1773 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1774 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1775 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1776 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1777 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1778 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1779 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1780 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1781 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1782 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1783 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1784 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1785 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1786 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1787 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1788 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1789 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1790 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1791 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1792 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1793 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1794 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1795 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1796 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1797 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1798 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1799 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1800 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1801 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1802 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1803 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1804 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1805 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1806 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1807 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1808 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1809 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1810 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1811 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1812 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1813 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1814 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1815 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1816 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1817 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1818 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1819 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1820 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1821 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1822 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1823 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1824 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1825 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1826 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1827 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1828 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1829 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1830 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1831 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1832 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1833 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1834 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1835 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1836 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1837 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1838 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1839 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1840 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1841 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1842 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1843 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1844 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1845 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1846 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1847 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
 Piece 1848 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
 Piece 1849 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
 Piece 1850 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
@@ -2022,159 +713,8 @@ Piece 1869 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1)
 Piece 1870 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
 Piece 1871 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
 Piece 1872 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1873 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1874 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1875 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1876 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1877 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1878 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1879 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1880 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1881 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1882 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1883 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1884 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1885 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1886 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1887 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1888 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1889 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1890 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1891 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1892 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1893 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1894 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1895 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1896 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1897 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1898 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1899 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1900 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1901 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1902 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1903 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1904 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1905 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1906 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1907 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1908 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1909 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1910 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1911 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1912 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1913 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1914 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1915 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1916 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1917 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1918 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1919 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1920 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1921 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1922 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1923 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1924 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1925 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1926 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1927 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1928 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1929 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1930 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1931 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1932 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1933 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1934 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1935 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1936 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1937 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1938 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1939 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1940 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1941 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1942 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1943 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1944 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1945 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1946 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1947 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1948 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1949 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1950 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1951 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1952 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1953 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1954 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1955 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1956 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1957 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1958 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1959 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1960 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1961 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1962 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1963 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1964 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1965 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1966 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1967 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1968 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1969 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1970 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1971 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1972 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1973 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1974 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1975 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1976 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1977 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1978 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1979 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1980 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1981 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1982 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1983 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1984 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1985 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1986 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1987 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1988 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1989 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1990 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1991 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1992 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1993 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1994 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1995 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1996 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1997 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1998 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 1999 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 2000 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 2001 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 2002 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 2003 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 2004 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 2005 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 2006 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 2007 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 2008 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 2009 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 2010 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 2011 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 2012 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 2013 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 2014 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 2015 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 2016 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 2017 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 2018 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 2019 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 2020 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 2021 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 2022 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 2023 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 2024 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 2025 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
+(gst_bt_demux_get_ppi) empty, post one
+(bt_demux_handle_alert) got piece_info_alert, but ppi is empty 
 Piece 2026 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
 Piece 2027 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
 Piece 2028 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
@@ -2182,22 +722,18 @@ Piece 2029 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1)
 Piece 2030 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
 Piece 2031 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
 Piece 2032 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
-Piece 2033 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:4) 
-(bt_demux_handle_alert) file at file_idx (1) has finished downloading 
+Piece 2033 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
 Got torrent_checked_alert
-(bvw_handle_application_message) entering 
-(bvw_handle_application_message) stop-ppi 
-(gst_bt_demux_get_ppi) empty, post one
-(bvw_reconfigure_ppi_timeout) removing ppi timeout
 (gst_bt_demux_finished_piece_info) we called
-(We are seeder) 
 (IN bvw_handle_element_message_async) 
 (bvw_handle_element_message) src_name is:btdemux,type_name is:btdemux-video-info  
+(We are not seeder) 
+(bvw_handle_application_message) entering 
 (bvw) fname is Singnapore/2025-02-22_18-58-36.mp4
 (bvw) fpath is /home/pal/Documents/Singnapore/2025-02-22_18-58-36.mp4
 (btdemux-video-info) Key: 0, FileName: Singnapore/2025-02-22_18-58-36.mp4, FullPath: /home/pal/Documents/Singnapore/2025-02-22_18-58-36.mp4
-(bvw_handle_application_message) entering 
 (bitfield_scale_set_whole_piece_finished)
+(bt_demux_handle_alert) got piece_info_alert, but ppi is empty 
 (bvw) fname is Singnapore/HotSopt.mp4
 (bvw) fpath is /home/pal/Documents/Singnapore/HotSopt.mp4
 (btdemux-video-info) Key: 1, FileName: Singnapore/HotSopt.mp4, FullPath: /home/pal/Documents/Singnapore/HotSopt.mp4
@@ -2225,27 +761,15 @@ totem_object_set_fileidx_and_play, file_index=0
 (btdemux/update_requested_stream) stream-idx(1) disable undesired streams(src pads)
 (btdemux/update_requested_stream) stream-idx(1) DISABLE gst_pad_set_active ok
 (bacon_video_widget_open) reset seekable back to unknown state (which is -1)
-mark_popup_busy 0x555555571c80, opening file
+mark_popup_busy 0x5985b0d4ae50, opening file
 (totem_playlist_get_current_full_path) /home/pal/Documents/Singnapore/2025-02-22_18-58-36.mp4 
 In totem_movie_properties_plugin_fileidx_opened 
 (totem_playlist_get_current_full_path) /home/pal/Documents/Singnapore/2025-02-22_18-58-36.mp4 
-[New Thread 0x7fffc67fc6c0 (LWP 43856)]
 (totem_object_play) 
 (bacon_video_widget_play) cur_state:READY
-[New Thread 0x7fff977ff6c0 (LWP 43857)]
 play_starting_cb 
 -unmark_popup_busy opening file
 (bacon_video_widget_play) SET bvw->pipeline state to PLAYING
-[New Thread 0x7fff96ffe6c0 (LWP 43859)]
-[New Thread 0x7fff967fd6c0 (LWP 43860)]
--unmark_popup_busy paused
-[New Thread 0x7fff95ffc6c0 (LWP 43861)]
-(totem_got_torrent_videos_info) gotta free the GList* 
-[New Thread 0x7fff957fb6c0 (LWP 43862)]
-[New Thread 0x7fff94ffa6c0 (LWP 43863)]
-[New Thread 0x7fff8bfff6c0 (LWP 43864)]
-[New Thread 0x7fff8b7fe6c0 (LWP 43865)]
-[New Thread 0x7fff8affd6c0 (LWP 43866)]
 (bt_demux_handle_alert) BEGIN in read_piece_alert, piece idx:(0)
 (bt_demux_handle_alert) stream-idx(0) Create the pad if needed and add the pad to element (0)
 (bt_demux_handle_alert) stream-idx(0) ENABLE gst_pad_set_active ok
@@ -2255,7 +779,6 @@ play_starting_cb
 (on_btdemux_pad_added) Stream-start event pushed on pad 'src_00'
 (bt_demux_handle_alert) in read_piece_alert, piece_idx on alert(aka ipc_data->piece)=(0), size=1048576 
 (bt_demux_handle_alert) stream-idx(0) in read_piece_alert, Start the pad task(bt_demux_stream_push_loop) 0 
-[New Thread 0x7fff8a7fc6c0 (LWP 43867)]
 (gst_bt_demux_handle_alert) judge whether this read piece belongs to this stream
 (bt_demux_check_no_more_pads) We're done... Sending no more pads 
 (on_btdemux_no_more_pads) on no more pads: src_00
@@ -2270,6 +793,8 @@ play_starting_cb
 (bt_demux_stream_push_loop) Push SEGMENT event, start_byte=0, end_byte=949733275 
 (bt_demux_stream_push_loop) Modifying thiz->current_piece from -1 to 0 
 (bt_demux_stream_push_loop) Pushing buffer, actual size: 1048576, file: 0, cur piece: (0) 
+-unmark_popup_busy paused
+(totem_got_torrent_videos_info) gotta free the GList* 
 (gstTYPEFIND) gst_type_find_element_emit_have_type 
 GST-DECODEBIN::type_found, it is video/quicktime 
 (ghostpad_pad_constructed) GST_PAD_UNSET_FLUSHING
@@ -2280,7 +805,7 @@ GST-DECODEBIN::type_found, it is video/quicktime
 (qtdemux_handle_sink_event) GST_EVENT_STREAM_START 
 (gst_qtdemux_process_adapter) demux->state=<INITIAL> 
 (qtdemux_chain) Received buffer size:1048576 demux offset:0
-(qtdemux_chain) pushing in inbuf 0x7fff00002270,neededbytes:16,available: 1048576
+(qtdemux_chain) pushing in inbuf 0x7ec4980021f0,neededbytes:16,available: 1048576
 (gst_qtdemux_process_adapter) demux->state=<INITIAL> 
 (gst_qtdemux_check_seekability) seekable:1, start:0 stop:949733275
 (qtdemux_process_adapter) InQTDEMUX_STATE_INITIAL, Peeking found [ftyp] size:32
@@ -2342,7 +867,7 @@ bt_demux_stream_push_loop, END
 (bt_demux_stream_push_loop) Modifying thiz->current_piece from 904 to 905 
 (bt_demux_stream_push_loop) Pushing buffer, actual size: 575439, file: 0, cur piece: (905) 
 (qtdemux_chain) Received buffer size:575439 demux offset:0
-(qtdemux_chain) pushing in inbuf 0x7fff00002270,neededbytes:16,available: 575439
+(qtdemux_chain) pushing in inbuf 0x7ec4980021f0,neededbytes:16,available: 575439
 (gst_qtdemux_process_adapter) demux->state=<INITIAL> 
 (qtdemux_process_adapter) InQTDEMUX_STATE_INITIAL, Peeking found [moov] size:575439
 (qtdemux_process_adapter) already buffering still no moov header, set state to QTDEMUX_STATE_HEADER, set demux->neededbytes=575439
@@ -2364,28 +889,9 @@ bt_demux_stream_push_loop, END
 (qtdemux_prepare_streams) num: 2 
 (qtdemux_add_stream) adding pad video_0 
 (ghostpad_pad_constructed) GST_PAD_UNSET_FLUSHING
-[New Thread 0x7fff89ffb6c0 (LWP 43868)]
-warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libflite_cmu_us_awb.so.1
-warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libflite_cmu_us_kal.so.1
-warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libflite_cmu_us_kal16.so.1
-warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libflite_cmu_us_rms.so.1
-warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libflite_cmu_us_slt.so.1
-warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libvpl.so.2
-warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libzvbi.so.0
-warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libtheoraenc.so.1
-warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libtheoradec.so.1
-warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libvdpau.so.1
-warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libflite_usenglish.so.1
-warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libflite_cmulex.so.1
-warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libcjson.so.1
 FFMPEG,GST-AVVIDEC:: gst_ffmpegviddec_set_format
-[New Thread 0x7fff66fff6c0 (LWP 43869)]
-[New Thread 0x7fff667fe6c0 (LWP 43870)]
-[New Thread 0x7fff65f426c0 (LWP 43871)]
-[New Thread 0x7fff656866c0 (LWP 43872)]
 (qtdemux_add_stream) adding pad audio_0 
 (ghostpad_pad_constructed) GST_PAD_UNSET_FLUSHING
-[New Thread 0x7fff64e856c0 (LWP 43873)]
 (gst_qtdemux_map_and_push_segments) 
 (qtdemux_activate_segment) (video_0) activate segment 0, offset 0:00:00.000000000
 (stream_segment_get_boundaries) (video_0) seg_time = 0:00:00.000000000 
@@ -2430,7 +936,7 @@ bt_demux_stream_push_loop, END
 (bt_demux_stream_push_loop) Modifying thiz->current_piece from -1 to 0 
 (bt_demux_stream_push_loop) Pushing buffer, actual size: 1048576, file: 0, cur piece: (0) 
 (qtdemux_chain) Received buffer size:1048576 demux offset:40
-(qtdemux_chain) pushing in inbuf 0x7fff00002270,neededbytes:16,available: 1048576
+(qtdemux_chain) pushing in inbuf 0x7ec4980021f0,neededbytes:16,available: 1048576
 (gst_qtdemux_process_adapter) demux->state=<INITIAL> 
 (qtdemux_process_adapter) InQTDEMUX_STATE_INITIAL, Peeking found [ftyp] size:32
 (qtdemux_process_adapter) already buffering still no moov header, set state to QTDEMUX_STATE_HEADER, set demux->neededbytes=32
@@ -2472,7 +978,29 @@ GTK-GLSINK::gst_gtk_gl_sink_event: segment
 GTK-GLSINK::gst_gtk_gl_sink_event: tag 
 GTK-GLSINK::gst_gtk_gl_sink_event: tag 
 GTK-GLSINK::gst_gtk_gl_sink_event: tag 
-[New Thread 0x7fff593006c0 (LWP 43874)]
+(bvw_update_tags) gain video Tags: 0x7ec494001020A 
+(bvw_update_tags) emit got-metadata 
+(on_got_metadata_event) 
+(totem_get_nice_name_for_stream) emit_metadata_updated 
+(totem-object/on_playlist_change_name)  got title to update player header Singnapore/2025-02-22_18-58-36.mp4
+(bvw_update_tags) gain video Tags: 0x7ec498077280A 
+(bvw_update_tags) emit got-metadata 
+(on_got_metadata_event) 
+(totem_get_nice_name_for_stream) emit_metadata_updated 
+(totem-object/on_playlist_change_name)  got title to update player header Singnapore/2025-02-22_18-58-36.mp4
+(bvw_update_tags) Pipeline sent video tags update with no changes 
+(bvw_update_tags) gain audio Tags: 0x7ec4900020f0A 
+(bvw_update_tags) emit got-metadata 
+(on_got_metadata_event) 
+(totem_get_nice_name_for_stream) emit_metadata_updated 
+(totem-object/on_playlist_change_name)  got title to update player header Singnapore/2025-02-22_18-58-36.mp4
+(bvw_update_tags) Pipeline sent audio tags update with no changes 
+(bvw_update_tags) Pipeline sent audio tags update with no changes 
+(bvw_update_tags) gain audio Tags: 0x7ec490003ef0A 
+(bvw_update_tags) emit got-metadata 
+(on_got_metadata_event) 
+(totem_get_nice_name_for_stream) emit_metadata_updated 
+(totem-object/on_playlist_change_name)  got title to update player header Singnapore/2025-02-22_18-58-36.mp4
 (gst_bt_demux_change_state) GstTaskState is 0, transition is 28
 (bvw_bus_message_cb) bvw-pipeline changed state from READY to PAUSED
 (bvw_bus_message_cb) disable updating slider and time label
@@ -2489,77 +1017,61 @@ GTK-GLSINK::gst_gtk_gl_sink_event: tag
 (bvw_bus_message_cb) bvw-pipeline changed state from PAUSED to PLAYING
 (bvw_bus_message_cb) resume updating slider and time label
 (bvw_reconfigure_tick_timeout) adding tick timeout (at 200ms) 
-(bvw_update_tags) gain video Tags: 0x7fff08001040A 
+(bvw_update_tags) gain audio Tags: 0x7ec490020230A 
 (bvw_update_tags) emit got-metadata 
 (on_got_metadata_event) 
 (totem_get_nice_name_for_stream) emit_metadata_updated 
 (totem-object/on_playlist_change_name)  got title to update player header Singnapore/2025-02-22_18-58-36.mp4
-(bvw_update_tags) gain video Tags: 0x7fff000786d0A 
+(bvw_update_tags) gain audio Tags: 0x7ec4900204b0A 
 (bvw_update_tags) emit got-metadata 
 (on_got_metadata_event) 
 (totem_get_nice_name_for_stream) emit_metadata_updated 
 (totem-object/on_playlist_change_name)  got title to update player header Singnapore/2025-02-22_18-58-36.mp4
-(bvw_update_tags) Pipeline sent video tags update with no changes 
-(bvw_update_tags) gain audio Tags: 0x7fff0c0017a0A 
+(bvw_update_tags) gain audio Tags: 0x7ec490008e20A 
 (bvw_update_tags) emit got-metadata 
 (on_got_metadata_event) 
 (totem_get_nice_name_for_stream) emit_metadata_updated 
 (totem-object/on_playlist_change_name)  got title to update player header Singnapore/2025-02-22_18-58-36.mp4
-(bvw_update_tags) Pipeline sent audio tags update with no changes 
-(bvw_update_tags) Pipeline sent audio tags update with no changes 
-(bvw_update_tags) gain audio Tags: 0x7fff0c003630A 
+(bvw_update_tags) gain audio Tags: 0x7ec4900040d0A 
 (bvw_update_tags) emit got-metadata 
 (on_got_metadata_event) 
 (totem_get_nice_name_for_stream) emit_metadata_updated 
 (totem-object/on_playlist_change_name)  got title to update player header Singnapore/2025-02-22_18-58-36.mp4
-[Thread 0x7fffc57fa6c0 (LWP 43843) exited]
-(bvw_update_tags) gain audio Tags: 0x7fff0c020320A 
+(bvw_update_tags) gain audio Tags: 0x7ec490009ac0A 
 (bvw_update_tags) emit got-metadata 
 (on_got_metadata_event) 
 (totem_get_nice_name_for_stream) emit_metadata_updated 
 (totem-object/on_playlist_change_name)  got title to update player header Singnapore/2025-02-22_18-58-36.mp4
-(bvw_update_tags) gain audio Tags: 0x7fff0c0205a0A 
+(gst_bt_demux_get_ppi) empty, post one
+(bt_demux_handle_alert) got piece_info_alert, but ppi is empty 
+(bvw_update_tags) gain audio Tags: 0x7ec490000bf0A 
 (bvw_update_tags) emit got-metadata 
 (on_got_metadata_event) 
 (totem_get_nice_name_for_stream) emit_metadata_updated 
 (totem-object/on_playlist_change_name)  got title to update player header Singnapore/2025-02-22_18-58-36.mp4
-(bvw_update_tags) gain audio Tags: 0x7fff0c004510A 
+(bvw_update_tags) gain audio Tags: 0x7ec49000a0e0A 
 (bvw_update_tags) emit got-metadata 
 (on_got_metadata_event) 
 (totem_get_nice_name_for_stream) emit_metadata_updated 
 (totem-object/on_playlist_change_name)  got title to update player header Singnapore/2025-02-22_18-58-36.mp4
-(bvw_update_tags) gain audio Tags: 0x7fff0c00a4d0A 
-(bvw_update_tags) emit got-metadata 
-(on_got_metadata_event) 
-(totem_get_nice_name_for_stream) emit_metadata_updated 
-(totem-object/on_playlist_change_name)  got title to update player header Singnapore/2025-02-22_18-58-36.mp4
-[Thread 0x7fff593006c0 (LWP 43874) exited]
-(bvw_update_tags) gain audio Tags: 0x7fff0c003e40A 
-(bvw_update_tags) emit got-metadata 
-(on_got_metadata_event) 
-(totem_get_nice_name_for_stream) emit_metadata_updated 
-(totem-object/on_playlist_change_name)  got title to update player header Singnapore/2025-02-22_18-58-36.mp4
-(bvw_update_tags) gain audio Tags: 0x7fff0c01ed10A 
-(bvw_update_tags) emit got-metadata 
-(on_got_metadata_event) 
-(totem_get_nice_name_for_stream) emit_metadata_updated 
-(totem-object/on_playlist_change_name)  got title to update player header Singnapore/2025-02-22_18-58-36.mp4
-(bvw_update_tags) gain audio Tags: 0x7fff0c01c400A 
+(gst_bt_demux_get_ppi) empty, post one
+(bt_demux_handle_alert) got piece_info_alert, but ppi is empty 
+(bvw_update_tags) gain audio Tags: 0x7ec490000bf0A 
 (bvw_update_tags) emit got-metadata 
 (on_got_metadata_event) 
 (totem_get_nice_name_for_stream) emit_metadata_updated 
 (totem-object/on_playlist_change_name)  got title to update player header Singnapore/2025-02-22_18-58-36.mp4
 (bt_demux_stream_push_loop) Luckily we have next piece 1, call read_piece() on it, current:0
-(bt_demux_handle_alert) BEGIN in read_piece_alert, piece idx:(1)
 (bt_demux_stream_push_loop) unlock cur:(0)
 bt_demux_stream_push_loop, END 
+(bt_demux_stream_push_loop) FIRE src_00 [start piece idx:0, end piece idx:905],current_piece:0,pad task state 0 
+(bt_demux_stream_push_loop) decodebin ghost sink pad is ok to have target
+(bt_demux_stream_push_loop) have_type emitted, proceeding 
+(bt_demux_handle_alert) BEGIN in read_piece_alert, piece idx:(1)
 (bt_demux_handle_alert) in read_piece_alert, piece_idx on alert(aka ipc_data->piece)=(1), size=1048576 
 (bt_demux_handle_alert) stream-idx(0) in read_piece_alert, Start the pad task(bt_demux_stream_push_loop) 1 
 (gst_bt_demux_handle_alert) judge whether this read piece belongs to this stream
 (bt_demux_handle_alert) EXIT in read_piece_alert, piece idx:(1)
-(bt_demux_stream_push_loop) FIRE src_00 [start piece idx:0, end piece idx:905],current_piece:0,pad task state 0 
-(bt_demux_stream_push_loop) decodebin ghost sink pad is ok to have target
-(bt_demux_stream_push_loop) have_type emitted, proceeding 
 (bt_demux_stream_push_loop) waiting lock thiz->current_piece(0), ipc_data->piece(1)
 (bt_demux_stream_push_loop) recovery lock (0)
 (gst_bt_demux_buffer_new) thiz->start_piece=0, piece=1, this buffer actual size:1048576 
@@ -2567,467 +1079,18 @@ bt_demux_stream_push_loop, END
 (bt_demux_stream_push_loop) Modifying thiz->current_piece from 0 to 1 
 (bt_demux_stream_push_loop) Pushing buffer, actual size: 1048576, file: 0, cur piece: (1) 
 (qtdemux_chain) Received buffer size:1048576 demux offset:1044688
-(qtdemux_chain) pushing in inbuf 0x7fff002453a0,neededbytes:20345,available: 1052464
+(qtdemux_chain) pushing in inbuf 0x7ec4986f6910,neededbytes:20345,available: 1052464
 (gst_qtdemux_process_adapter) demux->state=<MOVIE> 
-(totem_object_seek_next) Press Next Chapter 
-(totem_object_direction) switch to next item in playlist 
-(totem_object_set_current_fileidx_and_play) get current fileidx 1 from totem-playlist 
-totem_object_set_fileidx_and_play, file_index=1 
-(totem_object_set_fileidx), file_idx=1 
-(totem_object_set_fileidx, file_idx=1) Closing the current stream first 
-(bvw_stop_play_pipeline) SET bvw->pipeline state to READY
-(gst_bt_demux_change_state) GstTaskState is 0, transition is 35
-(bt_demux_stream_push_loop)!!Failed Pushing buffer,actual size: 1048576, file: 0, piece: (1) ret=-2
-(bt_demux_stream_push_loop) it is flushing  
-(bt_demux_stream_push_loop) otherwise, send eos downstream to avoid blcking on push_loop 
-(bt_demux_stream_push_loop) Sending EOS event on file 0, piece:1 
-(qtdemux_handle_sink_event) in push mode, Data still available after EOS: 1026380
-(gst_qtdemux_process_adapter) demux->state=<MOVIE> 
-(bt_demux_stream_push_loop) due to EOS or internal Error, suspend call read_piece() on next piece 2, current:1, end/last:(bt_demux_stream_push_loop) unlock cur:(1)
-bt_demux_stream_push_loop, END 
-(gstdecodebin2) state changed from PAUSED to READY 
-(caps_set) caps on video pad is empty 
-(caps_set) caps on video pad is empty 
-(caps_set) caps on video pad is empty 
-[Thread 0x7fff66fff6c0 (LWP 43869) exited]
-[Thread 0x7fff667fe6c0 (LWP 43870) exited]
-[Thread 0x7fff65f426c0 (LWP 43871) exited]
-[Thread 0x7fff656866c0 (LWP 43872) exited]
-(gst_qtdemux_stream_flush_samples_data) 
-(decodebin2/pad_removed_cb) pad name is video_0
-(gst_qtdemux_stream_flush_samples_data) 
-(decodebin2/pad_removed_cb) pad name is audio_0
-(gstdecodebin2) state changed from PAUSED to READY 2
-(decodebin/chain_free_internal) pad type is video
-(bvw/on_pad_removed for decodebin) :src_0, pad_type is video
-(bvw/on_pad_removed) existed in video channels at 0
-(bvw/on_pad_removed for decodebin)  glsinkbin sinkpad is not linked with any pad, no need to unlink 
-Removed decodebin's Video pad from video_channels, len after remove is 0
-(decodebin/chain_free_internal) pad type is audio
-(bvw/on_pad_removed for decodebin) :src_1, pad_type is audio
-(bvw/on_pad_removed) existed in audio channels at 0
-(bvw/on_pad_removed for decodebin) audio_bin sinkpad is not linked with any pad, no need to unlink 
-Removed decodebin's Audio pad from audio_channels, len after remove is 0
-(decodebin/chain_free_internal) pad type is video
-(decodebin/chain_free_internal) pad type is audio
-(gst_bt_demux_change_state) GstTaskState is 0, transition is 26
-(gst_bt_demux_change_state) PAUSED_TO_READY 
-(gst_bt_demux_change_state) PAUSED_TO_READY 2 
-(bvw_bus_message_cb) bvw-pipeline changed state from PLAYING to PAUSED
-(bvw_bus_message_cb) disable updating slider and time label
-(bvw_query_timeout) could not get position
-(bvw_reconfigure_tick_timeout) removing tick timeout 
-(bvw_bus_message_cb) bvw-pipeline changed state from PAUSED to READY
-(bvw_bus_message_cb) disable updating slider and time label
-(bvw_query_timeout) could not get position
-(bvw_bus_message_cb) pipeline state changed from PAUSED back to READY, clear related tags cache 
-(bvw_stop_play_pipeline) stopped
-In totem_movie_properties_plugin_fileidx_closed 
-(totem_open_directory_fileidx_closed) 
-(totem_object_set_fileidx) clear is_stream_length_set
-(totem_object_set_fileidx), file_idx=1 gonna call bacon_video_widget_open
-(bacon_video_widget_open) So we aren't closed yet...
-(bvw_stop_play_pipeline) stopped
-(bacon_video_widget_open) set cur_video_fileidx_within_tor to 1
-(btdemux/update_requested_stream) desired fileidx 1 
-(btdemux/update_requested_stream) stream-idx(0) disable undesired streams(src pads)
-(btdemux/update_requested_stream) stream-idx(0) DISABLE gst_pad_set_active ok
-(btdemux/update_requested_stream) re-set typefindelement have-type to FALSE
-(gst_type_find_element_set_property) 
-(on_btdemux_pad_removed) btdemux src pad removed: src_00
-(on_btdemux_pad_removed) btdemux src pad removed successfully: src_00
-(update_requested_stream) Mark stream of fileidx 1 as Requested 
-(gst_bt_demux_switch_streams) before activate, clear previous Three-Piece-Area [2,4]
-(bt_demux_stream_activate) waiting lock
-(bt_demux_stream_activate) recovery lock
-(bt_demux_stream_activate) Modifying thiz->current_piece to 904 (start_piece minus one) 
-(bt_demux_stream_activate) clearing historical cur_buffering_flags for activate stream
-(bt_demux_stream_activate) Activating stream 'src_01', start: (905), start_offset: 771995, end: 2033, end_offset: 54374, current: (904) buffering(No)
-(bt_demux_stream_activate) unlock
-(gst_bt_demux_switch_streams) Switching to stream 'src_01', reading piece 905, current: 904, buffering(No)
-(gst_bt_demux_switch_streams) call read_piece() on piece 905
-(bacon_video_widget_open) reset seekable back to unknown state (which is -1)
-mark_popup_busy 0x555555571c80, opening file
-(totem_playlist_get_current_full_path) /home/pal/Documents/Singnapore/HotSopt.mp4 
-In totem_movie_properties_plugin_fileidx_opened 
-(totem_playlist_get_current_full_path) /home/pal/Documents/Singnapore/HotSopt.mp4 
-(totem_object_play) 
-(bacon_video_widget_play) cur_state:READY
-play_starting_cb 
--unmark_popup_busy opening file
-(bacon_video_widget_play) SET bvw->pipeline state to PLAYING
-(gstdecodebin2) state changed from READY to PAUSED 
-(gstTYPEFIND) start_typefinding 
-(gst_bt_demux_change_state) GstTaskState is 0, transition is 19
-(bt_demux_change_state) READY_TO_PAUSED GstTaskState is:(0)
--unmark_popup_busy paused
-(next_chapter_action_cb:176) took 0.019744 seconds
-(bt_demux_sink_event) 
-(bt_demux_sink_event) Not EOS, skip and return
-(bt_demux_sink_event) 
-(bt_demux_sink_event) Not EOS, skip and return
-(bt_demux_sink_event) 
-(bt_demux_handle_alert) BEGIN in read_piece_alert, piece idx:(905)
-(gst_bt_demux_sink_event) torrent already added to session, skip
-(bt_demux_handle_alert) stream-idx(1) Create the pad if needed and add the pad to element (905)
-(bt_demux_handle_alert) stream-idx(1) ENABLE gst_pad_set_active ok
-(on_btdemux_pad_added) btdemux src pad added: src_01
-(on_btdemux_pad_added) Successfully linked btdemux src pad (src_01) to decodebin sink pad 
-(on_btdemux_pad_added) gst_pad_is_active (pad) is 1 
-(on_btdemux_pad_added) Stream-start event pushed on pad 'src_01'
-(bt_demux_handle_alert) in read_piece_alert, piece_idx on alert(aka ipc_data->piece)=(905), size=1048576 
-(bt_demux_handle_alert) stream-idx(1) in read_piece_alert, Start the pad task(bt_demux_stream_push_loop) 905 
-(bt_demux_check_no_more_pads) We're done... Sending no more pads 
-(on_btdemux_no_more_pads) on no more pads: src_01
-(bt_demux_handle_alert) EXIT in read_piece_alert, piece idx:(905)
-(bt_demux_stream_push_loop) FIRE src_01 [start piece idx:905, end piece idx:2033],current_piece:904,pad task state 0 
-(bt_demux_stream_push_loop) decodebin ghost sink pad is ok to have target
-(bt_demux_stream_push_loop) have_type not emitted yet
-(bt_demux_stream_push_loop) waiting lock thiz->current_piece(904), ipc_data->piece(905)
-(bt_demux_stream_push_loop) recovery lock (904)
-(gst_bt_demux_buffer_new) thiz->start_piece=905, piece=905, this buffer actual size:276581 
-(bt_demux_stream_push_loop) Received piece (905) of size 1048576 and actual size 276581 on file 1 
-(bt_demux_stream_push_loop) Push SEGMENT event, start_byte=0, end_byte=1182076107 
-(bt_demux_stream_push_loop) Modifying thiz->current_piece from 904 to 905 
-(bt_demux_stream_push_loop) Pushing buffer, actual size: 276581, file: 1, cur piece: (905) 
-(gstTYPEFIND) gst_type_find_element_emit_have_type 
-GST-DECODEBIN::type_found, it is video/quicktime 
-(ghostpad_pad_constructed) GST_PAD_UNSET_FLUSHING
-(qtdemux_init) 
-(qtdemux_sink_activate) activating push 
-(qtdemux_handle_sink_event) GST_EVENT_STREAM_START 
-(gst_qtdemux_process_adapter) demux->state=<INITIAL> 
-(qtdemux_handle_sink_event) GST_EVENT_STREAM_START 
-(gst_qtdemux_process_adapter) demux->state=<INITIAL> 
-(qtdemux_chain) Received buffer size:276581 demux offset:0
-(qtdemux_chain) pushing in inbuf 0x7fff0c003050,neededbytes:16,available: 276581
-(gst_qtdemux_process_adapter) demux->state=<INITIAL> 
-(gst_qtdemux_check_seekability) seekable:1, start:0 stop:1182076107
-(qtdemux_process_adapter) InQTDEMUX_STATE_INITIAL, Peeking found [ftyp] size:32
-(qtdemux_process_adapter) already buffering still no moov header, set state to QTDEMUX_STATE_HEADER, set demux->neededbytes=32
-(qtdemux_process_adapter) In QTDEMUX_STATE_HEADER, fourcc is ftyp
-(qtdemux_process_adapter) only go back to the mdat if there are samples to play first_mdat=18446744073709551615
-(qtdemux_process_adapter) In QTDEMUX_STATE_HEADER, set demux->offset+=demux->neededbytes(32) 
-(qtdemux_process_adapter) In QTDEMUX_STATE_HEADER, set demux->neededbytes=16 and demux->state back to QTDEMUX_STATE_INITIAL 
-(qtdemux_process_adapter) InQTDEMUX_STATE_INITIAL, Peeking found [free] size:8
-(qtdemux_process_adapter) already buffering still no moov header, set state to QTDEMUX_STATE_HEADER, set demux->neededbytes=8
-(qtdemux_process_adapter) In QTDEMUX_STATE_HEADER, fourcc is free
-(qtdemux_process_adapter) only go back to the mdat if there are samples to play first_mdat=18446744073709551615
-(qtdemux_process_adapter) In QTDEMUX_STATE_HEADER, set demux->offset+=demux->neededbytes(8) 
-(qtdemux_process_adapter) In QTDEMUX_STATE_HEADER, set demux->neededbytes=16 and demux->state back to QTDEMUX_STATE_INITIAL 
-(qtdemux_process_adapter) InQTDEMUX_STATE_INITIAL, Peeking found [mdat] size:1180035240
-(qtdemux_process_adapter) FOURCC_mdat. no headers yet, try to get them
-(qtdemux_seek_offset) Seeking to 1180035280
-(bt_demux_stream_event) Got Event, GST_EVENT_SEEK 
-(bt_demux_stream_seek) info 905,771995 2033,54374 
-(bt_demux_stream_seek) moov_after_mdat, this Seek event is posted by qtdemux 
-(bt_demux_stream_seek) rate:1.000000, start:1180035280, stop:1182076107 
-(bt_demux_stream_seek) push flush_start 
-(qtdemux_handle_sink_event) got GST_EVENT_FLUSH_START 
-(bt_demux_stream_seek) waiting lock (905)
-(bt_demux_stream_seek) recovery lock (905)
-(bt_demux_stream_seek) fileidx(1) start_byte_global = 949733275
-(bt_demux_stream_seek) Seeking to, start:2031, start_offset:110699, end:2033, end_offset:54374, start_byte2129768555,end_byte2131809382 
-(bt_demux_stream_seek) before activate, clear previous Three-Piece-Area [906,908]
-(bt_demux_stream_activate) waiting lock
-(bt_demux_stream_activate) recovery lock
-(bt_demux_stream_activate) Modifying thiz->current_piece to 2030 (start_piece minus one) 
-(bt_demux_stream_activate) clearing historical cur_buffering_flags for activate stream
-(bt_demux_stream_activate) Activating stream 'src_01', start: (2031), start_offset: 110699, end: 2033, end_offset: 54374, current: (2030) buffering(No)
-(bt_demux_stream_activate) unlock
-(bt_demux_stream_seek) Starting SEEK stream 'src_01', reading piece 2031, current: 2030 buffering(No) 
-(bt_demux_stream_seek) call read_piece() on piece 2031
-(bt_demux_stream_seek) return FALSE to deliberately let qtdemux_seek_offset failed 
-(bt_demux_stream_seek) unlock lock (905)
-(qtdemux_process_adapter) seek failed/skipped : 40
-(qtdemux_process_adapter) although moov header not found in first 10MB, dont give up
-(qtdemux_process_adapter) Clear data in adapter, demux->mdatoffset=40
-(bt_demux_stream_push_loop) current_piece modified, give up call read_piece() on next piece 906, current:2030
-(bt_demux_stream_push_loop) unlock cur:(2030)
-bt_demux_stream_push_loop, END 
-(bt_demux_stream_push_loop) FIRE src_01 [start piece idx:2031, end piece idx:2033],current_piece:2030,pad task state 0 
-(bt_demux_stream_push_loop) decodebin ghost sink pad is ok to have target
-(bt_demux_stream_push_loop) have_type emitted, proceeding 
-(bt_demux_handle_alert) BEGIN in read_piece_alert, piece idx:(2031)
-(gst_bt_demux_handle_alert) judge whether this read piece belongs to this stream
-(bt_demux_handle_alert) in read_piece_alert, piece_idx on alert(aka ipc_data->piece)=(2031), size=1048576 
-(bt_demux_handle_alert) stream-idx(1) in read_piece_alert, Start the pad task(bt_demux_stream_push_loop) 2031 
-(bt_demux_handle_alert) EXIT in read_piece_alert, piece idx:(2031)
-(bt_demux_stream_push_loop) waiting lock thiz->current_piece(2030), ipc_data->piece(2031)
-(bt_demux_stream_push_loop) recovery lock (2030)
-(gst_bt_demux_buffer_new) thiz->start_piece=2031, piece=2031, this buffer actual size:937877 
-(bt_demux_stream_push_loop) Received piece (2031) of size 1048576 and actual size 937877 on file 1 
-(bt_demux_stream_push_loop) Push SEGMENT event, start_byte=1180035280, end_byte=1182076107 
-(bt_demux_stream_push_loop) since flush_start sent, send flush_stop then 
-(qtdemux_handle_sink_event) got GST_EVENT_FLUSH_STOP 
-(bt_demux_stream_push_loop) Modifying thiz->current_piece from 2030 to 2031 
-(bt_demux_stream_push_loop) Pushing buffer, actual size: 937877, file: 1, cur piece: (2031) 
-(qtdemux_chain) Received buffer size:937877 demux offset:0
-(qtdemux_chain) pushing in inbuf 0x7fff0c003050,neededbytes:16,available: 937877
-(gst_qtdemux_process_adapter) demux->state=<INITIAL> 
-(qtdemux_process_adapter) InQTDEMUX_STATE_INITIAL, Peeking found [moov] size:2040827
-(qtdemux_process_adapter) already buffering still no moov header, set state to QTDEMUX_STATE_HEADER, set demux->neededbytes=2040827
-(bt_demux_stream_push_loop) Luckily we have next piece 2032, call read_piece() on it, current:2031
-(bt_demux_stream_push_loop) unlock cur:(2031)
-bt_demux_stream_push_loop, END 
-(bt_demux_stream_push_loop) FIRE src_01 [start piece idx:2031, end piece idx:2033],current_piece:2031,pad task state 0 
-(bt_demux_stream_push_loop) decodebin ghost sink pad is ok to have target
-(bt_demux_stream_push_loop) have_type emitted, proceeding 
-(bt_demux_handle_alert) BEGIN in read_piece_alert, piece idx:(2032)
-(gst_bt_demux_handle_alert) judge whether this read piece belongs to this stream
-(bt_demux_handle_alert) in read_piece_alert, piece_idx on alert(aka ipc_data->piece)=(2032), size=1048576 
-(bt_demux_handle_alert) stream-idx(1) in read_piece_alert, Start the pad task(bt_demux_stream_push_loop) 2032 
-(bt_demux_handle_alert) EXIT in read_piece_alert, piece idx:(2032)
-(bt_demux_stream_push_loop) waiting lock thiz->current_piece(2031), ipc_data->piece(2032)
-(bt_demux_stream_push_loop) recovery lock (2031)
-(gst_bt_demux_buffer_new) thiz->start_piece=2031, piece=2032, this buffer actual size:1048576 
-(bt_demux_stream_push_loop) Received piece (2032) of size 1048576 and actual size 1048576 on file 1 
-(bt_demux_stream_push_loop) Modifying thiz->current_piece from 2031 to 2032 
-(bt_demux_stream_push_loop) Pushing buffer, actual size: 1048576, file: 1, cur piece: (2032) 
-(qtdemux_chain) Received buffer size:1048576 demux offset:0
-(qtdemux_chain) pushing in inbuf 0x7fff0c002c80,neededbytes:2040827,available: 1986453
-(gst_qtdemux_process_adapter) demux->state=<HEADER> 
-(bt_demux_stream_push_loop) Luckily we have next piece 2033, call read_piece() on it, current:2032
-(bt_demux_stream_push_loop) unlock cur:(2032)
-bt_demux_stream_push_loop, END 
-(bt_demux_stream_push_loop) FIRE src_01 [start piece idx:2031, end piece idx:2033],current_piece:2032,pad task state 0 
-(bt_demux_stream_push_loop) decodebin ghost sink pad is ok to have target
-(bt_demux_stream_push_loop) have_type emitted, proceeding 
-(bt_demux_handle_alert) BEGIN in read_piece_alert, piece idx:(2033)
-(gst_bt_demux_handle_alert) judge whether this read piece belongs to this stream
-(bt_demux_handle_alert) in read_piece_alert, piece_idx on alert(aka ipc_data->piece)=(2033), size=54374 
-(bt_demux_handle_alert) stream-idx(1) in read_piece_alert, Start the pad task(bt_demux_stream_push_loop) 2033 
-(bt_demux_handle_alert) EXIT in read_piece_alert, piece idx:(2033)
-(bt_demux_stream_push_loop) waiting lock thiz->current_piece(2032), ipc_data->piece(2033)
-(bt_demux_stream_push_loop) recovery lock (2032)
-(gst_bt_demux_buffer_new) thiz->start_piece=2031, piece=2033, this buffer actual size:54374 
-(bt_demux_stream_push_loop) Received piece (2033) of size 54374 and actual size 54374 on file 1 
-(bt_demux_stream_push_loop) Modifying thiz->current_piece from 2032 to 2033 
-(bt_demux_stream_push_loop) Pushing buffer, actual size: 54374, file: 1, cur piece: (2033) 
-(qtdemux_chain) Received buffer size:54374 demux offset:0
-(qtdemux_chain) pushing in inbuf 0x7fff00355a70,neededbytes:2040827,available: 2040827
-(gst_qtdemux_process_adapter) demux->state=<HEADER> 
-(qtdemux_process_adapter) In QTDEMUX_STATE_HEADER, fourcc is moov
-(qtdemux_process_adapter) Parsing [moov] 
-(qtdemux_process_adapter) demux->last_moov_offset= 0
-(qtdemux_parse_moov)parsing moov atom!!! 
-(qtdemux_parse_tree) we have read the complete moov node now at parse_tree 
-(_create_stream), stream_id=3efe89ceb7f3618a94681ce7a1d4a898b5e1c7868873e1b7c95144f81b7da3d5/01/001 
-(qtdemux_stbl_init) [stsz] stream->sample_size=0, stream->n_samples=59803 
-(qtdemux_stbl_init), [stsc] stream->n_samples_per_chunk=2 
-(qtdemux_stbl_init) allocating n_samples 59803, (guint)sizeof(QtDemuxSample) is 32
-(qtdemux_parse_segments) created segment 0 time 0:00:00.000000000, media_start (0:00:00.066666666), media_stop (0:33:13.566666666), duration 0:33:13.500000000, timescale 15360
-(_create_stream), stream_id=3efe89ceb7f3618a94681ce7a1d4a898b5e1c7868873e1b7c95144f81b7da3d5/01/002 
-(qtdemux_stbl_init) [stsz] stream->sample_size=0, stream->n_samples=93440 
-(qtdemux_stbl_init), [stsc] stream->n_samples_per_chunk=52325 
-(qtdemux_stbl_init) allocating n_samples 93440, (guint)sizeof(QtDemuxSample) is 32
-(qtdemux_parse_segments) created segment 0 time 0:00:00.000000000, media_start (0:00:00.000000000), media_stop (0:33:13.387000000), duration 0:33:13.387000000, timescale 48000
-(qtdemux_prepare_streams) num: 2 
-(qtdemux_add_stream) adding pad video_0 
-(ghostpad_pad_constructed) GST_PAD_UNSET_FLUSHING
-FFMPEG,GST-AVVIDEC:: gst_ffmpegviddec_set_format
-[New Thread 0x7fff656866c0 (LWP 43876)]
-[New Thread 0x7fff65f426c0 (LWP 43877)]
-[New Thread 0x7fff667fe6c0 (LWP 43878)]
-[New Thread 0x7fff66fff6c0 (LWP 43879)]
-(qtdemux_add_stream) adding pad audio_0 
-(ghostpad_pad_constructed) GST_PAD_UNSET_FLUSHING
-(gst_qtdemux_map_and_push_segments) 
-(qtdemux_activate_segment) (video_0) activate segment 0, offset 0:00:00.000000000
-(stream_segment_get_boundaries) (video_0) seg_time = 0:00:00.000000000 
-(stream_segment_get_boundaries) (video_0) result is start=0:00:00.066666666,stop=0:33:13.566666666,time=0:00:00.000000000
-(qtdemux_stream_update_segment) (video_0) new segment 0 from 0:00:00.066666666 to 0:33:13.566666666,time 0:00:00.000000000 
-(gst_qtdemux_push_tags) Checking pad qtdemux1:video_0 for tags
-(qtdemux_activate_segment) (audio_0) activate segment 0, offset 0:00:00.000000000
-(stream_segment_get_boundaries) (audio_0) seg_time = 0:00:00.000000000 
-(stream_segment_get_boundaries) (audio_0) result is start=0:00:00.000000000,stop=0:33:13.387000000,time=0:00:00.000000000
-(qtdemux_stream_update_segment) (audio_0) new segment 0 from 0:00:00.000000000 to 0:33:13.387000000,time 0:00:00.000000000 
-(gst_qtdemux_push_tags) Checking pad qtdemux1:audio_0 for tags
-(gst_qtdemux_push_tags) Checking pad qtdemux1:video_0 for tags
-(gst_qtdemux_push_tags) Checking pad qtdemux1:audio_0 for tags
-(qtdemux_process_adapter) Finished parsing the header 
-(qtdemux_process_adapter) only go back to the mdat if there are samples to play first_mdat=40
-(has_next_entry) Checking if there are samples not played yet
-(qtdemux_process_adapter) In QTDEMUX_STATE_HEADER, set demux->offset to demux->first_mdat(40) 
-(qtdemux_process_adapter) In QTDEMUX_STATE_HEADER, set demux->neededbytes=16 and demux->state back to QTDEMUX_STATE_INITIAL 
-(bt_demux_stream_push_loop) When got moov header after mdat , reset pushing start from first piece 
-(bt_demux_stream_activate) waiting lock
-(bt_demux_stream_activate) recovery lock
-(bt_demux_stream_activate) Modifying thiz->current_piece to 904 (start_piece minus one) 
-(bt_demux_stream_activate) clearing historical cur_buffering_flags for activate stream
-(bt_demux_stream_activate) Activating stream 'src_01', start: (905), start_offset: 771995, end: 2033, end_offset: 54374, current: (904) buffering(No)
-(bt_demux_stream_activate) unlock
-(bt_demux_stream_push_loop) When got moov header after mdat, call read_piece() on start piece 905
-(bt_demux_stream_push_loop) unlock cur:(904)
-bt_demux_stream_push_loop, END 
-(bt_demux_stream_push_loop) FIRE src_01 [start piece idx:905, end piece idx:2033],current_piece:904,pad task state 0 
-(bt_demux_stream_push_loop) decodebin ghost sink pad is ok to have target
-(bt_demux_stream_push_loop) have_type emitted, proceeding 
-(bt_demux_handle_alert) BEGIN in read_piece_alert, piece idx:(905)
-(bt_demux_handle_alert) in read_piece_alert, piece_idx on alert(aka ipc_data->piece)=(905), size=1048576 
-(bt_demux_handle_alert) stream-idx(1) in read_piece_alert, Start the pad task(bt_demux_stream_push_loop) 905 
-(bt_demux_handle_alert) EXIT in read_piece_alert, piece idx:(905)
-(bt_demux_stream_push_loop) waiting lock thiz->current_piece(904), ipc_data->piece(905)
-(bt_demux_stream_push_loop) recovery lock (904)
-(gst_bt_demux_buffer_new) thiz->start_piece=905, piece=905, this buffer actual size:276581 
-(bt_demux_stream_push_loop) Received piece (905) of size 1048576 and actual size 276581 on file 1 
-(bt_demux_stream_push_loop) Push SEGMENT event, start_byte=0, end_byte=1182076107 
-(bt_demux_stream_push_loop) Modifying thiz->current_piece from 904 to 905 
-(bt_demux_stream_push_loop) Pushing buffer, actual size: 276581, file: 1, cur piece: (905) 
-(qtdemux_chain) Received buffer size:276581 demux offset:40
-(qtdemux_chain) pushing in inbuf 0x7fff00355a70,neededbytes:16,available: 276581
-(gst_qtdemux_process_adapter) demux->state=<INITIAL> 
-(qtdemux_process_adapter) InQTDEMUX_STATE_INITIAL, Peeking found [ftyp] size:32
-(qtdemux_process_adapter) already buffering still no moov header, set state to QTDEMUX_STATE_HEADER, set demux->neededbytes=32
-(qtdemux_process_adapter) In QTDEMUX_STATE_HEADER, fourcc is ftyp
-(qtdemux_process_adapter) only go back to the mdat if there are samples to play first_mdat=40
-(has_next_entry) Checking if there are samples not played yet
-(qtdemux_process_adapter) In QTDEMUX_STATE_HEADER, set demux->offset to demux->first_mdat(40) 
-(qtdemux_process_adapter) In QTDEMUX_STATE_HEADER, set demux->neededbytes=16 and demux->state back to QTDEMUX_STATE_INITIAL 
-(qtdemux_process_adapter) InQTDEMUX_STATE_INITIAL, Peeking found [free] size:8
-(qtdemux_process_adapter) already buffering still no moov header, set state to QTDEMUX_STATE_HEADER, set demux->neededbytes=8
-(qtdemux_process_adapter) In QTDEMUX_STATE_HEADER, fourcc is free
-(qtdemux_process_adapter) only go back to the mdat if there are samples to play first_mdat=40
-(has_next_entry) Checking if there are samples not played yet
-(qtdemux_process_adapter) In QTDEMUX_STATE_HEADER, set demux->offset to demux->first_mdat(40) 
-(qtdemux_process_adapter) In QTDEMUX_STATE_HEADER, set demux->neededbytes=16 and demux->state back to QTDEMUX_STATE_INITIAL 
-(qtdemux_process_adapter) InQTDEMUX_STATE_INITIAL, Peeking found [mdat] size:1180035240
-(qtdemux_process_adapter) FOURCC_mdat.  already got moov header
-(qtdemux_process_adapter) FOURCC_mdat. we have the headers, start playback, state set to QTDEMUX_STATE_MOVIE, and set neededbytes to 39561
-(qtdemux_drop_data) dropping 8 bytes 
-(bvw_update_tags) gain audio Tags: 0x7fff0c0017a0A 
+(bvw_update_tags) gain audio Tags: 0x7ec4900020f0A 
 (bvw_update_tags) emit got-metadata 
 (on_got_metadata_event) 
 (totem_get_nice_name_for_stream) emit_metadata_updated 
-(totem-object/on_playlist_change_name)  got title to update player header Singnapore/HotSopt.mp4
-(bvw/on_pad_added for decodebin) :src_2
-decodebin's Video pad detected.
-(bvw_stream_changed_cb) 
-(caps_set) video decoder caps: fps_n: 30, fps_d: 1, width: 1920, height: 1080 
-(bvw_update_stream_info) emit got-metadata 
-(on_got_metadata_event) 
-(totem_get_nice_name_for_stream) emit_metadata_updated 
-(totem-object/on_playlist_change_name)  got title to update player header Singnapore/HotSopt.mp4
-(bvw/on_pad_added for decodebin) :src_3
-decodebin's Audio pad detected.
-(bvw_stream_changed_cb) 
-(caps_set) video decoder caps: fps_n: 30, fps_d: 1, width: 1920, height: 1080 
-(bvw_update_stream_info) emit got-metadata 
-(on_got_metadata_event) 
-(totem_get_nice_name_for_stream) emit_metadata_updated 
-(totem-object/on_playlist_change_name)  got title to update player header Singnapore/HotSopt.mp4
-GTK-GLSINK::gst_gtk_gl_sink_event: stream-start 
-GTK-GLSINK::gst_gtk_gl_sink_event: caps 
-GTK-GLSINK::gst_gtk_gl_sink_event: segment 
-GTK-GLSINK::gst_gtk_gl_sink_event: tag 
-GTK-GLSINK::gst_gtk_gl_sink_event: tag 
-GTK-GLSINK::gst_gtk_gl_sink_event: tag 
-[New Thread 0x7fff593006c0 (LWP 43880)]
-(bvw_bus_message_cb) bvw-pipeline changed state from READY to PAUSED
-(bvw_bus_message_cb) disable updating slider and time label
-(gst_bt_demux_change_state) GstTaskState is 0, transition is 28
-(bacon_video_widget_update_and_get_seekable) seeking query says the stream is seekable 
-(got_time_tick) From now on, (Initial) the stream become seekable 
-(update_current_time) From now on, We get the stream_length, which is 1993500 
-(caps_set) video decoder caps: fps_n: 30, fps_d: 1, width: 1920, height: 1080 
-(bvw_update_stream_info) emit got-metadata 
-(on_got_metadata_event) 
-(totem_get_nice_name_for_stream) emit_metadata_updated 
-(totem-object/on_playlist_change_name)  got title to update player header Singnapore/HotSopt.mp4
-(bvw_bus_message_cb) In GST_MESSAGE_ASYNC_DONE case: Maybe starting deferred playback after seek
-(bacon_video_widget_play) cur_state:PLAYING
-(bvw_bus_message_cb) bvw-pipeline changed state from PAUSED to PLAYING
-(bvw_bus_message_cb) resume updating slider and time label
-(bvw_reconfigure_tick_timeout) adding tick timeout (at 200ms) 
-(bvw_update_tags) gain video Tags: 0x7fff602e2800A 
-(bvw_update_tags) emit got-metadata 
-(on_got_metadata_event) 
-(totem_get_nice_name_for_stream) emit_metadata_updated 
-(totem-object/on_playlist_change_name)  got title to update player header Singnapore/HotSopt.mp4
-(bvw_update_tags) gain video Tags: 0x7fff0c003e60A 
-(bvw_update_tags) emit got-metadata 
-(on_got_metadata_event) 
-(totem_get_nice_name_for_stream) emit_metadata_updated 
-(totem-object/on_playlist_change_name)  got title to update player header Singnapore/HotSopt.mp4
-(bvw_update_tags) Pipeline sent video tags update with no changes 
-(bvw_update_tags) gain audio Tags: 0x7fff0022dcf0A 
-(bvw_update_tags) emit got-metadata 
-(on_got_metadata_event) 
-(totem_get_nice_name_for_stream) emit_metadata_updated 
-(totem-object/on_playlist_change_name)  got title to update player header Singnapore/HotSopt.mp4
-(bvw_update_tags) Pipeline sent audio tags update with no changes 
-(bvw_update_tags) Pipeline sent audio tags update with no changes 
-(bvw_update_tags) gain audio Tags: 0x7fff001f8fa0A 
-(bvw_update_tags) emit got-metadata 
-(on_got_metadata_event) 
-(totem_get_nice_name_for_stream) emit_metadata_updated 
-(totem-object/on_playlist_change_name)  got title to update player header Singnapore/HotSopt.mp4
-(bvw_update_tags) gain audio Tags: 0x7fff00354b10A 
-(bvw_update_tags) emit got-metadata 
-(on_got_metadata_event) 
-(totem_get_nice_name_for_stream) emit_metadata_updated 
-(totem-object/on_playlist_change_name)  got title to update player header Singnapore/HotSopt.mp4
-(bvw_update_tags) gain audio Tags: 0x7fff0007b9c0A 
-(bvw_update_tags) emit got-metadata 
-(on_got_metadata_event) 
-(totem_get_nice_name_for_stream) emit_metadata_updated 
-(totem-object/on_playlist_change_name)  got title to update player header Singnapore/HotSopt.mp4
-[Thread 0x7fff593006c0 (LWP 43880) exited]
-(totem-menu) Play/Pause Button Pressed 
-(totem_object_play_pause) 
-(totem_object_play_pause) next line to call bacon_video_widget_pause
-(bacon_video_widget_pause) Pausing
-(bacon_video_widget_pause) SET bvw->pipeline state to PAUSED
-(gst_bt_demux_change_state) GstTaskState is 0, transition is 35
-(bvw_bus_message_cb) bvw-pipeline changed state from PLAYING to PAUSED
-(bvw_bus_message_cb) disable updating slider and time label
-(bvw_reconfigure_tick_timeout) removing tick timeout 
+(totem-object/on_playlist_change_name)  got title to update player header Singnapore/2025-02-22_18-58-36.mp4
+(gst_bt_demux_get_ppi) empty, post one
+(bt_demux_handle_alert) got piece_info_alert, but ppi is empty 
 (totme-object/main_window_destroy_cb) 
 ~(totem-object/totem_object_exit) 
 (totem-object/totem_object_set_rate) rate is 1.000000
 In totem-movie-properties.c impl_deactivate 
 OPEN-DIRECTORY: impl_deactivate
-[Thread 0x7fffc7fff6c0 (LWP 43838) exited]
-[Thread 0x7fffdcdfd6c0 (LWP 43837) exited]
-[Thread 0x7fffc6ffd6c0 (LWP 43840) exited]
-[Thread 0x7fffc77fe6c0 (LWP 43839) exited]
-[Thread 0x7fffaeffd6c0 (LWP 43849) exited]
-[Thread 0x7fffaf7fe6c0 (LWP 43848) exited]
-[Thread 0x7fffdd5fe6c0 (LWP 43836) exited]
-[Thread 0x7fffdddff6c0 (LWP 43835) exited]
- [Thread 0x7fff667fe6c0 (LWP 43878) exited]
-[Thread 0x7fff65f426c0 (LWP 43877) exited]
-[Thread 0x7fff656866c0 (LWP 43876) exited]
-[Thread 0x7fff64e856c0 (LWP 43873) exited]
-[Thread 0x7fff89ffb6c0 (LWP 43868) exited]
-[Thread 0x7fff8a7fc6c0 (LWP 43867) exited]
-[Thread 0x7fff8affd6c0 (LWP 43866) exited]
-[Thread 0x7fff8b7fe6c0 (LWP 43865) exited]
-[Thread 0x7fff8bfff6c0 (LWP 43864) exited]
-[Thread 0x7fff94ffa6c0 (LWP 43863) exited]
-[Thread 0x7fff957fb6c0 (LWP 43862) exited]
-[Thread 0x7fff95ffc6c0 (LWP 43861) exited]
-[Thread 0x7fff967fd6c0 (LWP 43860) exited]
-[Thread 0x7fff96ffe6c0 (LWP 43859) exited]
-[Thread 0x7fff977ff6c0 (LWP 43857) exited]
-[Thread 0x7fffc67fc6c0 (LWP 43856) exited]
-[Thread 0x7fffc5ffb6c0 (LWP 43854) exited]
-[Thread 0x7fffacff96c0 (LWP 43853) exited]
-[Thread 0x7fffad7fa6c0 (LWP 43852) exited]
-[Thread 0x7fffadffb6c0 (LWP 43851) exited]
-[Thread 0x7fffae7fc6c0 (LWP 43850) exited]
-[Thread 0x7fffaffff6c0 (LWP 43847) exited]
-[Thread 0x7fffc4ff96c0 (LWP 43846) exited]
-[Thread 0x7fffe89ff6c0 (LWP 43834) exited]
-[Thread 0x7fffe99ff6c0 (LWP 43833) exited]
-[Thread 0x7fffedffe6c0 (LWP 43832) exited]
-[Thread 0x7fffee7ff6c0 (LWP 43831) exited]
-[Thread 0x7fffeffff6c0 (LWP 43828) exited]
-[Thread 0x7ffff4bc86c0 (LWP 43827) exited]
-[Thread 0x7fffec9ff6c0 (LWP 43826) exited]
-[Thread 0x7ffff53c96c0 (LWP 43825) exited]
-[Thread 0x7ffff5995a80 (LWP 43822) exited]
-[Thread 0x7fff66fff6c0 (LWP 43879) exited]
-[New process 43822]
-[Inferior 1 (process 43822) exited normally]
-(gdb) 
+ pal@pal-desktop79:/media/pal/E/GnomeApp/totem-gstbt/install/bin$ 

@@ -233,7 +233,8 @@ subdir('data')
 subdir('src')
 
 
-
+# tells Meson to automatically run the glib-compile-schemas tool 
+# after installing your schema files
 gnome.post_install(
   glib_compile_schemas: true,
   gtk_update_icon_cache: true,

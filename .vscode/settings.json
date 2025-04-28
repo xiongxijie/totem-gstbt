@@ -67,7 +67,10 @@
         "cinttypes": "cpp",
         "totem-preferences-dialog.h": "c",
         "gd.h": "c",
-        "totem-player-toolbar.h": "c"
+        "totem-player-toolbar.h": "c",
+        "totem-playlist.h": "c",
+        "totem-options.h": "c",
+        "bacon-video-widget-enums.h": "c"
     },
     "mesonbuild.configureOnOpen": false
 }

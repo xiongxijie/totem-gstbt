@@ -1544,7 +1544,7 @@ window_state_event_cb (GtkWidget           *window,
 		set_controls_visibility (totem, TRUE, FALSE);
 	}
 
-	g_object_notify (G_OBJECT (totem), "fullscreen");
+	// g_object_notify (G_OBJECT (totem), "fullscreen");
 
 	return FALSE;
 }
@@ -2714,8 +2714,8 @@ static void
 update_volume_sliders (TotemObject *totem)
 {
 	double volume;
-
 	volume = bacon_video_widget_get_volume (totem->bvw);
+	printf("(update_volume_sliders) %lf\n", volume);
 
 	g_signal_handlers_block_by_func (totem->volume, volume_button_value_changed_cb, totem);
 	gtk_scale_button_set_value (GTK_SCALE_BUTTON (totem->volume), volume);
@@ -2727,6 +2727,7 @@ update_volume_sliders (TotemObject *totem)
 void
 property_notify_cb_volume (BaconVideoWidget *bvw, GParamSpec *spec, TotemObject *totem)
 {
+
 	update_volume_sliders (totem);
 }
 
@@ -2743,6 +2744,9 @@ property_notify_cb_seekable (BaconVideoWidget *bvw, GParamSpec *spec, TotemObjec
 gboolean
 seek_slider_pressed_cb (GtkWidget *widget, GdkEventButton *event, TotemObject *totem)
 {
+
+	printf("(totem-object/seek_slider_pressed_cb) enter \n");
+
 	/* HACK: we want the behaviour you get with the left button, so we
 	 * mangle the event.  clicking with other buttons moves the slider in
 	 * step increments, clicking with the left button moves the slider to
@@ -2767,10 +2771,14 @@ seek_slider_pressed_cb (GtkWidget *widget, GdkEventButton *event, TotemObject *t
 void
 seek_slider_changed_cb (GtkAdjustment *adj, TotemObject *totem)
 {
+	printf("(totem-object/seek_slider_changed_cb) both enter \n");
+
 	double pos;
 	gint64 _time;
 	if (totem->seek_lock == FALSE)
 	{
+	printf("(totem-object/seek_slider_changed_cb) seek_lock == FALSE \n");
+
 		return;
 	}
 	//get the pos in percent you point the seek bar to
@@ -2796,6 +2804,7 @@ seek_slider_changed_cb (GtkAdjustment *adj, TotemObject *totem)
 gboolean
 seek_slider_released_cb (GtkWidget *widget, GdkEventButton *event, TotemObject *totem)
 {
+	printf("(totem-object/seek_slider_released_cb) enter\n");
 
 	GtkAdjustment *adj;
 	gdouble val;
@@ -2813,7 +2822,7 @@ seek_slider_released_cb (GtkWidget *widget, GdkEventButton *event, TotemObject *
 	val = gtk_adjustment_get_value (adj);
 
 	if (bacon_video_widget_can_direct_seek (totem->bvw) == FALSE){
-			printf("(totem-object/seek_slider_released_cb) \n");
+			printf("(totem-object/seek_slider_released_cb) seek\n");
 
 		totem_object_seek (totem, val / 65535.0);
 	}

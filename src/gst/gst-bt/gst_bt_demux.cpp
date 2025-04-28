@@ -1390,6 +1390,14 @@ printf ("(bt_demux_stream_seek) fileidx(%d) start_byte_global = %d\n",
                                                             thiz->current_piece);
 
             gst_bt_demux_stream_update_buffering (thiz, h, demux->buffer_pieces);
+
+            //If buffering is cleared, we need to set it,to avoid that when piece_finished_alerts received, we cannot updating buffering level
+            if(thiz->buffering == FALSE)
+            {
+              thiz->buffering = TRUE;
+            }
+
+
   }
 
   if(thiz->moov_after_mdat)

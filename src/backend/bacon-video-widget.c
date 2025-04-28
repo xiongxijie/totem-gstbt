@@ -181,6 +181,9 @@ struct _BaconVideoWidget
 
           GstElement                  *glsinkbin;
 
+          GstElement                  *volume_plugin;
+
+
           GstElement                  *video_sink;
 
           GstElement                  *audio_filter_convert;
@@ -2443,15 +2446,23 @@ bacon_video_widget_set_property (GObject * object, guint property_id,
       bacon_video_widget_set_volume (bvw, g_value_get_double (value));
       break;
     case PROP_BRIGHTNESS:
+    printf ("(set video property) PROP_BRIGHTNESS \n");
+
       bacon_video_widget_set_video_property (bvw, BVW_VIDEO_BRIGHTNESS, g_value_get_int (value));
       break;
     case PROP_CONTRAST:
+    printf ("(set video property) PROP_CONTRAST \n");
+
       bacon_video_widget_set_video_property (bvw, BVW_VIDEO_CONTRAST, g_value_get_int (value));
       break;
     case PROP_SATURATION:
+    printf ("(set video property) PROP_SATURATION \n");
+    
       bacon_video_widget_set_video_property (bvw, BVW_VIDEO_SATURATION, g_value_get_int (value));
       break;
     case PROP_HUE:
+    printf ("(set video property) PROP_HUE \n");
+
       bacon_video_widget_set_video_property (bvw, BVW_VIDEO_HUE, g_value_get_int (value));
       break;
     case PROP_AUDIO_OUTPUT_TYPE:
@@ -2494,15 +2505,22 @@ bacon_video_widget_get_property (GObject * object, guint property_id,
       g_value_set_double (value, bvw->volume);
       break;
     case PROP_BRIGHTNESS:
+      printf ("(get video property) PROP_BRIGHTNESS \n");
       g_value_set_int (value, bacon_video_widget_get_video_property (bvw, BVW_VIDEO_BRIGHTNESS));
       break;
     case PROP_CONTRAST:
+    printf ("(get video property) PROP_CONTRAST \n");
+
       g_value_set_int (value, bacon_video_widget_get_video_property (bvw, BVW_VIDEO_CONTRAST));
       break;
     case PROP_SATURATION:
+    printf ("(get video property) PROP_SATURATION \n");
+
       g_value_set_int (value, bacon_video_widget_get_video_property (bvw, BVW_VIDEO_SATURATION));
       break;
     case PROP_HUE:
+    printf ("(get video property) PROP_HUE \n");
+
       g_value_set_int (value, bacon_video_widget_get_video_property (bvw, BVW_VIDEO_HUE));
       break;
     case PROP_AUDIO_OUTPUT_TYPE:
@@ -3444,6 +3462,38 @@ bacon_video_widget_can_set_volume (BaconVideoWidget * bvw)
 
 
 
+
+static gboolean
+notify_volume_idle_cb (BaconVideoWidget *bvw)
+{
+  gdouble vol;
+
+  vol = gst_stream_volume_get_volume (GST_STREAM_VOLUME (bvw->volume_plugin),
+                                      GST_STREAM_VOLUME_FORMAT_CUBIC);
+  bvw->volume = vol;
+
+  //g_object_notify is to inform the GObject system that a specific property of a GObject has changed
+  g_object_notify (G_OBJECT (bvw), "volume");
+  
+printf ("(notify_volume_idle_cb) %lf\n", vol);
+
+  return FALSE;
+}
+
+static void
+volume_readback (BaconVideoWidget    *bvw)
+{
+  guint id;
+
+  id = g_idle_add ((GSourceFunc) notify_volume_idle_cb, bvw);
+  g_source_set_name_by_id (id, "[totem] notify_volume_idle_cb");
+}
+
+
+
+
+
+
 /**
  * bacon_video_widget_set_volume:
  * @bvw: a #BaconVideoWidget
@@ -3457,19 +3507,21 @@ void
 bacon_video_widget_set_volume (BaconVideoWidget * bvw, double volume)
 {     
 
-                printf("(bacon_video_widget_set_volume) %lf \n", volume);
 
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
   g_return_if_fail (GST_IS_ELEMENT (bvw->pipeline));
 
   if (bacon_video_widget_can_set_volume (bvw) != FALSE) {
     volume = CLAMP (volume, 0.0, 1.0);
-    gst_stream_volume_set_volume (GST_STREAM_VOLUME (bvw->pipeline),
+    gst_stream_volume_set_volume (GST_STREAM_VOLUME (bvw->volume_plugin),
                                   GST_STREAM_VOLUME_FORMAT_CUBIC,
                                   volume);
 
     bvw->volume = volume;
-    g_object_notify (G_OBJECT (bvw), "volume");
+    printf("(bacon_video_widget_set_volume) %lf \n", volume);
+
+    // g_object_notify (G_OBJECT (bvw), "volume");
+    volume_readback (bvw);
   }
 }
 
@@ -3485,7 +3537,7 @@ double
 bacon_video_widget_get_volume (BaconVideoWidget * bvw)
 {
 
-                printf("(bacon_video_widget_get_volume)\n" );
+                // printf("(bacon_video_widget_get_volume)\n" );
 
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 0.0);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->pipeline), 0.0);
@@ -3715,34 +3767,6 @@ bacon_video_widget_get_video_property (BaconVideoWidget *bvw,
   g_object_unref (found_channel);
   return ret;
 }
-
-
-static gboolean
-notify_volume_idle_cb (BaconVideoWidget *bvw)
-{
-  gdouble vol;
-
-  vol = gst_stream_volume_get_volume (GST_STREAM_VOLUME (bvw->pipeline),
-                                      GST_STREAM_VOLUME_FORMAT_CUBIC);
-  bvw->volume = vol;
-
-  //g_object_notify is to inform the GObject system that a specific property of a GObject has changed
-  g_object_notify (G_OBJECT (bvw), "volume");
-
-  return FALSE;
-}
-
-static void
-notify_volume_cb (GObject             *object,
-		  GParamSpec          *pspec,
-		  BaconVideoWidget    *bvw)
-{
-  guint id;
-
-  id = g_idle_add ((GSourceFunc) notify_volume_idle_cb, bvw);
-  g_source_set_name_by_id (id, "[totem] notify_volume_idle_cb");
-}
-
 
 
 
@@ -5380,6 +5404,7 @@ bacon_video_widget_init (BaconVideoWidget *bvw)
               //serves as a container for OpenGL-based rendering, providing a bridge between multimedia streaming and graphics rendering.
               bvw->glsinkbin = element_make_or_warn ("glsinkbin", "glsinkbin");
 
+              bvw->volume_plugin = element_make_or_warn ("volume", "volume");
 
               audio_sink = element_make_or_warn ("autoaudiosink", "audio-sink");
 
@@ -5392,15 +5417,22 @@ bacon_video_widget_init (BaconVideoWidget *bvw)
       !bvw->audio_pitchcontrol ||
       !bvw->video_sink ||
       !audio_sink ||
+      !bvw->volume_plugin ||
       !bvw->glsinkbin) {
     if (bvw->video_sink)
       g_object_ref_sink (bvw->video_sink);
+    g_clear_object (&bvw->video_sink);
     if (audio_sink)
       g_object_ref_sink (audio_sink);
     g_clear_object (&audio_sink);
     if (bvw->glsinkbin)
       g_object_ref_sink (bvw->glsinkbin);
     g_clear_object (&bvw->glsinkbin);
+
+    if(bvw->volume_plugin)
+      g_object_ref_sink (bvw->volume_plugin);
+    g_clear_object (&bvw->volume_plugin);
+
     bvw->init_error = g_error_new_literal (BVW_ERROR, BVW_ERROR_PLUGIN_LOAD,
 					   _("Some necessary plug-ins are missing. "
 					     "Make sure that the program is correctly installed."));
@@ -5415,13 +5447,13 @@ bacon_video_widget_init (BaconVideoWidget *bvw)
 
             // Set location for the filesrc (assuming you have a torrent or file URL)
 
-            // g_object_set(bvw->filesrc, "location", "/media/pal/E/FreeDsktop/gst-bt/install/lib/gstreamer-1.0/Japan.torrent", NULL);
-            g_object_set(bvw->filesrc, "location", "/media/pal/E/FreeDsktop/gst-bt/install/lib/gstreamer-1.0/Singnapore.torrent", NULL);
+            g_object_set(bvw->filesrc, "location", "/media/pal/E/FreeDsktop/gst-bt/install/lib/gstreamer-1.0/Japan.torrent", NULL);
+            // g_object_set(bvw->filesrc, "location", "/media/pal/E/FreeDsktop/gst-bt/install/lib/gstreamer-1.0/Singnapore.torrent", NULL);
 
             // g_object_set(bvw->filesrc, "location", "/media/pal/E/FreeDsktop/gst-bt/install/lib/gstreamer-1.0/ForBiggerBlazes.mp4.torrent", NULL);
 
-            g_object_set(bvw->btdemux, "temp-location", "/home/pal/Documents", NULL);
-            // g_object_set(bvw->btdemux, "temp-location", "/home/pal/Downloads", NULL);
+            // g_object_set(bvw->btdemux, "temp-location", "/home/pal/Documents", NULL);
+            g_object_set(bvw->btdemux, "temp-location", "/home/pal/Downloads", NULL);
 
             // g_object_set(bvw->btdemux, "temp-location", "/home/pal/Pictures", NULL);
 
@@ -5490,6 +5522,7 @@ bacon_video_widget_init (BaconVideoWidget *bvw)
                                 bvw->audio_filter_convert,
                                 bvw->audio_capsfilter,
                                 bvw->audio_pitchcontrol,
+                                bvw->volume_plugin,
                                 audio_sink, 
                                 NULL);
 
@@ -5499,6 +5532,7 @@ bacon_video_widget_init (BaconVideoWidget *bvw)
               gst_element_link_many (bvw->audio_filter_convert,
                                      bvw->audio_capsfilter,
                                      bvw->audio_pitchcontrol,
+                                     bvw->volume_plugin,
                                      audio_sink,
                                      NULL);
 
@@ -5580,12 +5614,7 @@ bacon_video_widget_init (BaconVideoWidget *bvw)
                     G_CALLBACK (bvw_bus_message_cb), bvw);
 
 
-  // The notify::volume signal is emitted whenever the volume property changes
-  // For example, if a user adjusts the volume via a slider in a user interface, 
-  // your application can capture this change and update the playback accordingly.
-  g_signal_connect (bvw, "notify::volume",
-      G_CALLBACK (notify_volume_cb), bvw);
-
+  volume_readback(bvw);
 
   // signal that the video output has changed such as switch between video tracks.
   g_signal_connect (bvw, "video-changed",

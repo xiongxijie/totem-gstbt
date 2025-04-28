@@ -25,7 +25,8 @@ libgstbt_sources = files(
 # but i want to use my own-built Gstreamer instead of the system-intalled one
 # it's '/media/pal/E/FreeDsktop/gstreamer/install/lib/x86_64-linux-gnu/gstreamer-1.0'
 
-gstbt_install_dir = '/media/pal/E/FreeDsktop/gstreamer/install/lib/x86_64-linux-gnu/gstreamer-1.0'
+#no, just install it in out project install dir, not our own built gstreamer dir
+gstbt_install_dir = '/media/pal/E/GnomeApp/totem-gstbt/install/lib/x86_64-linux-gnu'
 
 
 # cc = meson.get_compiler('cpp')

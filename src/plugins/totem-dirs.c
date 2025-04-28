@@ -54,7 +54,7 @@ totem_get_plugin_paths (void)
 	settings = g_settings_new (TOTEM_GSETTINGS_SCHEMA);
 	if (g_settings_get_boolean (settings, "disable-user-plugins") == FALSE) {
 		path = g_build_filename (totem_data_dot_dir (), "plugins", NULL);
-						// printf("totem-dirs.c. path is %s \n", path);
+						// printf("totem-dirs.c. path is %s \n", path);///home/pal/.local/share/totem/plugins
 		g_ptr_array_add (paths, path);
 	}
 

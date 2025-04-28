@@ -158,7 +158,7 @@
                     <signal name="motion-notify-event" handler="on_bvw_motion_notify_cb"/>
                     <signal name="notify::volume" handler="property_notify_cb_volume"/>
                     <signal name="notify::seekable" handler="property_notify_cb_seekable"/>
-                    <!-- <signal name="button-press-event" handler="on_video_button_press_event" after="yes"/> -->
+                    <signal name="button-press-event" handler="on_video_button_press_event" after="yes"/>
                     <!-- <signal name="scroll-event" handler="seek_slider_scroll_event_cb"/> -->
                     <!-- <signal name="channels-change" handler="on_channels_change_event"/> -->
                     <signal name="got-metadata" handler="on_got_metadata_event"/>

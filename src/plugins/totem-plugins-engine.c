@@ -95,7 +95,7 @@ totem_plugins_engine_get_default (TotemObject *totem)
 	// type repository is essentially a database of all registered GObject types and their associated information.
 	g_irepository_require (g_irepository_get_default (), "Peas", "1.0", 0, NULL);
 	g_irepository_require (g_irepository_get_default (), "PeasGtk", "1.0", 0, NULL);
-	g_irepository_require (g_irepository_get_default (), "Totem", TOTEM_API_VERSION, 0, NULL);
+	// g_irepository_require (g_irepository_get_default (), "Totem", TOTEM_API_VERSION, 0, NULL);
 
 	paths = totem_get_plugin_paths ();
 

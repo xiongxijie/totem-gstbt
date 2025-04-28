@@ -147,11 +147,14 @@ gen_sources += custom_target(
   command: [uri_scheme_include_sh, uri_schemes_list],
 )
 
+# A configuration_data() object is created to hold 
+# key-value pairs that can be substituted into template files.
 schema_conf = configuration_data()
 schema_conf.set('GETTEXT_PACKAGE', meson.project_name())
 
 schema = 'org.gnome.totem.gschema.xml'
-
+# any placeholders (like @GETTEXT_PACKAGE@) 
+# in the template are replaced by values from schema_conf.
 configure_file(
   input: schema + '.in',
   output: schema,
@@ -159,7 +162,10 @@ configure_file(
   install_dir: totem_schemadir,
   configuration: schema_conf
 )
+
 # Validata GSchema
+# find_program:  locate executables or programs that can be run from the command line, 
+# like glib-compile-schemas, gcc, pkg-config, etc.
 glib_compile_schemas = find_program('glib-compile-schemas', required: false)
 if glib_compile_schemas.found()
   test(
@@ -168,6 +174,11 @@ if glib_compile_schemas.found()
       )
 endif
 
+
+# totem.convert: a GConf to GSettings conversion file used when migrating applications 
+# from the old GConf system to the newer GSettings system
+# This .convert file maps GConf settings to GSettings keys, so that during 
+# migration, the old GConf settings can be read and automatically converted to the corresponding GSettings keys
 install_data(
   'totem.convert',
   install_dir: join_paths(totem_datadir, 'GConf', 'gsettings')
