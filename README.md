@@ -21,6 +21,6 @@ A very poor torrent streaming player application (mainly working on top of other
 Ubuntu 24.04 LTS
 
 # test video
-https://github.com/xiongxijie/totem-gstbt/blob/main/test-video/test_screencast.mp4
+https://youtu.be/filNB6CZq_0
 
 ![](https://github.com/xiongxijie/totem-gstbt/blob/main/test-video/Screenshot%20from%202025-03-15%2008-18-12.png)
