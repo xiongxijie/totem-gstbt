@@ -2,12 +2,12 @@
 A very poor torrent streaming player Demo(Without torrent client) (mainly working on top of others' code)
 
 ## Based on (Clone&Copy&Paste oriented programming)
-[gst-bt] (https://github.com/turran/gst-bt)
-[Totem]  (https://gitlab.gnome.org/GNOME/totem)  
+**[gst-bt]** (https://github.com/turran/gst-bt)
+**[Totem]**  (https://gitlab.gnome.org/GNOME/totem)  
 
 ## Dependencies
-[libtorrent] (https://github.com/arvidn/libtorrent)
-[GStreamer] (https://gitlab.freedesktop.org/gstreamer/gstreamer)
+**[libtorrent]** (https://github.com/arvidn/libtorrent)
+**[GStreamer]** (https://gitlab.freedesktop.org/gstreamer/gstreamer)
 
 
 ## Description
