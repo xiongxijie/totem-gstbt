@@ -1,5 +1,5 @@
 # totem-gstbt
-A very poor torrent streaming player application (mainly working on top of others' code)
+A very poor torrent streaming player Demo(Without torrent client) (mainly working on top of others' code)
 
 ## Based on (Clone&Copy&Paste oriented programming)
 [gst-bt] (https://github.com/turran/gst-bt)
